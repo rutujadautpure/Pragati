@@ -73,8 +73,13 @@ app.use("/business", businessRoutes);
 // Routes
 // Start Server
 app.use("/auth", authRoutes);
-app.get("/", (req, res) => res.send("Server is running..."));
 app.get("/home", (req, res) => res.render("index"));
+
+const productRoutes = require("./routes/product");
+app.use("/products", productRoutes);
+
+app.get("/", (req, res) => res.send("Server is running..."));
+
 app.listen(8080, () => {
     console.log("🚀 Server started on port 8080");
 });

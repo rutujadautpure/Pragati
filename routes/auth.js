@@ -17,7 +17,6 @@ router.post("/signup", async (req, res) => {
   try {
     const { firstName, lastName, email, password, mob_no, pinCode, state, district, role } = req.body;
 
-    
     const newUser = new User({ firstName, lastName, email, mob_no, pinCode, state, district, role });
 
     const registeredUser = await User.register(newUser, password);
@@ -27,15 +26,22 @@ router.post("/signup", async (req, res) => {
         req.flash("error", "Signup successful, but auto-login failed. Please log in manually.");
         return res.redirect("/auth/login");
       }
+
       req.flash("success", "Signup successful! Welcome to our platform.");
-      res.redirect("/home");  
+      
+      if (registeredUser.role === "Entrepreneur") {
+        return res.redirect("/business/register"); // Redirect to business registration page
+      } else {
+        return res.redirect("/home"); // Normal user redirection
+      }
     });
 
-  } catch (error) {
+  } catch (error) {  // Corrected catch block
     req.flash("error", error.message);
     res.redirect("/auth/signup");
   }
 });
+
 
 module.exports = router;
 router.post("/login", async (req, res, next) => {

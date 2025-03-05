@@ -1,7 +1,7 @@
 const express = require("express");
 const multer = require("multer");
 const Product = require("../models/product");
-const { ensureAuthenticated } = require("../middleware/auth");
+const { isLoggedIn } = require("../middleware");
 
 const router = express.Router();
 
@@ -15,12 +15,12 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Route to display product form
-router.get("/add", ensureAuthenticated, (req, res) => {
+router.get("/add",  isLoggedIn, (req, res) => {
     res.render("products/addProduct");
 });
 
 // Route to handle product submission
-router.post("/add", ensureAuthenticated, upload.fields([
+router.post("/add",  isLoggedIn, upload.fields([
     { name: "productImage1", maxCount: 1 },
     { name: "productImage2", maxCount: 1 },
     { name: "productImage3", maxCount: 1 }

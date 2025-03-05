@@ -43,7 +43,7 @@ router.post("/register", upload.single("businessDoc"), async (req, res) => {
         });
 
         await newBusiness.save();
-        res.redirect("/"); // Redirect after successful submission
+        res.redirect("/home"); // Redirect after successful submission
     } catch (err) {
         res.status(400).send(err.message);
     }
