@@ -1,0 +1,29 @@
+{
+  "name": "pccoe_hackathon",
+  "version": "1.0.0",
+  "description": "Entrepreneurship and Women Empowerment",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/khedkarsayali/SHE_Solves_Hack_Hustlers.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/khedkarsayali/SHE_Solves_Hack_Hustlers/issues"
+  },
+  "homepage": "https://github.com/khedkarsayali/SHE_Solves_Hack_Hustlers#readme",
+  "dependencies": {
+    "connect-flash": "^0.1.1",
+    "ejs": "^3.1.10",
+    "ejs-mate": "^4.0.0",
+    "express": "^4.21.2",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.18.1",
+    "mongoose": "^8.12.1"
+  }
+}
