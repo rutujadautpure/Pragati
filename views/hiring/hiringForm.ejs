@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Hiring</title>
+    <link rel="stylesheet" href="../../public/hiring/style.css">
+
+</head>
+<body>
+    <h2>Add Hiring Details</h2>
+    <form action="/hiring/add" method="POST">
+        <label for="salary">Salary:</label>
+        <input type="number" id="salary" name="salary" required min="0"><br><br>
+
+        <label for="businessType">Business Type:</label>
+        <input type="text" id="businessType" name="businessType" required><br><br>
+
+        <h3>Location</h3>
+        <label for="pinCode">Pin Code:</label>
+        <input type="text" id="pinCode" name="location[pinCode]" required pattern="\d{6}" title="Enter a valid 6-digit pin code"><br><br>
+
+        <label for="state">State:</label>
+        <input type="text" id="state" name="location[state]" required><br><br>
+
+        <label for="district">District:</label>
+        <input type="text" id="district" name="location[district]" required><br><br>
+
+        <label for="jobRole">Job Role:</label>
+        <input type="text" id="jobRole" name="jobRole" required><br><br>
+
+        <label for="jobRoleDescription">Job Role Description:</label>
+        <textarea id="jobRoleDescription" name="jobRoleDescription" required></textarea><br><br>
+
+        <label for="jobHours">Job Hours:</label>
+        <input type="number" id="jobHours" name="jobHours" required min="1"><br><br>
+
+        <label for="deadlineToApply">Deadline to Apply:</label>
+        <input type="date" id="deadlineToApply" name="deadlineToApply" required><br><br>
+
+        <label for="vacancies">Vacancies:</label>
+        <input type="number" id="vacancies" name="vacancies" required min="1"><br><br>
+
+        <h3>Contact Information</h3>
+        <label for="contactName">Contact Name:</label>
+        <input type="text" id="contactName" name="contactInfo[name]" required><br><br>
+
+        <label for="contactEmail">Contact Email:</label>
+        <input type="email" id="contactEmail" name="contactInfo[email]" required><br><br>
+
+        <label for="contactPhone">Contact Phone:</label>
+        <input type="text" id="contactPhone" name="contactInfo[phone]" required pattern="[6-9]\d{9}" title="Enter a valid 10-digit mobile number"><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

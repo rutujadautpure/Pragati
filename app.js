@@ -8,6 +8,8 @@ const ejsMate = require("ejs-mate");
 require("dotenv").config();
 
 
+const Hiringroute = require("./routes/hiring")
+
 const MONGO_URL=process.env.MONGO_URL;
 // Database Connection
 async function main() {
@@ -27,6 +29,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, "homepage")));
 
+app.use('/hiring',Hiringroute);
 
 app.get("/", (req, res) => {
     res.render("index"); // No need for .ejs extension
