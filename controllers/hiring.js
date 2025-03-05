@@ -56,7 +56,7 @@ async function handleHiringForm(req, res) {
 
         console.log("Hiring entry created successfully!"); // Debugging log
 
-        return res.status(201).json({ message: "Hiring entry added successfully!"});
+        //return res.status(201).json({ message: "Hiring entry added successfully!"});
 
     } catch (error) {
         console.error("Error adding hiring entry:", error);

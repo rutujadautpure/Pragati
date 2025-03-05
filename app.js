@@ -14,6 +14,7 @@ const User = require("./models/user"); // Ensure this path is correct
 const authRoutes = require("./routes/auth");
 
 const Hiringroute = require("./routes/hiring")
+const Applicationroute = require("./routes/application")
 
 const MONGO_URL = process.env.MONGO_URL || "mongodb://127.0.0.1:27017/myDatabase";
 
@@ -35,6 +36,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, "homepage")));
 
 app.use('/hiring',Hiringroute);
+app.use('/worker',Applicationroute);
 // ✅ Express-session must be initialized before passport.session()
 app.use(
     session({
