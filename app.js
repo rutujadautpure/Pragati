@@ -38,24 +38,34 @@ app.use(express.static(path.join(__dirname, "homepage")));
 app.use('/hiring',Hiringroute);
 app.use('/worker',Applicationroute);
 // ✅ Express-session must be initialized before passport.session()
-app.use(
-    session({
-      secret: "your-secret-key",
-      resave: false,
-      saveUninitialized: false, // Set to false to prevent empty sessions
-      cookie: { secure: false }, // Change to true in production with HTTPS
-    })
-);
+app.use(session({
+    secret: 'your-secret-key', // You should use a strong secret key
+    resave: false, // Don't save session if unmodified
+    saveUninitialized: false, // Don't create a session until something is stored
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24, // Session expiration (optional, here 1 day)
+        secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
+        httpOnly: true // Prevent JavaScript from accessing the cookie (recommended for security)
+    }
+}));
 
 // ✅ Initialize Passport after express-session
 app.use(passport.initialize());
 app.use(passport.session());
 
 // ✅ Configure Passport authentication
-passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+passport.use(new LocalStrategy(User.authenticate()));passport.serializeUser(function(user, done) {
+    done(null, user._id);  // Store the user's ID in the session cookie
+});
 
+passport.deserializeUser(async function(id, done) {
+    try {
+        const user = await User.findById(id); // Find the user by their ID
+        done(null, user);  // Store the user object in the session
+    } catch (err) {
+        done(err);  // If an error occurs, call done with the error
+    }
+});
 // Flash Messages
 app.use(flash());
 
@@ -68,44 +78,14 @@ app.use((req, res, next) => {
     next();
 });
 
-// vaish
 
-const dashboardData = {
-    totalSales: 1000,
-    revenue: 5000,
-    expenses: 2000,
-    transactions: [
-        { date: '2025-03-01', type: 'Income', amount: 1500, category: 'Sales' },
-        { date: '2025-03-02', type: 'Expense', amount: 500, category: 'Supplies' },
-        { date: '2025-03-03', type: 'Expense', amount: 700, category: 'Rent' }
-    ],
-    pieChartData: {
-        labels: ['Rent', 'Salaries', 'Supplies', 'Other'],
-        data: [400, 1000, 300, 500],
-    },
-    barChartData: {
-        labels: ['January', 'February', 'March'],
-        sales: [1000, 1500, 2000],
-        expenses: [500, 700, 1000]
-    },
-    lineChartData: {
-        labels: ['2021', '2022', '2023', '2024'],
-        revenue: [20000, 25000, 30000, 35000]
-    }
-};
-
-app.get('/dashboard', (req, res) => {
-    res.render('./finance/dashboard.ejs', { dashboardData });
-
-});
 
 app.get("/", (req, res) => {
     res.render("index");
 });
 const businessRoutes = require("./routes/business");
 app.use("/business", businessRoutes);
-// Routes
-// Start Server
+
 app.use("/auth", authRoutes);
 app.get("/home", (req, res) => res.render("index"));
 app.get("/workerhome", (req, res) => res.render("./worker/home"));

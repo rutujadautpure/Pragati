@@ -8,7 +8,7 @@ router.get('/',async(req,res)=>{
     return res.render("./hiring/hiringForm");
 })
 
-router.get('/allaplicants',async(req,res)=>{
+router.post('/allaplicants',async(req,res)=>{
     console.log(req.session.userId);
     try{
         const id = req.session.userId;
