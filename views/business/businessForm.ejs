@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Your Business</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            max-width: 100%;
+        }
+
+        h2, h3 {
+            text-align: center;
+            color: #333;
+            margin-top: 0;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            height: 80px;
+            resize: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <form action="/business/register" method="POST" enctype="multipart/form-data">
+        <h2>Business Registration</h2>
+        
+        <label for="category">Business Category:</label>
+        <select name="category" required>
+            <option value="Fashion, Handicraft and Luggage">Fashion, Handicraft and Luggage</option>
+            <option value="Home Decor, Furniture and Hardware">Home Decor, Furniture and Hardware</option>
+            <option value="Electrical, Electronics and Software">Electrical, Electronics and Software</option>
+            <option value="Books, Office Supplies and Media">Books, Office Supplies and Media</option>
+            <option value="Personal Care Health and Beauty">Personal Care Health and Beauty</option>
+            <option value="Sports, Hobbies, Toys and Events">Sports, Hobbies, Toys and Events</option>
+            <option value="Others and Services">Others and Services</option>
+        </select>
+
+        <label for="businessName">Business Name:</label>
+        <input type="text" name="businessName" required>
+
+        <label for="tradeName">Trade Name:</label>
+        <input type="text" name="tradeName" required>
+
+        <label for="incorporationDate">Incorporation Date:</label>
+        <input type="date" name="incorporationDate" required>
+
+        <label for="description">Business Description:</label>
+        <textarea name="description" required></textarea>
+
+        <label for="businessDoc">Upload Business Document (Optional):</label>
+        <input type="file" name="businessDoc">
+
+        <h3>Contact Information</h3>
+
+        <label for="businessEmail">Business Email:</label>
+        <input type="email" name="businessEmail" required>
+
+        <label for="supportEmail">Customer Support Email:</label>
+        <input type="email" name="supportEmail" required>
+
+        <label for="businessPhone">Business Phone Number:</label>
+        <input type="text" name="businessPhone" required>
+
+        <label for="supportPhone">Customer Support Phone Number:</label>
+        <input type="text" name="supportPhone" required>
+
+        <button type="submit">Register</button>
+    </form>
+</body>
+</html>

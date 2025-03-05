@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+</head>
+<body>
+    <div class="container">
+        <h2>Sign Up</h2>
+
+        <% if (messages.error.length > 0) { %>
+            <p class="error"><%= messages.error %></p>
+        <% } %>
+
+        <% if (messages.success.length > 0) { %>
+            <p class="success"><%= messages.success %></p>
+        <% } %>
+
+        <form action="/auth/signup" method="POST">
+            <label>First Name:</label>
+            <input type="text" name="firstName" required>
+
+            <label>Last Name:</label>
+            <input type="text" name="lastName" required>
+
+            <label>Email:</label>
+            <input type="email" name="email" required>
+
+            <label>Mobile Number:</label>
+            <input type="text" name="mob_no" pattern="[6-9]\d{9}" title="Enter a valid 10-digit mobile number starting with 6-9" required>
+
+            <label>Pin Code:</label>
+            <input type="text" name="pinCode" pattern="\d{6}" title="Enter a valid 6-digit pin code" required>
+
+            <label>State:</label>
+            <select name="state" id="stateSelect" required>
+                <option value="">Select State</option>
+                <option value="Maharashtra">Maharashtra</option>
+                <option value="Gujarat">Gujarat</option>
+                <option value="Rajasthan">Rajasthan</option>
+                <option value="Karnataka">Karnataka</option>
+                <option value="Tamil Nadu">Tamil Nadu</option>
+                <option value="West Bengal">West Bengal</option>
+                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                <option value="Madhya Pradesh">Madhya Pradesh</option>
+                <option value="Bihar">Bihar</option>
+                <option value="Telangana">Telangana</option>
+                <option value="Andhra Pradesh">Andhra Pradesh</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <label>District:</label>
+            <input type="text" name="district" required>
+
+            <label>Role:</label>
+            <select name="role" required>
+                <option value="">Select Role</option>
+                <option value="Entrepreneur">Entrepreneur</option>
+                <option value="Worker">Worker</option>
+            </select>
+
+            <label>Password:</label>
+            <input type="password" name="password" required>
+
+            <button type="submit">Signup</button>
+        </form>
+    </div>
+</body>
+</html>
