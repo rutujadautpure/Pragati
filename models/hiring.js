@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const hiringSchema = new mongoose.Schema(
   {
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "user", required: true },
     salary: {
       type: Number,
       required: true,
