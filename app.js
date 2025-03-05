@@ -41,6 +41,17 @@ app.get("/", (req, res) => {
     res.render("index");
 });
 
+// vaish
+const businessRoutes = require("./routes/business");
+app.use("/business", businessRoutes);
+
+
+
+app.use(express.urlencoded({ extended: true })); // Parse form data
+app.use(express.json()); // Parse JSON data
+app.use("/uploads", express.static("uploads")); // Serve uploaded files
+
+
 app.listen(8080, () => {
     console.log("Server started on port 8080");
 });
