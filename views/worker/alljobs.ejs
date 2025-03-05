@@ -48,30 +48,34 @@
     <h1>Available Jobs</h1>
 
     <div class="job-container">
-        <% jobs.forEach(job => { %>
-            <div class="job-card">
-                <!-- Hidden field to store Hiring ID -->
-                <input type="hidden" value="<%= job._id %>">
-
-                <h2><%= job.businessName %></h2>
-
-                <p><strong>Salary:</strong> ₹<%= job.salary %> per month</p>
-                <p><strong>Business Type:</strong> <%= job.businessType %></p>
-                <p><strong>Job Role:</strong> <%= job.jobRole %></p>
-                <p><strong>Description:</strong> <%= job.jobRoleDescription %></p>
-                <p><strong>Job Hours:</strong> <%= job.jobHours %> hours/day</p>
-                <p><strong>Vacancies:</strong> <%= job.vacancies %></p>
-                <p><strong>Location:</strong> <%= job.location.district %>, <%= job.location.state %> - <%= job.location.pinCode %></p>
-                <p><strong>Deadline to Apply:</strong> <%= new Date(job.deadlineToApply).toLocaleDateString() %></p>
-
-                <div class="contact-info">
-                    <h3>Contact Information</h3>
-                    <p><strong>Name:</strong> <%= job.contactInfo.name %></p>
-                    <p><strong>Email:</strong> <%= job.contactInfo.email %></p>
-                    <p><strong>Phone:</strong> <%= job.contactInfo.phone %></p>
+        <% for (let i = 0; i < jobs.length; i++) { %>
+            <form action="/worker/applyForm/<%= id %>/<%= jobs[i]._id %>" method="GET">
+                <div class="job-card">
+                    <!-- Hidden field to store Hiring ID -->
+                    <input type="hidden" name="jobId" value="<%= jobs[i]._id %>">
+    
+                    <h2><%= business[i] %></h2>
+    
+                    <p><strong>Salary:</strong> ₹<%= jobs[i].salary %> per month</p>
+                    <p><strong>Business Type:</strong> <%= jobs[i].businessType %></p>
+                    <p><strong>Job Role:</strong> <%= jobs[i].jobRole %></p>
+                    <p><strong>Description:</strong> <%= jobs[i].jobRoleDescription %></p>
+                    <p><strong>Job Hours:</strong> <%= jobs[i].jobHours %> hours/day</p>
+                    <p><strong>Vacancies:</strong> <%= jobs[i].vacancies %></p>
+                    <p><strong>Location:</strong> <%= jobs[i].location.district %>, <%= jobs[i].location.state %> - <%= jobs[i].location.pinCode %></p>
+                    <p><strong>Deadline to Apply:</strong> <%= new Date(jobs[i].deadlineToApply).toLocaleDateString() %></p>
+    
+                    <div class="contact-info">
+                        <h3>Contact Information</h3>
+                        <p><strong>Name:</strong> <%= jobs[i].contactInfo.name %></p>
+                        <p><strong>Email:</strong> <%= jobs[i].contactInfo.email %></p>
+                        <p><strong>Phone:</strong> <%= jobs[i].contactInfo.phone %></p>
+                    </div>
+                    <button type="submit">Apply</button>
                 </div>
-            </div>
-        <% }) %>
+            </form>
+            
+        <% } %>
     </div>
 
 </body>

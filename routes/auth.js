@@ -32,15 +32,9 @@ router.post("/signup", async (req, res) => {
       if (registeredUser.role === "Entrepreneur") {
         return res.redirect("/business/register"); // Redirect to business registration page
       } else {
-        return res.redirect("/home"); // Normal user redirection
+        return res.render("./worker/home"); // Normal user redirection
       }
 
-      // For worker
-      if (registeredUser.role === "Worker") {
-        return res.redirect("/business/register"); 
-      } else {
-        return res.redirect("/home"); // Normal user redirection
-      }
     });
 
   } catch (error) {  // Corrected catch block
@@ -77,8 +71,14 @@ router.post("/login", async (req, res, next) => {
                   return res.redirect("/auth/login");
               }
 
-  
-              res.redirect("/home");
+              if (user.role === "Entrepreneur") {
+                return res.redirect("/business/register"); // Redirect to business registration page
+              } else {
+                const id=user._id
+                //return res.redirect(`/worker/home/${id}`); // Normal user redirection
+                return res.render("./worker/home",{id:id}); // Normal user redirection
+              }
+              
           });
       });
 
