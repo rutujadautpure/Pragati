@@ -70,6 +70,35 @@ app.use((req, res, next) => {
 
 // vaish
 
+const dashboardData = {
+    totalSales: 1000,
+    revenue: 5000,
+    expenses: 2000,
+    transactions: [
+        { date: '2025-03-01', type: 'Income', amount: 1500, category: 'Sales' },
+        { date: '2025-03-02', type: 'Expense', amount: 500, category: 'Supplies' },
+        { date: '2025-03-03', type: 'Expense', amount: 700, category: 'Rent' }
+    ],
+    pieChartData: {
+        labels: ['Rent', 'Salaries', 'Supplies', 'Other'],
+        data: [400, 1000, 300, 500],
+    },
+    barChartData: {
+        labels: ['January', 'February', 'March'],
+        sales: [1000, 1500, 2000],
+        expenses: [500, 700, 1000]
+    },
+    lineChartData: {
+        labels: ['2021', '2022', '2023', '2024'],
+        revenue: [20000, 25000, 30000, 35000]
+    }
+};
+
+app.get('/dashboard', (req, res) => {
+    res.render('./finance/dashboard.ejs', { dashboardData });
+
+});
+
 app.get("/", (req, res) => {
     res.render("index");
 });
@@ -86,6 +115,8 @@ app.use("/products", productRoutes);
 
 const financeRoutes = require("./routes/finance");
 app.use("/finance", financeRoutes);
+
+app.get("/dashboard", (req, res) => res.render("./finance/dashboard"));
 
 app.get("/", (req, res) => res.send("Server is running..."));
 
