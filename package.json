@@ -19,6 +19,7 @@
   "homepage": "https://github.com/khedkarsayali/SHE_Solves_Hack_Hustlers#readme",
   "dependencies": {
     "connect-flash": "^0.1.1",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
     "ejs-mate": "^4.0.0",

@@ -15,6 +15,16 @@ const authRoutes = require("./routes/auth");
 
 const MONGO_URL = process.env.MONGO_URL || "mongodb://127.0.0.1:27017/myDatabase";
 
+
+const cors = require('cors');
+app.use(cors());
+
+// Serve static files from the 'public' folder
+app.use('/uploads', express.static(path.join(__dirname, 'public', 'uploads')));
+
+
+
+
 // Database Connection
 async function main() {
     await mongoose.connect(MONGO_URL);
@@ -77,6 +87,8 @@ app.get("/home", (req, res) => res.render("index"));
 
 const productRoutes = require("./routes/product");
 app.use("/products", productRoutes);
+
+
 
 app.get("/", (req, res) => res.send("Server is running..."));
 
