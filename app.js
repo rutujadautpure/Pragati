@@ -80,6 +80,7 @@ app.use("/business", businessRoutes);
 app.use("/auth", authRoutes);
 app.get("/home", (req, res) => res.render("index"));
 
+
 const productRoutes = require("./routes/product");
 app.use("/products", productRoutes);
 

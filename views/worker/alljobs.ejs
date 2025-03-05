@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Jobs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .job-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .job-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+        }
+        .job-card h2 {
+            margin: 0;
+            color: #333;
+        }
+        .job-card p {
+            margin: 5px 0;
+            color: #666;
+        }
+        .contact-info {
+            background: #f9f9f9;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .contact-info strong {
+            color: #222;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Available Jobs</h1>
+
+    <div class="job-container">
+        <% jobs.forEach(job => { %>
+            <div class="job-card">
+                <!-- Hidden field to store Hiring ID -->
+                <input type="hidden" value="<%= job._id %>">
+
+                <h2><%= job.businessName %></h2>
+
+                <p><strong>Salary:</strong> ₹<%= job.salary %> per month</p>
+                <p><strong>Business Type:</strong> <%= job.businessType %></p>
+                <p><strong>Job Role:</strong> <%= job.jobRole %></p>
+                <p><strong>Description:</strong> <%= job.jobRoleDescription %></p>
+                <p><strong>Job Hours:</strong> <%= job.jobHours %> hours/day</p>
+                <p><strong>Vacancies:</strong> <%= job.vacancies %></p>
+                <p><strong>Location:</strong> <%= job.location.district %>, <%= job.location.state %> - <%= job.location.pinCode %></p>
+                <p><strong>Deadline to Apply:</strong> <%= new Date(job.deadlineToApply).toLocaleDateString() %></p>
+
+                <div class="contact-info">
+                    <h3>Contact Information</h3>
+                    <p><strong>Name:</strong> <%= job.contactInfo.name %></p>
+                    <p><strong>Email:</strong> <%= job.contactInfo.email %></p>
+                    <p><strong>Phone:</strong> <%= job.contactInfo.phone %></p>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+
+</body>
+</html>
