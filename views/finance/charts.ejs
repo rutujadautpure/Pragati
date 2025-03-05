@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Poppins', sans-serif;
+        }
+        .container {
+            max-width: 1100px;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        canvas {
+            max-width: 100% !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center mb-4">Finance Dashboard</h2>
+
+        <!-- Expense Breakdown Pie Chart -->
+        <h4 class="text-center">Expense Breakdown</h4>
+        <canvas id="expenseBreakdownChart"></canvas>
+
+        <!-- Budget vs Income vs Expenses Pie Chart -->
+        <h4 class="text-center mt-5">Budget vs. Income vs. Expenses</h4>
+        <canvas id="budgetComparisonChart"></canvas>
+
+        <!-- Weekly Income Comparison -->
+        <h4 class="text-center mt-5">Weekly Income Comparison</h4>
+        <canvas id="weeklyIncomeChart"></canvas>
+
+        <!-- Weekly Expense Comparison -->
+        <h4 class="text-center mt-5">Weekly Expense Comparison</h4>
+        <canvas id="weeklyExpenseChart"></canvas>
+
+        <div class="text-center mt-4">
+            <a href="/" class="btn btn-primary">Go Back</a>
+        </div>
+    </div>
+
+    <script>
+        // Get finance data from EJS
+        const expenses = <%- JSON.stringify(expenses) %>;
+        const income = <%- JSON.stringify(income) %>;
+        const budget = <%= budget %>;
+
+        // Expense Breakdown (Pie Chart)
+        const expenseCategories = {};
+        expenses.forEach(expense => {
+            expenseCategories[expense.category] = (expenseCategories[expense.category] || 0) + expense.amount;
+        });
+
+        new Chart(document.getElementById("expenseBreakdownChart"), {
+            type: "pie",
+            data: {
+                labels: Object.keys(expenseCategories),
+                datasets: [{
+                    data: Object.values(expenseCategories),
+                    backgroundColor: ["#007bff", "#28a745", "#dc3545", "#ffc107", "#17a2b8"],
+                    borderColor: "#fff",
+                    borderWidth: 1
+                }]
+            },
+            options: { responsive: true, plugins: { legend: { position: "bottom" } } }
+        });
+
+        // Budget vs Income vs Expenses (Pie Chart)
+        const totalExpenses = expenses.reduce((sum, e) => sum + e.amount, 0);
+        const totalIncome = income.reduce((sum, i) => sum + i.amount, 0);
+        
+        new Chart(document.getElementById("budgetComparisonChart"), {
+            type: "pie",
+            data: {
+                labels: ["Expenses", "Income", "Remaining Budget"],
+                datasets: [{
+                    data: [totalExpenses, totalIncome, Math.max(0, budget - totalExpenses)],
+                    backgroundColor: ["#dc3545", "#28a745", "#007bff"],
+                    borderColor: "#fff",
+                    borderWidth: 1
+                }]
+            },
+            options: { responsive: true, plugins: { legend: { position: "bottom" } } }
+        });
+
+        // Weekly Income Comparison (Bar Chart)
+        const weeklyIncome = {};
+        income.forEach(entry => {
+            const week = new Date(entry.date).toLocaleDateString("en-GB", { weekday: "long" });
+            weeklyIncome[week] = (weeklyIncome[week] || 0) + entry.amount;
+        });
+
+        new Chart(document.getElementById("weeklyIncomeChart"), {
+            type: "bar",
+            data: {
+                labels: Object.keys(weeklyIncome),
+                datasets: [{
+                    label: "Income (₹)",
+                    data: Object.values(weeklyIncome),
+                    backgroundColor: "#28a745"
+                }]
+            },
+            options: { responsive: true, scales: { y: { beginAtZero: true } } }
+        });
+
+        // Weekly Expense Comparison (Bar Chart)
+        const weeklyExpenses = {};
+        expenses.forEach(entry => {
+            const week = new Date(entry.date).toLocaleDateString("en-GB", { weekday: "long" });
+            weeklyExpenses[week] = (weeklyExpenses[week] || 0) + entry.amount;
+        });
+
+        new Chart(document.getElementById("weeklyExpenseChart"), {
+            type: "bar",
+            data: {
+                labels: Object.keys(weeklyExpenses),
+                datasets: [{
+                    label: "Expenses (₹)",
+                    data: Object.values(weeklyExpenses),
+                    backgroundColor: "#dc3545"
+                }]
+            },
+            options: { responsive: true, scales: { y: { beginAtZero: true } } }
+        });
+    </script>
+</body>
+</html>

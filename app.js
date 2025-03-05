@@ -12,6 +12,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user"); // Ensure this path is correct
 const authRoutes = require("./routes/auth");
+const finRoutes = require("./routes/finance");
 
 const MONGO_URL = process.env.MONGO_URL || "mongodb://127.0.0.1:27017/myDatabase";
 
@@ -73,6 +74,7 @@ app.use("/business", businessRoutes);
 // Routes
 // Start Server
 app.use("/auth", authRoutes);
+app.use("/finance",finRoutes);
 app.get("/home", (req, res) => res.render("index"));
 
 const productRoutes = require("./routes/product");
