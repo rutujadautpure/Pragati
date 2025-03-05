@@ -63,13 +63,18 @@ app.use((req, res, next) => {
     next();
 });
 
+// vaish
 
+app.get("/", (req, res) => {
+    res.render("index");
+});
+const businessRoutes = require("./routes/business");
+app.use("/business", businessRoutes);
 // Routes
+// Start Server
 app.use("/auth", authRoutes);
 app.get("/", (req, res) => res.send("Server is running..."));
 app.get("/home", (req, res) => res.render("index"));
-
-// Start Server
 app.listen(8080, () => {
     console.log("🚀 Server started on port 8080");
 });
