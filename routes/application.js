@@ -2,10 +2,17 @@ const express = require("express")
 const router = express.Router();
 const {handleApplyForm, getAllJobs} = require("../controllers/application");
 
-router.get('/application',async(req,res)=>{
-    return res.render("./application/applicationForm");   //Show all application here
+router.get('/home/:id',async(req,res)=>{
+    const id=req.params.id;
+    return res.render("./worker/home", {id:id});   
 })
+router.get('/applyForm/:id/:hiringId',async(req,res)=>{
+    const id=req.params.id;
+    const hiringid=req.params.hiringId;
+    return res.render("./worker/applicationForm", {id:id, hiringid:hiringid});   
+});
 router.post('/application/:id/:hiringId',handleApplyForm);
-router.get("/alljobs", getAllJobs);
+
+router.get("/alljobs/:id", getAllJobs);
 
 module.exports = router;
