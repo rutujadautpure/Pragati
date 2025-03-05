@@ -30,7 +30,8 @@ async function handleApplyForm(req, res) {
         });
 
         await newApplicant.save();
-        res.status(201).json({ message: "Application submitted successfully", applicant: newApplicant });
+       // res.status(201).json({ message: "Application submitted successfully", applicant: newApplicant });
+       res.redirect(`/worker/home/${userId}`);
     } catch (error) {
         console.error("Error saving applicant:", error);
         res.status(500).json({ message: "Internal Server Error" });
@@ -39,20 +40,27 @@ async function handleApplyForm(req, res) {
 
 async function getAllJobs(req, res) {
     try {
+        // Fetch all job listings
         const jobListings = await Hiring.find().lean();
+        // Fetch business names asynchronously
+        const businessList = [];
 
         for (let job of jobListings) {
-            const business = await Business.findOne({ userId: job.userId }).lean();
-            job.businessName = business ? business.businessName : "Unknown Business";
+            const business = await Business.findOne({ _id: job.userId }).lean();
+            businessList.push(business ? business.businessName : "Unknown Business");
         }
 
-        res.render("/worker/alljobs", { jobs: jobListings });
+        const id = req.params.id;
+        // const loginuser= req.user._id
+        // console.log(loginuser)
+        res.render("./worker/alljobs", { jobs: jobListings, business: businessList, id:id});
 
     } catch (error) {
         console.error("Error fetching jobs:", error);
         res.status(500).send("Internal Server Error");
     }
 }
+
 
 
 

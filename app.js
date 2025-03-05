@@ -108,6 +108,7 @@ app.use("/business", businessRoutes);
 // Start Server
 app.use("/auth", authRoutes);
 app.get("/home", (req, res) => res.render("index"));
+app.get("/workerhome", (req, res) => res.render("./worker/home"));
 
 
 const productRoutes = require("./routes/product");
