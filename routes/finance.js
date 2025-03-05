@@ -9,29 +9,35 @@ router.get("/add-expense", isLoggedIn, (req, res) => {
   res.render("./finance/addExpense"); 
 });
 
-router.get("/expenses", isLoggedIn, (req, res) => {
-  res.render("./finance/expenses"); 
-});
 
-router.get("/dashboard", isLoggedIn, async (req, res) => {
+
+// Assuming you are using user authentication to get the logged-in user's ID
+router.get("/dashboard", async (req, res) => {
   try {
-    const user_id = req.user._id;
-    const finance = await Finance.findOne({ user_id });
+    const userId = req.user._id; // or get the user ID from the session
+    const financeData = await Finance.findOne({ user_id: userId });
 
-    if (!finance) {
-      return res.status(404).json({ message: "No financial records found" });
+    if (!financeData) {
+      return res.status(404).send("Finance data not found.");
     }
 
- 
-    res.render("finance/charts", {
-      expenses: finance.expenses,
-      income: finance.income,
-      budget: finance.budget
+    const expenses = financeData.expenses;
+    const income = financeData.income;
+    const budget = financeData.budget;
+
+    // Send the data to the EJS view
+    res.render("./finance/dashboard", { 
+      expenses: expenses,
+      income: income,
+      budget: budget
     });
+
   } catch (error) {
-    res.status(500).json({ message: "Server error", error });
+    console.error(error);
+    res.status(500).send("Server error");
   }
 });
+
 
 
 
@@ -55,7 +61,7 @@ router.post("/add-expense", isLoggedIn,async (req, res) => {
 
     await finance.save();
 
-    res.status(201).json({ message: "Expense added successfully", expense: finance.expenses });
+    res.redirect(`expenses/${user_id}`);
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
   }
