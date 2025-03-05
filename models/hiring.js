@@ -26,12 +26,10 @@ const hiringSchema = new mongoose.Schema(
       state: {
         type: String,
         required: true,
-        trim: true,
       },
       district: {
         type: String,
         required: true,
-        trim: true,
       },
     },
     jobRole: {
@@ -39,6 +37,11 @@ const hiringSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    jobRoleDescription: {
+        type: String,
+        required: true,
+        trim: true,
+      },
     jobHours: {
       type: Number,
       required: true,
@@ -70,7 +73,7 @@ const hiringSchema = new mongoose.Schema(
         required: true,
         validate: {
           validator: function (v) {
-            return /^[6-9]\d{9}$/.test(v); // Validates Indian 10-digit mobile numbers
+            return /^[6-9]\d{9}$/.test(v); 
           },
           message: (props) => `${props.value} is not a valid mobile number!`,
         },
