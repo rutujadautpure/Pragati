@@ -87,7 +87,9 @@ const businessRoutes = require("./routes/business");
 app.use("/business", businessRoutes);
 
 app.use("/auth", authRoutes);
-app.get("/home", (req, res) => res.render("index"));
+app.get("/home/:id", (req, res) =>{
+    const uid = req.params.id
+    res.render("index",{id:uid})});
 app.get("/workerhome", (req, res) => res.render("./worker/home"));
 
 

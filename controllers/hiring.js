@@ -61,6 +61,7 @@ async function handleHiringForm(req, res) {
         await newHiring.save();
 
         console.log("Hiring entry created successfully!"); // Debugging log
+        res.redirect(`/home/${userId}`);
 
         //return res.status(201).json({ message: "Hiring entry added successfully!"});
 

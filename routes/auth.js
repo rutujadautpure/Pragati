@@ -70,9 +70,10 @@ router.post("/login", async (req, res, next) => {
                   req.flash("error", "Login failed");
                   return res.redirect("/auth/login");
               }
-              req.session.userId = user._id;
+              //req.session.userId = user._id;
+              console.log(user._id);
               if (user.role === "Entrepreneur") {
-                return res.redirect("/home"); // Redirect to business registration page
+                return res.redirect(`/home/${user._id}`); 
               } else {
                 const id=user._id
                 //return res.redirect(`/worker/home/${id}`); // Normal user redirection

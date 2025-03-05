@@ -2,16 +2,12 @@ const express = require("express")
 const router = express.Router();
 const {handleHiringForm} = require("../controllers/hiring");
 const session = require("express-session");
+const Hiring = require("../models/hiring")
+const {isLoggedIn}=require("../middleware")
 
-
-router.get('/',async(req,res)=>{
-    return res.render("./hiring/hiringForm");
-})
-
-router.post('/allaplicants',async(req,res)=>{
-    console.log(req.session.userId);
+router.get('/allaplicants',isLoggedIn,async(req,res)=>{
     try{
-        const id = req.session.userId;
+        const id = req.user._id
         const jobCount = await Hiring.countDocuments({ userId: id });
         return res.render("./hiring/allapplicants",{jobCount:jobCount});
     }
@@ -20,6 +16,13 @@ router.post('/allaplicants',async(req,res)=>{
     }
     
 })
-router.post('/:id',handleHiringForm);
+
+router.get('/:id',async(req,res)=>{
+    const id = req.params.id;
+    return res.render("./hiring/hiringForm", {id:id});
+})
+
+
+router.post('/submit/:id',handleHiringForm);
 
 module.exports = router;
