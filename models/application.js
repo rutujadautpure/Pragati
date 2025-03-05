@@ -2,11 +2,14 @@ const mongoose = require("mongoose");
 
 const applicantSchema = new mongoose.Schema(
   {
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "user", required: true },
+    hiringId: {type: mongoose.Schema.Types.ObjectId, ref: "hiring", required: true},
     name: {
       type: String,
       required: true,
       trim: true,
     },
+
     mob_no: {
       type: String,
       required: true,

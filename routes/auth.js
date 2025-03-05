@@ -34,6 +34,13 @@ router.post("/signup", async (req, res) => {
       } else {
         return res.redirect("/home"); // Normal user redirection
       }
+
+      // For worker
+      if (registeredUser.role === "Worker") {
+        return res.redirect("/business/register"); 
+      } else {
+        return res.redirect("/home"); // Normal user redirection
+      }
     });
 
   } catch (error) {  // Corrected catch block

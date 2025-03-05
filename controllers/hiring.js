@@ -1,4 +1,5 @@
 const Hiring = require("../models/hiring"); // Import the Hiring model
+const User = require("../models/user");
 
 // Handle hiring form submission
 async function handleHiringForm(req, res) {
@@ -39,7 +40,12 @@ async function handleHiringForm(req, res) {
         //     contactInfo
         // });
 
+        //const userId = req.user._id
+        const userId = req.params.id;
+
+
         const newHiring = new Hiring({
+            userId,
             salary,
             businessType,
             location,

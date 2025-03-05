@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Expense</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="container mt-5">
+
+    <h2 class="mb-4">Add New Expense</h2>
+
+    <form action="/finance/add-expense" method="POST" class="card p-4 shadow">
+        <div class="mb-3">
+            <label class="form-label">Date:</label>
+            <input type="date" name="date" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Expense Category:</label>
+            <select name="category" class="form-control" required>
+                <option value="Raw Materials">Raw Materials</option>
+                <option value="Marketing">Marketing</option>
+                <option value="Salaries">Salaries</option>
+                <option value="Utilities">Utilities</option>
+                <option value="Transportation">Transportation</option>
+                <option value="Office Supplies">Office Supplies</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Amount:</label>
+            <input type="number" name="amount" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Payment Method:</label>
+            <select name="payment_method" class="form-control" required>
+                <option value="Cash">Cash</option>
+                <option value="UPI">UPI</option>
+                <option value="Bank Transfer">Bank Transfer</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Notes (Optional):</label>
+            <textarea name="notes" class="form-control" rows="2"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add Expense</button>
+    </form>
+
+</body>
+</html>

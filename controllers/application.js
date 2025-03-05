@@ -1,5 +1,6 @@
 const Applicant=require("../models/application")
-
+const Business = require("../models/business")
+const Hiring = require("../models/hiring")
 
 async function handleApplyForm(req, res) {
     try {
@@ -13,8 +14,15 @@ async function handleApplyForm(req, res) {
         if (!pinCode || !state || !district) {
             return res.status(400).json({ message: "Complete location details are required." });
         }
+        //const userId = req.user._id
+       // const hiringID = 
+
+       const userId = req.params.id;
+       const hiringId = req.params.hiringId;
 
         const newApplicant = new Applicant({
+            userId,
+            hiringId,
             name,
             mob_no,
             location: { pinCode, state, district },
@@ -29,4 +37,25 @@ async function handleApplyForm(req, res) {
     }
 }
 
-module.exports = { handleApplyForm };
+async function getAllJobs(req, res) {
+    try {
+        const jobListings = await Hiring.find().lean();
+
+        for (let job of jobListings) {
+            const business = await Business.findOne({ userId: job.userId }).lean();
+            job.businessName = business ? business.businessName : "Unknown Business";
+        }
+
+        res.render("/worker/alljobs", { jobs: jobListings });
+
+    } catch (error) {
+        console.error("Error fetching jobs:", error);
+        res.status(500).send("Internal Server Error");
+    }
+}
+
+
+
+module.exports = { handleApplyForm,
+    getAllJobs
+ };
