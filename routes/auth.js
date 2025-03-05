@@ -64,7 +64,7 @@ router.post("/login", async (req, res, next) => {
                   return res.redirect("/auth/login");
               }
 
-              // ✅ Redirect to dashboard or homepage after successful login
+  
               res.redirect("/home");
           });
       });
