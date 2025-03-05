@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const productSchema = new mongoose.Schema({
-    businessId: { type: mongoose.Schema.Types.ObjectId, ref: "Business", required: true }, // Foreign key to Business
+    businessId: { type: mongoose.Schema.Types.ObjectId, ref: "business", required: true }, // Foreign key to Business
     name: { type: String, required: true },
     description: { type: String, required: true },
     price: { type: Number, required: true },
