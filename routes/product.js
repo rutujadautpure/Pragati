@@ -7,7 +7,6 @@ const { isLoggedIn } = require("../middleware");
 const Business=require("../models/business");
 
 const router = express.Router();
-
 // Multer setup for file upload
 const storage = multer.diskStorage({
     destination: "./public/uploads/",

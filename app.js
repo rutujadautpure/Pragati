@@ -94,6 +94,9 @@ const productRoutes = require("./routes/product");
 app.use("/products", productRoutes);
 
 
+const SingleproductRoutes = require('./routes/seperateProductRoutes');
+app.use(SingleproductRoutes);
+
 
 app.get("/", (req, res) => res.send("Server is running..."));
 
