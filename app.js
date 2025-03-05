@@ -24,22 +24,25 @@ app.set("views", path.join(__dirname, "views"));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "public"))); 
+app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "homepage")));
 
-/* 
+
+app.get("/", (req, res) => {
+    res.render("index"); // No need for .ejs extension
+});
+
 app.use(flash());
 
-
+/* 
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");  // Stores success messages
     res.locals.error = req.flash("error");      // Stores error messages
     next();
-});
- */
+}); */
+ 
 // Routes
-app.get("/", (req, res) => {
-    res.render("index");
-});
+
 
 app.listen(8080, () => {
     console.log("Server started on port 8080");
