@@ -71,6 +71,8 @@
             display: inline-block;
             background-color: #3498db;
             color: #fff;
+            width: 150px;
+            height:50px;
             padding: 12px 25px;
             border-radius: 5px;
             font-size: 1.1rem;
@@ -78,13 +80,16 @@
             margin-top: 20px;
             cursor: pointer;
             text-align: center;
+            position: relative;
+            overflow: hidden;
             transition: background-color 0.3s ease, transform 0.3s ease;
         }
 
         .btn:hover {
-            background-color: #2980b9;
-            transform: translateY(-3px);
-        }
+    background-color: #2980b9;
+    transform: translateY(-3px);
+    opacity: 100;
+}
 
         .btn-back {
             background-color: #e74c3c; /* Red */
@@ -111,6 +116,28 @@
             margin-top: 50px;
             font-size: 0.9rem;
             color: #777;
+        }
+
+        /* Styling for phone number visibility */
+        .phone-info {
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px;
+            background-color: #fff; /* White background */
+            color: black;  /* Black text */
+            font-size: 1.2rem;
+            border-radius: 5px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease, bottom 0.3s ease;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-call-now:hover .phone-info {
+            opacity: 1;
+            bottom: 0px;  /* Position phone number above the button */
         }
 
         @media (max-width: 768px) {
@@ -140,6 +167,12 @@
         <div class="product-detail">
             <h1><%= product.name %></h1>
 
+            <!-- Debugging: Print the UserId object -->
+            <div style="color: red;">
+                <h3>Debug: UserId Object</h3>
+                <pre><%= JSON.stringify(product.UserId, null, 2) %></pre>
+            </div>
+
             <!-- Product Images -->
             <div class="product-images">
                 <img src="/<%= product.productImages.image1 %>" alt="Product Image 1">
@@ -160,11 +193,20 @@
 
             <!-- Contact & Other Options -->
             <div class="options">
-                <a href="tel:+1234567890" class="btn">Call Now</a>
+                <!-- Call Now Button with hover effect to show the phone number -->
+                <a href="tel:<%= product.UserId.supportPhone %>" class="btn btn-call-now">
+                    Call Now
+                    <h1></h1>
+                    <span class="phone-info"><%= product.UserId.mob_no %></span>
+                </a>
                 <a href="mailto:example@domain.com" class="btn">Chat to Buy</a>
                 <a href="/seller/<%= product.UserId._id %>" class="btn">More from Seller</a>
                 <a href="/similar-products/<%= product.category %>" class="btn">Similar Products</a>
+
+                
             </div>
+
+            
 
             <!-- Back Button -->
             <button class="btn btn-back" onclick="window.history.back();">Go Back</button>
