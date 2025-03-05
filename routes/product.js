@@ -2,6 +2,7 @@ const express = require("express");
 const multer = require("multer");
 const Product = require("../models/product");
 const { isLoggedIn } = require("../middleware");
+const Business=require("../models/business");
 
 const router = express.Router();
 
@@ -25,11 +26,13 @@ router.post("/add",  isLoggedIn, upload.fields([
     { name: "productImage2", maxCount: 1 },
     { name: "productImage3", maxCount: 1 }
 ]), async (req, res) => {
+   
     try {
         const { name, description, price, category, stock } = req.body;
 
         const newProduct = new Product({
-            businessId: req.user.businessId, // Assuming user is linked to a business
+        
+            UserId: req.user._id, // Assuming user is linked to a business
             name,
             description,
             price,
@@ -43,7 +46,7 @@ router.post("/add",  isLoggedIn, upload.fields([
         });
 
         await newProduct.save();
-        res.redirect("/dashboard"); // Redirect to user dashboard after adding product
+        res.redirect("/home"); // Redirect to user dashboard after adding product
     } catch (err) {
         res.status(400).send(err.message);
     }
