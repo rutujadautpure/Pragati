@@ -84,6 +84,9 @@ app.get("/home", (req, res) => res.render("index"));
 const productRoutes = require("./routes/product");
 app.use("/products", productRoutes);
 
+const financeRoutes = require("./routes/finance");
+app.use("/finance", financeRoutes);
+
 app.get("/", (req, res) => res.send("Server is running..."));
 
 app.listen(8080, () => {
