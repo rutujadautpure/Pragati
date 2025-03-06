@@ -5,9 +5,15 @@ const session = require("express-session");
 const Hiring = require("../models/hiring")
 const {isLoggedIn}=require("../middleware")
 
+router.get('/',isLoggedIn,async(req,res)=>{
+    const id = req.user._id;
+    return res.render("./hiring/hiringForm", {id:id});
+})
+
+
 router.get('/allaplicants',isLoggedIn,async(req,res)=>{
     try{
-        const id = req.user._id
+        const id = req.user._id; 
         const jobCount = await Hiring.countDocuments({ userId: id });
         return res.render("./hiring/allapplicants",{jobCount:jobCount});
     }
@@ -17,10 +23,6 @@ router.get('/allaplicants',isLoggedIn,async(req,res)=>{
     
 })
 
-router.get('/:id',async(req,res)=>{
-    const id = req.params.id;
-    return res.render("./hiring/hiringForm", {id:id});
-})
 
 
 router.post('/submit/:id',handleHiringForm);

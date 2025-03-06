@@ -73,11 +73,12 @@ router.post("/login", async (req, res, next) => {
               //req.session.userId = user._id;
               console.log(user._id);
               if (user.role === "Entrepreneur") {
-                return res.redirect(`/home/${user._id}`); 
+                //return res.redirect(`/home/${user._id}`); 
+                return res.redirect("/home"); 
               } else {
-                const id=user._id
+                //const id=user._id
                 //return res.redirect(`/worker/home/${id}`); // Normal user redirection
-                return res.render("./worker/home",{id:id}); // Normal user redirection
+                return res.render("./worker/home"); // Normal user redirection
               }
               
           });
