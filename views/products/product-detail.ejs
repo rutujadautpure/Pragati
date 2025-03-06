@@ -170,15 +170,9 @@
            
 
             <div class="product-images">
-                <% if (product.productImages.image1) { %>
-                    <img src="/<%= product.productImages.image1 %>" alt="Image 1">
-                <% } %>
-                <% if (product.productImages.image2) { %>
-                    <img src="/<%= product.productImages.image2 %>" alt="Image 2">
-                <% } %>
-                <% if (product.productImages.image3) { %>
-                    <img src="/<%= product.productImages.image3 %>" alt="Image 3">
-                <% } %>
+                <img src="<%= product.productImages.image1 %>" alt="Product Image 1" style="width: 300px; height: 300px;">
+                <img src="<%= product.productImages.image2 %>" alt="Product Image 2" style="width: 300px; height: 300px;">
+                <img src="<%= product.productImages.image3 %>" alt="Product Image 3" style="width: 300px; height: 300px;">
             </div>
             
 

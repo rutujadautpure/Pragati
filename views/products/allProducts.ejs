@@ -107,17 +107,19 @@
 
 <div class="card-group">
     <% products.forEach(product => { %>
-    <div class="card">
-        <img src="/<%= product.productImages.image1 %>" class="card-img-top" alt="Product Image">
-
-        <div class="card-body">
-            <h5 class="card-title"><%= product.name %></h5>
-            <p class="card-text"><strong>Price:</strong> ₹<%= product.price %></p>
-            <a href="/product/<%= product._id %>" class="btn">View Details</a>
-
+        <div class="card">
+            <% product.images.forEach(image => { %>
+                <img src="<%= image.url %>" alt="Product Image" style="width: 200px; height: 200px; margin: 5px;">
+            <% }); %>
+    
+            <div class="card-body">
+                <h5 class="card-title"><%= product.name %></h5>
+                <p class="card-text"><strong>Price:</strong> ₹<%= product.price %></p>
+                <a href="/product/<%= product._id %>" class="btn">View Details</a>
+            </div>
         </div>
-    </div>
     <% }); %>
+    
 </div>
 
 </body>

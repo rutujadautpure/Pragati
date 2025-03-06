@@ -6,11 +6,12 @@ const productSchema = new mongoose.Schema({
     price: Number,
     description: String,
     stock: Number,
-    productImages: {
-        image1: String,
-        image2: String,
-        image3: String,
-    },
+    images: [
+        {
+            url: { type: String, required: true },
+            filename: { type: String, required: true }
+        }
+    ],
     UserId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

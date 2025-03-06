@@ -5,10 +5,36 @@ const mongoose = require("mongoose");
 const path = require("path");
 const flash = require("connect-flash");
 const ejsMate = require("ejs-mate");
-const multer = require("multer-s3");
+
+// const cloudinary = require("cloudinary").v2;
+// const { CloudinaryStorage } = require('multer-storage-cloudinary');
+
+
+// cloudinary.config({
+//     cloud_name: 'dryvfbx1a',
+//     api_key: '125726864975736',
+//     api_secret: 'EXmo00NXsnokFr_2jFkW8utcFBA',
+//   });
+
+// const storage = new CloudinaryStorage({
+//     cloudinary: cloudinary,
+//     params: {
+//         folder: 'products/',
+//         allowedFormats: ['jpeg', 'png', 'jpg', 'gif'],
+//         transformation: [{ width: 500, height: 500, crop: 'limit' }],
+//     },
+// });
+
+
+
 require("dotenv").config();
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+
+
+  
 
 
 const session = require("express-session");
