@@ -1,3 +1,5 @@
+<% layout("/layouts/boilerplate")%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,6 +15,7 @@
             padding: 0;
             color: #333;
         }
+
         h1 {
             text-align: center;
             color: #333;
@@ -21,16 +24,18 @@
 
         /* Card Group */
         .card-group {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 20px;
             padding: 20px;
+            max-width: 1200px;
+            margin: auto;
         }
 
         /* Individual Card */
         .card {
-            width: 300px;
+            width: 100%;
+            max-width: 300px;
             border: none;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
@@ -78,25 +83,31 @@
         /* Button Styling */
         .btn {
             padding: 12px 20px;
-            background-color: #4CAF50;
-            color: white;
+            background-color: #FFC107; /* Yellow */
+            color: black;
             border: none;
             border-radius: 5px;
             text-decoration: none;
             font-size: 1.1em;
+            font-weight: bold;
             transition: background-color 0.3s ease, transform 0.3s ease;
         }
 
         .btn:hover {
-            background-color: #45a049;
+            background-color: #e0a800; /* Slightly darker yellow */
             transform: scale(1.05);
         }
 
         /* Responsive Design */
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
             .card-group {
-                flex-direction: column;
-                align-items: center;
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .card-group {
+                grid-template-columns: repeat(1, 1fr);
             }
         }
     </style>
@@ -111,7 +122,7 @@
             <% product.images.forEach(image => { %>
                 <img src="<%= image.url %>" alt="Product Image" style="width: 200px; height: 200px; margin: 5px;">
             <% }); %>
-    
+
             <div class="card-body">
                 <h5 class="card-title"><%= product.name %></h5>
                 <p class="card-text"><strong>Price:</strong> ₹<%= product.price %></p>
@@ -119,7 +130,6 @@
             </div>
         </div>
     <% }); %>
-    
 </div>
 
 </body>

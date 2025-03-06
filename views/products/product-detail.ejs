@@ -1,3 +1,4 @@
+<% layout("/layouts/boilerplate")%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -170,10 +171,21 @@
            
 
             <div class="product-images">
-                <img src="<%= product.productImages.image1 %>" alt="Product Image 1" style="width: 300px; height: 300px;">
-                <img src="<%= product.productImages.image2 %>" alt="Product Image 2" style="width: 300px; height: 300px;">
-                <img src="<%= product.productImages.image3 %>" alt="Product Image 3" style="width: 300px; height: 300px;">
+                <% if (product.productImages) { %>
+                    <% if (product.productImages.image1) { %>
+                        <img src="<%= product.productImages.image1 %>" alt="Product Image 1" style="width: 300px; height: 300px;">
+                    <% } %>
+                    <% if (product.productImages.image2) { %>
+                        <img src="<%= product.productImages.image2 %>" alt="Product Image 2" style="width: 300px; height: 300px;">
+                    <% } %>
+                    <% if (product.productImages.image3) { %>
+                        <img src="<%= product.productImages.image3 %>" alt="Product Image 3" style="width: 300px; height: 300px;">
+                    <% } %>
+                <% } else { %>
+                    <p>No images available</p>
+                <% } %>
             </div>
+            
             
 
             <!-- Product Description -->
@@ -184,7 +196,7 @@
 
             <!-- Product Price -->
             <div class="price">
-                <p>$<%= product.price %></p>
+                <p>₹<%= product.price %></p>
             </div>
 
             <!-- Contact & Other Options -->

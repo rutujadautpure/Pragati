@@ -146,8 +146,7 @@ app.use(SingleproductRoutes);
 
 
 
-const SingleproductRoutes = require('./routes/seperateProductRoutes');
-app.use(SingleproductRoutes);
+
 
 
 app.get("/dashboard", (req, res) => res.render("./finance/dashboard"));
