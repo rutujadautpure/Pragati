@@ -14,10 +14,10 @@ async function handleApplyForm(req, res) {
         if (!pinCode || !state || !district) {
             return res.status(400).json({ message: "Complete location details are required." });
         }
-        //const userId = req.user._id
+        const userId = req.user._id
        // const hiringID = 
 
-       const userId = req.params.id;
+       //const userId = req.params.id;
        const hiringId = req.params.hiringId;
 
         const newApplicant = new Applicant({
@@ -31,7 +31,7 @@ async function handleApplyForm(req, res) {
 
         await newApplicant.save();
        // res.status(201).json({ message: "Application submitted successfully", applicant: newApplicant });
-       res.redirect(`/worker/home/${userId}`);
+       res.redirect("/worker/home");
     } catch (error) {
         console.error("Error saving applicant:", error);
         res.status(500).json({ message: "Internal Server Error" });
@@ -50,10 +50,10 @@ async function getAllJobs(req, res) {
             businessList.push(business ? business.businessName : "Unknown Business");
         }
 
-        const id = req.params.id;
+        //const id = req.params.id;
         // const loginuser= req.user._id
         // console.log(loginuser)
-        res.render("./worker/alljobs", { jobs: jobListings, business: businessList, id:id});
+        res.render("./worker/alljobs", { jobs: jobListings, business: businessList});
 
     } catch (error) {
         console.error("Error fetching jobs:", error);

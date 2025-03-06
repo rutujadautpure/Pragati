@@ -70,13 +70,15 @@ router.post("/login", async (req, res, next) => {
                   req.flash("error", "Login failed");
                   return res.redirect("/auth/login");
               }
-              req.session.userId = user._id;
+              //req.session.userId = user._id;
+              console.log(user._id);
               if (user.role === "Entrepreneur") {
-                return res.redirect("/home"); // Redirect to business registration page
+                //return res.redirect(`/home/${user._id}`); 
+                return res.redirect("/home"); 
               } else {
-                const id=user._id
+                //const id=user._id
                 //return res.redirect(`/worker/home/${id}`); // Normal user redirection
-                return res.render("./worker/home",{id:id}); // Normal user redirection
+                return res.render("./worker/home"); // Normal user redirection
               }
               
           });
@@ -93,7 +95,7 @@ router.post("/login", async (req, res, next) => {
 router.get("/logout", (req, res, next) => {
   req.logout((err) => {
     if (err) return next(err);
-    res.json({ message: "Logout successful" });
+    res.render("./Homepage/index");
   });
 });
 
