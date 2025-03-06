@@ -56,6 +56,7 @@ router.post("/add-expense", isLoggedIn,async (req, res) => {
     await finance.save();
 
     res.status(201).json({ message: "Expense added successfully", expense: finance.expenses });
+    res.render("./finance/expenses")
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
   }

@@ -5,7 +5,11 @@ const mongoose = require("mongoose");
 const path = require("path");
 const flash = require("connect-flash");
 const ejsMate = require("ejs-mate");
+const multer = require("multer-s3");
 require("dotenv").config();
+
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 const session = require("express-session");
 const passport = require("passport");
@@ -25,6 +29,7 @@ app.use(cors());
 // Serve static files from the 'public' folder
 app.use('/uploads', express.static(path.join(__dirname, 'public', 'uploads')));
 
+  
 
 
 

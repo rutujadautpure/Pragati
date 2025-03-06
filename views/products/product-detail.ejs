@@ -167,18 +167,20 @@
         <div class="product-detail">
             <h1><%= product.name %></h1>
 
-            <!-- Debugging: Print the UserId object -->
-            <div style="color: red;">
-                <h3>Debug: UserId Object</h3>
-                <pre><%= JSON.stringify(product.UserId, null, 2) %></pre>
-            </div>
+           
 
-            <!-- Product Images -->
             <div class="product-images">
-                <img src="/<%= product.productImages.image1 %>" alt="Product Image 1">
-                <img src="/<%= product.productImages.image2 %>" alt="Product Image 2">
-                <img src="/<%= product.productImages.image3 %>" alt="Product Image 3">
+                <% if (product.productImages.image1) { %>
+                    <img src="/<%= product.productImages.image1 %>" alt="Image 1">
+                <% } %>
+                <% if (product.productImages.image2) { %>
+                    <img src="/<%= product.productImages.image2 %>" alt="Image 2">
+                <% } %>
+                <% if (product.productImages.image3) { %>
+                    <img src="/<%= product.productImages.image3 %>" alt="Image 3">
+                <% } %>
             </div>
+            
 
             <!-- Product Description -->
             <div class="product-description">
