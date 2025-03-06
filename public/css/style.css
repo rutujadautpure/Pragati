@@ -3,8 +3,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-
-
+        overflow-x: hidden;
 }
 
 /*** Navbar ***/
@@ -515,3 +514,33 @@ body {
     padding-right: 0;
     border-right: none;
 }
+
+
+#morris-bar-chart {
+    -webkit-transition: all 2s; /* Safari */
+    transition: all 2s;
+  }
+  
+  
+  .header-row {
+    padding: 0 18px;
+  }
+  .header-column {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    display: inline-block;
+    font-weight: 300;
+    color: #555;
+    /*border: 1px solid grey;*/
+    padding: 0px;
+    width: 24%;
+    box-sizing: border-box; /*content-box|border-box|initial|inherit;*/
+  }
+  .list-group-column {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    display: inline-block;
+    font-weight: 300;
+    color: #555;
+    /*border: 1px solid grey;*/
+    padding: 0px;
+    width: 24%;
+  }
