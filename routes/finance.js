@@ -13,6 +13,7 @@ router.get("/add-expense", isLoggedIn, (req, res) => {
 
 // Assuming you are using user authentication to get the logged-in user's ID
 router.get("/dashboard", async (req, res) => {
+  console.log(req.session.userId);
   try {
     const userId = req.user._id; // or get the user ID from the session
     const financeData = await Finance.findOne({ user_id: userId });

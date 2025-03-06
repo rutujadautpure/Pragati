@@ -79,9 +79,8 @@ app.use((req, res, next) => {
 });
 
 
-
 app.get("/", (req, res) => {
-    res.render("index");
+    res.render("Homepage/index"); // No need for './' or .ejs extension
 });
 const businessRoutes = require("./routes/business");
 app.use("/business", businessRoutes);
@@ -99,7 +98,6 @@ app.use("/finance", financeRoutes);
 
 app.get("/dashboard", (req, res) => res.render("./finance/dashboard"));
 
-app.get("/", (req, res) => res.send("Server is running..."));
 
 app.listen(8080, () => {
     console.log("🚀 Server started on port 8080");
