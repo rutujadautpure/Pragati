@@ -6,7 +6,8 @@ Pragati - one-stop digital platform that provides comprehensive support for wome
 ![Alt Text](public/img/feature.png)
 
 
-It supports women empowerment by providing them the platform for
+It supports women empowerment by providing them the platform for:
+
 1] Hiring(for women-led startup)
 2] To apply for jobs
 3] Exposure to Marketplace
