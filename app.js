@@ -23,6 +23,8 @@ async function main() {
     await mongoose.connect(MONGO_URL);
     console.log("✅ MongoDB Connected Successfully");
 }
+
+console.log("hello")
 main().catch(err => console.log(err));
 
 // View Engine Setup
@@ -35,8 +37,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, "homepage")));
 
-app.use('/hiring',Hiringroute);
-app.use('/worker',Applicationroute);
+
 // ✅ Express-session must be initialized before passport.session()
 app.use(session({
     secret: 'your-secret-key', // You should use a strong secret key
@@ -86,9 +87,11 @@ const businessRoutes = require("./routes/business");
 app.use("/business", businessRoutes);
 
 app.use("/auth", authRoutes);
-app.get("/home", (req, res) => res.render("index"));
+app.get("/home", (req, res) =>{
+    res.render("index")});
 app.get("/workerhome", (req, res) => res.render("./worker/home"));
-
+app.use('/hiring',Hiringroute);
+app.use('/worker',Applicationroute);
 
 const productRoutes = require("./routes/product");
 app.use("/products", productRoutes);

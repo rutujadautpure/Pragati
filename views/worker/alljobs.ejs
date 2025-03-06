@@ -49,7 +49,7 @@
 
     <div class="job-container">
         <% for (let i = 0; i < jobs.length; i++) { %>
-            <form action="/worker/applyForm/<%= id %>/<%= jobs[i]._id %>" method="GET">
+            <form action="/worker/applyForm/<%= jobs[i]._id %>" method="GET">
                 <div class="job-card">
                     <!-- Hidden field to store Hiring ID -->
                     <input type="hidden" name="jobId" value="<%= jobs[i]._id %>">
