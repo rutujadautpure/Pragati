@@ -95,7 +95,7 @@ router.post("/login", async (req, res, next) => {
 router.get("/logout", (req, res, next) => {
   req.logout((err) => {
     if (err) return next(err);
-    res.json({ message: "Logout successful" });
+    res.render("./Homepage/index");
   });
 });
 
