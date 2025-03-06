@@ -65,6 +65,8 @@
     </style>
 </head>
 <body>
+
+    <% layout("/layouts/boilerplate")%>
     <div class="container">
         <h2 class="text-center mb-4">Finance Dashboard</h2>
 
@@ -291,7 +293,7 @@
         });
 
         document.getElementById('addTransactionBtn').addEventListener('click', function() {
-            window.location.href = '/add-expense';  // Redirects to the add-expense route
+            window.location.href = '/finance/add-expense';  // Redirects to the add-expense route
         });
     </script>
 
