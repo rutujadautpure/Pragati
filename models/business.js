@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
 const businessSchema = new mongoose.Schema({
-    userId: {
+    _id: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "user", // Assumes you have a User model
-        required: true
+        ref: "User", // Reference to User model
+        required: true,
     },
     category: {
         type: String,
@@ -73,5 +73,5 @@ const businessSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-const Business = mongoose.model("Business", businessSchema);
+const Business = mongoose.model("business", businessSchema);
 module.exports = Business;

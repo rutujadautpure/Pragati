@@ -5,7 +5,37 @@ const mongoose = require("mongoose");
 const path = require("path");
 const flash = require("connect-flash");
 const ejsMate = require("ejs-mate");
+
+// const cloudinary = require("cloudinary").v2;
+// const { CloudinaryStorage } = require('multer-storage-cloudinary');
+
+
+// cloudinary.config({
+//     cloud_name: 'dryvfbx1a',
+//     api_key: '125726864975736',
+//     api_secret: 'EXmo00NXsnokFr_2jFkW8utcFBA',
+//   });
+
+// const storage = new CloudinaryStorage({
+//     cloudinary: cloudinary,
+//     params: {
+//         folder: 'products/',
+//         allowedFormats: ['jpeg', 'png', 'jpg', 'gif'],
+//         transformation: [{ width: 500, height: 500, crop: 'limit' }],
+//     },
+// });
+
+
+
 require("dotenv").config();
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+
+
+
+  
+
 
 const session = require("express-session");
 const passport = require("passport");
@@ -17,6 +47,17 @@ const Hiringroute = require("./routes/hiring")
 const Applicationroute = require("./routes/application")
 
 const MONGO_URL = process.env.MONGO_URL || "mongodb://127.0.0.1:27017/myDatabase";
+
+
+const cors = require('cors');
+app.use(cors());
+
+// Serve static files from the 'public' folder
+app.use('/uploads', express.static(path.join(__dirname, 'public', 'uploads')));
+
+  
+
+
 
 // Database Connection
 async function main() {
@@ -99,8 +140,18 @@ app.use("/products", productRoutes);
 const financeRoutes = require("./routes/finance");
 app.use("/finance", financeRoutes);
 
+
+const SingleproductRoutes = require('./routes/seperateProductRoutes');
+app.use(SingleproductRoutes);
+
+
+
+
+
+
 app.get("/dashboard", (req, res) => res.render("./finance/dashboard"));
 
+app.get("/", (req, res) => res.send("Server is running..."));
 
 app.listen(8080, () => {
     console.log("🚀 Server started on port 8080");
