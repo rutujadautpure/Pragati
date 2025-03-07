@@ -1,64 +1,65 @@
-<% layout("/layouts/boilerplateworker")%>
-    <h1>Available Jobs</h1>
+<% layout("/layouts/boilerplateworker") %>
+<h1 style="text-align: center; margin-top: 30px; color: #333;">Available Jobs</h1>
 
-    <div class="filter-container">
-        <label for="jobFilter">Filter Jobs:</label>
-        <select id="jobFilter" onchange="filterJobs()">
-            <option value="all" <%= filter === "all" ? "selected" : "" %>>All Jobs</option>
-            <option value="district" <%= filter === "district" ? "selected" : "" %>>Jobs in My District</option>
-        </select>
-    </div>
+<div class="filter-container" style="text-align: center; margin-bottom: 20px;">
+    <label for="jobFilter" style="font-size: 16px; color: #333;">Filter Jobs:</label>
+    <select id="jobFilter" onchange="filterJobs()" style="padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ddd;">
+        <option value="all" <%= filter === "all" ? "selected" : "" %>>All Jobs</option>
+        <option value="district" <%= filter === "district" ? "selected" : "" %>>Jobs in My District</option>
+    </select>
+</div>
 
-    <div class="job-container">
-        <% if (jobs.length === 0) { %>
-            <div class="no-jobs-card">
-                <img src="https://cdn-icons-png.flaticon.com/512/2748/2748558.png" alt="No Jobs Icon">
-                <h2>No Job openings Currently</h2>
-                <p>Looks like there are no job postings available at the moment.</p>
-                <p>Please check back later or try changing the filter.</p>
-            </div>
-        <% } else { %>
-            <% for (let i = 0; i < jobs.length; i++) { %>
-                <form action="/worker/applyForm/<%= jobs[i]._id %>" method="GET">
-                    <div class="job-card">
-                        <input type="hidden" name="jobId" value="<%= jobs[i]._id %>">
-
-                        <h2><%= business[i] %></h2>
-
-                        <p><strong>Salary:</strong> ₹<%= jobs[i].salary %> per month</p>
-                        <p><strong>Business Type:</strong> <%= jobs[i].businessType %></p>
-                        <p><strong>Job Role:</strong> <%= jobs[i].jobRole %></p>
-                        <p><strong>Description:</strong> <%= jobs[i].jobRoleDescription %></p>
-                        <p><strong>Job Hours:</strong> <%= jobs[i].jobHours %> hours/day</p>
-                        <p><strong>Vacancies:</strong> <%= jobs[i].vacancies %></p>
-                        <p><strong>Location:</strong> <%= jobs[i].location.district %>, <%= jobs[i].location.state %> - <%= jobs[i].location.pinCode %></p>
-                        <p><strong>Deadline to Apply:</strong> <%= new Date(jobs[i].deadlineToApply).toLocaleDateString() %></p>
-
-                        <div class="contact-info">
-                            <h3>Contact Information</h3>
-                            <p><strong>Name:</strong> <%= jobs[i].contactInfo.name %></p>
-                            <p><strong>Email:</strong> <%= jobs[i].contactInfo.email %></p>
-                            <p><strong>Phone:</strong> <%= jobs[i].contactInfo.phone %></p>
-                        </div>
-
-                        <% if (appliedJobIds.includes(jobs[i]._id.toString())) { %>
-                            <button type="button" disabled>Applied</button>
-                        <% } else { %>
-                            <button type="submit">Apply</button>
-                        <% } %>
+<div class="job-container" style="display: flex; flex-wrap: wrap; justify-content: space-around; gap: 20px; padding: 20px;">
+    <% if (jobs.length === 0) { %>
+        <div class="no-jobs-card" style="background-color: #fff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 30px; text-align: center; width: 100%; max-width: 500px; margin: 20px auto;">
+            <img src="https://cdn-icons-png.flaticon.com/512/2748/2748558.png" alt="No Jobs Icon" style="width: 100px; height: 100px; margin-bottom: 20px;">
+            <h2 style="color: #333; font-size: 20px; margin-bottom: 10px;">No Job openings Currently</h2>
+            <p style="color: #777; font-size: 16px;">Looks like there are no job postings available at the moment.</p>
+            <p style="color: #777; font-size: 16px;">Please check back later or try changing the filter.</p>
+        </div>
+    <% } else { %>
+        <% for (let i = 0; i < jobs.length; i++) { %>
+            <form action="/worker/applyForm/<%= jobs[i]._id %>" method="GET" style="flex: 1 1 300px;">
+                <div class="job-card" style="background-color: #fff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); width: 100%; padding: 20px; transition: transform 0.2s ease-in-out; text-align: left; font-size: 14px; margin-bottom: 20px;">
+                    <input type="hidden" name="jobId" value="<%= jobs[i]._id %>">
+                    <h4 style="font-size: 30px; color: #333; margin-bottom: 10px; text-align: center;"><%= business[i] %></h4>
+                    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; margin-bottom: 15px;">
+                        <div style="width: 48%;"><strong>Salary:</strong> ₹<%= jobs[i].salary %> per month</div>
+                        <div style="width: 48%;"><strong>Job Role:</strong> <%= jobs[i].jobRole %></div>
                     </div>
-                </form>
-            <% } %>
-        <% } %>
-    </div>
+                    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; margin-bottom: 15px;">
+                        <div style="width: 48%;"><strong>Job Hours:</strong> <%= jobs[i].jobHours %> hours/day</div>
+                        <div style="width: 48%;"><strong>Vacancies:</strong> <%= jobs[i].vacancies %></div>
+                    </div>
+                    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; margin-bottom: 15px;">
+                        <div style="width: 48%;"><strong>Location:</strong> <%= jobs[i].location.district %>, <%= jobs[i].location.state %> - <%= jobs[i].location.pinCode %></div>
+                        <div style="width: 48%;"><strong>Deadline:</strong> <%= new Date(jobs[i].deadlineToApply).toLocaleDateString() %></div>
+                    </div>
+                    <div class="contact-info" style="margin-top: 20px; padding-top: 10px; border-top: 1px solid #f0f0f0;">
+                        <h3 style="font-size: 16px; color: #333; margin-bottom: 10px;">Contact Information</h3>
+                        <p style="font-size: 14px; margin-bottom: 5px;"><strong>Name:</strong> <%= jobs[i].contactInfo.name %></p>
+                        <p style="font-size: 14px; margin-bottom: 5px;"><strong>Email:</strong> <%= jobs[i].contactInfo.email %></p>
+                        <p style="font-size: 14px; margin-bottom: 5px;"><strong>Phone:</strong> <%= jobs[i].contactInfo.phone %></p>
+                    </div>
 
-    <script>
-        function filterJobs() {
-            const filter = document.getElementById("jobFilter").value;
-            if (filter === "all") {
-                window.location.href = "/worker/alljobs";
-            } else {
-                window.location.href = "/worker/jobsByDistrict";
-            }
+                    <% if (appliedJobIds.includes(jobs[i]._id.toString())) { %>
+                        <button type="button" disabled style="background-color: #888; color: white; border: none; padding: 10px; width: 100%; border-radius: 5px; font-size: 16px; cursor: not-allowed; margin-top: 20px;">Applied</button>
+                    <% } else { %>
+                        <button type="submit" style="background-color: #59bcee; color: white; border: none; padding: 10px; width: 100%; border-radius: 5px; font-size: 16px; cursor: pointer; transition: background-color 0.3s ease; margin-top: 20px;">Apply</button>
+                    <% } %>
+                </div>
+            </form>
+        <% } %>
+    <% } %>
+</div>
+
+<script>
+    function filterJobs() {
+        const filter = document.getElementById("jobFilter").value;
+        if (filter === "all") {
+            window.location.href = "/worker/alljobs";
+        } else {
+            window.location.href = "/worker/jobsByDistrict";
         }
-    </script>
+    }
+</script>
