@@ -23,6 +23,7 @@ const schema = new mongoose.Schema(
     state: { type: String, required: true },
     district: { type: String, required: true },
     role: { type: String, required: true },
+    description: { type: String, trim: true },
   },
   { timestamps: true }
 );

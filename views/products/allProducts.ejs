@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Products</title>
     <style>
-        /* Overall Page Styling */
         body {
             font-family: 'Arial', sans-serif;
             background-color: #f4f4f9;
@@ -22,93 +21,63 @@
             margin: 40px 0;
         }
 
-        /* Card Group */
         .card-group {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
             padding: 20px;
             max-width: 1200px;
             margin: auto;
         }
 
-        /* Individual Card */
         .card {
-            width: 100%;
-            max-width: 300px;
             border: none;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
             overflow: hidden;
             background-color: #fff;
-        }
-
-        .card:hover {
-            transform: scale(1.05); /* Slightly increase size */
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Card Image */
-        .card-img-top {
-            width: 100%;
-            height: auto;
-            border-bottom: 1px solid #ddd;
-            transition: transform 0.3s ease;
-        }
-
-        .card:hover .card-img-top {
-            transform: scale(1.05); /* Slight zoom effect on image */
-        }
-
-        /* Card Body */
-        .card-body {
-            padding: 15px;
             text-align: center;
         }
 
+        .card-img-top {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .card-body {
+            padding: 15px;
+        }
+
         .card-title {
-            font-size: 1.5em;
+            font-size: 1.3em;
             margin-bottom: 10px;
             color: #333;
         }
 
         .card-text {
-            font-size: 1.1em;
+            font-size: 1em;
             color: #666;
             margin-bottom: 15px;
         }
 
-        /* Button Styling */
         .btn {
-            padding: 12px 20px;
-            background-color: #FFC107; /* Yellow */
+            padding: 10px 15px;
+            background-color: #FFC107;
             color: black;
             border: none;
             border-radius: 5px;
             text-decoration: none;
-            font-size: 1.1em;
+            font-size: 1em;
             font-weight: bold;
+            display: inline-block;
             transition: background-color 0.3s ease, transform 0.3s ease;
         }
 
         .btn:hover {
-            background-color: #e0a800; /* Slightly darker yellow */
+            background-color: #e0a800;
             transform: scale(1.05);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 1024px) {
-            .card-group {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 600px) {
-            .card-group {
-                grid-template-columns: repeat(1, 1fr);
-            }
         }
     </style>
 </head>
@@ -119,10 +88,15 @@
 <div class="card-group">
     <% products.forEach(product => { %>
         <div class="card">
-            <% product.images.forEach(image => { %>
-                <img src="<%= image.url %>" alt="Product Image" style="width: 200px; height: 200px; margin: 5px;">
-            <% }); %>
-
+            <% if (product.images && product.images.length > 0) { %>
+                <img src="<%= product.images[0] %>" 
+     alt="Product Image" class="card-img-top">
+           
+            <% } else { %>
+                <img src="https://res.cloudinary.com/<cloud_name>/image/upload/v_default-product.jpg" 
+                     alt="Default Product Image" class="card-img-top">
+            <% } %>
+            
             <div class="card-body">
                 <h5 class="card-title"><%= product.name %></h5>
                 <p class="card-text"><strong>Price:</strong> ₹<%= product.price %></p>

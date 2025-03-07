@@ -8,8 +8,8 @@ const productSchema = new mongoose.Schema({
     stock: Number,
     images: [
         {
-            url: { type: String, required: true },
-            filename: { type: String, required: true }
+            type: String, // ✅ Store Cloudinary URLs
+            required: true
         }
     ],
     UserId: {
