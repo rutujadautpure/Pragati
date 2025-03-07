@@ -68,14 +68,20 @@ router.post('/add', async (req, res) => {
 });
 
 // ✅ Route to display all products
-router.get('/allProducts', async (req, res) => {
-    try {
-        const products = await Product.find().populate('UserId');  // ✅ Populating UserId
-        res.render('products/allProducts', { products });
-    } catch (err) {
-        console.error('Error fetching products:', err);
-        res.status(500).send("Error fetching products.");
-    }
-});
+// router.get('/allProducts', async (req, res) => {
+//     try {
+//         const products = await Product.find().populate('UserId');  // ✅ Populating UserId
+//         res.render('products/allProducts', { products });
+//     } catch (err) {
+//         console.error('Error fetching products:', err);
+//         res.status(500).send("Error fetching products.");
+//     }
+// });
+
+
+// ✅ Route to display all products with search and category filter
+
+
+
 
 module.exports = router;

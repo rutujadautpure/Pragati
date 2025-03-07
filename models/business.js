@@ -36,9 +36,6 @@ const businessSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    businessDoc: {
-        type: String, // Store file path or URL
-    },
     businessEmail: {
         type: String,
         required: true,
@@ -72,6 +69,7 @@ const businessSchema = new mongoose.Schema({
         }
     }
 }, { timestamps: true });
+
 
 const Business = mongoose.model("business", businessSchema);
 module.exports = Business;

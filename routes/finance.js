@@ -1,6 +1,6 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const Finance = require("../models/Finance");
+const Finance = require("../models/finance");
 const { isLoggedIn } = require("../middleware");
 
 // ✅ Route to render expense form
