@@ -68,7 +68,7 @@
     </style>
 </head>
 <body>
-    <form action="/business/register" method="POST" enctype="multipart/form-data">
+    <form action="/business/register" method="POST">
         <h2>Business Registration</h2>
         
         <label for="category">Business Category:</label>
@@ -81,37 +81,35 @@
             <option value="Sports, Hobbies, Toys and Events">Sports, Hobbies, Toys and Events</option>
             <option value="Others and Services">Others and Services</option>
         </select>
-
+    
         <label for="businessName">Business Name:</label>
         <input type="text" name="businessName" required>
-
+    
         <label for="tradeName">Trade Name:</label>
         <input type="text" name="tradeName" required>
-
+    
         <label for="incorporationDate">Incorporation Date:</label>
         <input type="date" name="incorporationDate" required>
-
+    
         <label for="description">Business Description:</label>
         <textarea name="description" required></textarea>
-
-        <label for="businessDoc">Upload Business Document (Optional):</label>
-        <input type="file" name="businessDoc">
-
+    
         <h3>Contact Information</h3>
-
+    
         <label for="businessEmail">Business Email:</label>
         <input type="email" name="businessEmail" required>
-
+    
         <label for="supportEmail">Customer Support Email:</label>
         <input type="email" name="supportEmail" required>
-
+    
         <label for="businessPhone">Business Phone Number:</label>
         <input type="text" name="businessPhone" required>
-
+    
         <label for="supportPhone">Customer Support Phone Number:</label>
         <input type="text" name="supportPhone" required>
-
+    
         <button type="submit">Register</button>
     </form>
+    
 </body>
 </html>

@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router();
 const {handleApplyForm, getAllJobs, getJobsByDistrict, openApplyForm} = require("../controllers/application");
-const { isLoggedIn } = require("../middleware");
+const { isLoggedIn} = require("../middleware");
 router.get('/home',async(req,res)=>{
     //const id=req.params.id;
     return res.render("./worker/home");   

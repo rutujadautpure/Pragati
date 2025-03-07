@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Products</title>
+</head>
+<body>
+    <h1>My Products</h1>
+    <!-- <a href="/products/add">Add New Product</a> -->
+    <ul>
+        <% products.forEach(product => { %>
+            <li>
+                <h2><%= product.name %></h2>
+                <p><%= product.category %></p>
+                <p>Price: $<%= product.price %></p>
+                <p>Stock: <%= product.stock %></p>
+                <a href="/myproducts/edit/<%= product._id %>">Edit</a>
+            </li>
+        <% }) %>
+    </ul>
+</body>
+</html>
