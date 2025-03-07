@@ -11,12 +11,12 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 const ownerProductRoutes = require('./routes/ownerProduct');
 require("dotenv").config();
-
+const { Video } = require('./models/video');
 app.use(express.static(path.join(__dirname, 'public')));
 const {isAuthorized} = require("./middleware")
 const Product = require("./models/product")
 
-
+const router = express.Router();
 
 const session = require("express-session");
 const passport = require("passport");
@@ -44,6 +44,10 @@ async function main() {
     await mongoose.connect(MONGO_URL);
     console.log("✅ MongoDB Connected Successfully");
 }
+
+
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views')); 
 
 console.log("hello")
 main().catch(err => console.log(err));
@@ -167,68 +171,7 @@ app.use(SingleproductRoutes);
 
 
 
-
-
-
-
-
-
-
-
-
-
-app.get('/scrape', async (req, res) => {
-    const url = 'https://www.youtube.com/results?search_query=finance';  // Replace with the actual URL to scrape
-  
-    try {
-      console.log(`Scraping URL: ${url}`);
-  
-      const { data } = await axios.get(url);  // Fetch the HTML data
-      console.log('Page HTML fetched successfully');
-  
-      const $ = cheerio.load(data);  // Load the HTML into Cheerio
-  
-      // Check if data is loaded correctly
-      if (!data || data.length === 0) {
-        console.error('No HTML data received from the page');
-        return res.status(500).send('Failed to retrieve data');
-      }
-  
-      // Example: Scrape the top 5 finance video titles and links
-      const videos = [];
-      $('selector-for-video-title').each((index, element) => {
-        if (index < 5) {  // Limit to top 5 videos
-          const title = $(element).text();
-          const link = $(element).attr('href');
-          console.log(`Found video: ${title} - ${link}`);
-          videos.push({ title, link });
-        }
-      });
-  
-      // Check if videos are found
-      if (videos.length === 0) {
-        console.error('No videos found');
-        return res.status(500).send('Failed to scrape any videos');
-      }
-  
-      // Send the scraped video data to the EJS view
-      console.log('Rendering videos...');
-      res.render('scraped', { title: 'Top 5 Finance Videos', videos });
-    } catch (error) {
-      console.error('Error during scraping:', error);
-      res.status(500).send('Error scraping the page');
-    }
-  });
-
-
-
-
-
-
-
-
-
-
+app.use(financeVideoRoutes);
 
 
 app.get("/dashboard", isAuthorized(["Entrepreneur"]),(req, res) => res.render("./finance/dashboard"));
