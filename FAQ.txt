@@ -1,0 +1,57 @@
+What is Pragati?
+Pragati is a one-stop digital platform designed to support women entrepreneurs at every stage of their business journey, from ideation to market expansion. Pragati also acts as a community platform for women entrepreneurs where they can interact with each other and also some successful entrepreneurs and mentors.
+
+
+Who can use Pragati?
+Women entrepreneurs, small business owners, job seekers, and mentors looking to support women-led businesses.
+
+Why was Pragati created?
+To bridge the skill gap, provide mentorship, improve financial access, and connect women entrepreneurs with local and global markets.
+
+How does Pragati help with funding?
+The platform provides smart recommendations for government schemes, NGO grants, and microfinance loans.
+to know more about loan refer: http://localhost:8080/
+Can I apply for loans through Pragati?
+Pragati connects users with microfinance institutions and loan providers.
+
+Does Pragati offer financial management tools?
+Yes, it features a Business Analytics Dashboard to track revenue and expenses.
+
+How does the mentor matching system work?
+Pragati uses an AI-powered algorithm to recommend experienced mentors based on the entrepreneur’s business needs.
+
+Can I sell products on Pragati?
+Yes, women entrepreneurs can list and sell their products globally through Pragati’s Digital Marketplace.
+
+How many businesses has Pragati supported so far?
+Pragati has helped over 50+ women-led businesses grow and expand.
+
+How many women have found jobs through Pragati?
+Over  women 100+ have secured jobs through our platform.
+
+How can Pragati help me start a business?
+Pragati offers mentorship, funding recommendations, business tools, and a digital marketplace to support new entrepreneurs.
+
+How does Pragati help me sell my products?
+You can showcase and sell your products globally through the Pragati Digital Marketplace.
+
+Can I apply for government schemes through Pragati?
+Pragati provides information and recommendations on relevant government schemes, NGO grants, and microfinance loans.
+
+Does Pragati offer financial management tools?
+Yes, we provide tools to track income, expenses, and business performance.
+
+How can I find a job using Pragati?
+You can browse job listings posted by women entrepreneurs and small businesses in your area.
+
+Can I hire employees for my business through Pragati?
+Yes, as a business owner, you can post job openings and connect with potential employees.
+
+
+What is Pragati community? How does it help?
+It is a community for likeminded women entrepreneurs, where you can connect, engage and upskill to improve your business and understanding of selling on the e-commerce platform. Get access to educational videos, podcasts, and blogs from entrepreneurs on their business journey towards running a successful online business. Visit the community page to know more.
+
+
+How can I buy the product?
+You can view the product on our platform and contact respective firm for deal.
+

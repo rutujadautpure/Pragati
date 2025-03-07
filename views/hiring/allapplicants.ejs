@@ -1,0 +1,43 @@
+<% layout("/layouts/boilerplate")%>
+
+<div class="row mt-5 d-flex justify-content-center">
+  <div class="col-md-6">
+      <div class="card shadow-lg border-0 rounded-4 bg-light">
+          <div class="card-body text-center py-4">
+              <h3 class="fw-bold text-primary">All Applications</h3>
+              <h5 class="card-title display-5 text-dark"><%= applicantCount %></h5>
+              <p class="text-muted">Total number of applicants received</p>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+<!-- <div class="card">
+    <div class="card-header">
+      Featured
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Special title treatment</h5>
+      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+      <a href="#" class="btn btn-primary">Go somewhere</a>
+    </div>
+  </div> -->
+
+  <div class="row mt-5">
+    <% applicants.forEach(applicant => { %>
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-lg border-0 rounded-4 bg-light">
+                <div class="card-header bg-primary text-white fw-bold text-center">
+                    Applicant Details
+                </div>
+                <div class="card-body text-center py-4">
+                    <h5 class="card-title fw-bold text-dark"><%= applicant.name %></h5>
+                    <p class="card-text"><i class="fas fa-user text-primary"></i> <strong>Age:</strong> <%= applicant.age %></p>
+                    <p class="card-text"><i class="fas fa-phone-alt text-success"></i> <strong>Mobile:</strong> <%= applicant.mob_no %></p>
+                    <p class="card-text"><i class="fas fa-map-marker-alt text-danger"></i> <strong>Location:</strong> <%= applicant.location.district %>, <%= applicant.location.state %></p>
+                </div>
+            </div>
+        </div>
+    <% }); %>
+</div>

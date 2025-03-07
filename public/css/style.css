@@ -3,8 +3,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-
-
+        overflow-x: hidden;
 }
 
 /*** Navbar ***/
@@ -517,6 +516,91 @@ body {
 }
 
 
+
+#morris-bar-chart {
+    -webkit-transition: all 2s; /* Safari */
+    transition: all 2s;
+  }
+  
+  
+  .header-row {
+    padding: 0 18px;
+  }
+  .header-column {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    display: inline-block;
+    font-weight: 300;
+    color: #555;
+    /*border: 1px solid grey;*/
+    padding: 0px;
+    width: 24%;
+    box-sizing: border-box; /*content-box|border-box|initial|inherit;*/
+  }
+  .list-group-column {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    display: inline-block;
+    font-weight: 300;
+    color: #555;
+    /*border: 1px solid grey;*/
+    padding: 0px;
+    width: 24%;
+  }
+
+
+
+
+  .job-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+.job-card, .no-jobs-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 350px;
+    text-align: center;
+}
+.job-card h2, .no-jobs-card h2 {
+    margin: 0;
+    color: #333;
+}
+.job-card p, .no-jobs-card p {
+    margin: 5px 0;
+    color: #666;
+}
+.contact-info {
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+.contact-info strong {
+    color: #222;
+}
+.filter-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+select {
+    padding: 10px;
+    font-size: 16px;
+}
+.no-jobs-card {
+    background: #fffbf2;
+    border: 2px solid #ffc107;
+    color: #555;
+    font-size: 18px;
+}
+.no-jobs-card img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 10px;
+}
+
 /********** Template CSS **********/
 :root {
     --primary: #06BBCC;
@@ -951,3 +1035,4 @@ body {
     padding-right: 0;
     border-right: none;
 }
+
