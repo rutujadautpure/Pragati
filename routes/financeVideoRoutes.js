@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/videos/finance', async (req, res) => {
   try {
     const userId = req.user._id;  // Assuming user is authenticated and user ID is available
-    
+    console.log(userId);
     // Fetch the business category for the user
     const business = await Business.findOne({ _id: userId });
     if (!business) {
