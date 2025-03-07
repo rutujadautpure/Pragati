@@ -141,6 +141,24 @@
             display: block;
         }
 
+        .whatsapp-btn {
+            background-color: #25D366;
+        }
+
+        .whatsapp-btn:hover {
+            background-color: #128C7E;
+        }
+
+        .qr-scanner {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .qr-scanner img {
+            width: 150px;
+            height: 150px;
+        }
+
         @media (max-width: 768px) {
             .product-images {
                 flex-direction: column;
@@ -196,11 +214,24 @@
                         <span class="email-tooltip"><%= product.UserId.email %></span>
                     </a>
                 <% } %>
+
                 <% if (product.UserId) { %>
                     <a href="/seller/<%= product.UserId._id %>" class="btn">More about Seller</a>
                 <% } %>
-                
+
+                <!-- Chat to Buy Button -->
+                <!-- <% if (product.UserId && product.UserId.mob_no) { %>
+                    <a href="https://wa.me/<%= product.UserId.mob_no %>" class="btn whatsapp-btn">Chat to Buy</a>
+                <% } %> -->
             </div>
+
+            <!-- QR Scanner Section -->
+            <% if (product.UserId && product.UserId.mob_no) { %>
+                <div class="qr-scanner">
+                    <p>Scan to chat with the seller on WhatsApp:</p>
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?data=https://wa.me/<%= product.UserId.mob_no %>&size=200x200" alt="QR Code">
+                </div>
+            <% } %>
 
             <button type="button" class="btn btn-back" onclick="window.history.back();">Go Back</button>
         </div>

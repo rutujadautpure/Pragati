@@ -13,7 +13,7 @@ const businessSchema = new mongoose.Schema({
             "Fashion, Handicraft and Luggage",
             "Home Decor, Furniture and Hardware",
             "Electrical, Electronics and Software",
-            "Books, Office Supplies and Madla",
+            "Books, Office Supplies and Media",
             "Personal Care Health and Beauty",
             "Sports, Hobbies, Toys and Events",
             "Others and Services"
@@ -35,9 +35,6 @@ const businessSchema = new mongoose.Schema({
     description: {
         type: String,
         required: true
-    },
-    businessDoc: {
-        type: String, // Store file path or URL
     },
     businessEmail: {
         type: String,
@@ -72,6 +69,7 @@ const businessSchema = new mongoose.Schema({
         }
     }
 }, { timestamps: true });
+
 
 const Business = mongoose.model("business", businessSchema);
 module.exports = Business;

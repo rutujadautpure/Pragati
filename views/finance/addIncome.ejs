@@ -1,27 +1,29 @@
 <% layout("/layouts/boilerplate")%>
 <%- include("../layouts/layout.ejs") %>
 
-<form action="/finance/add-income" method="POST">
-  <label for="date">Date:</label>
-  <input type="date" name="date" required>
+<form action="/finance/add-income" method="POST" style="max-width: 600px; margin: 70px auto; padding: 20px; background-color: #f9f9f9; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+  <h2 style="text-align: center; margin-bottom: 20px;">Add Income</h2>
 
-  <label for="source">Income Source:</label>
-  <select name="source" required>
-      <option value="Product Sales">Product Sales</option>
-      <option value="Services">Services</option>
+  <label for="date" style="font-size: 16px; margin-bottom: 5px; display: block;">Date:</label>
+  <input type="date" name="date" required style="width: 100%; padding: 10px; margin-bottom: 20px; border-radius: 4px; border: 1px solid #ccc;">
+
+  <label for="source" style="font-size: 16px; margin-bottom: 5px; display: block;">Income Source:</label>
+  <select name="source" required style="width: 100%; padding: 10px; margin-bottom: 20px; border-radius: 4px; border: 1px solid #ccc;">
+      <option value="Online Sales">Online Sales</option>
+      <option value="Offline Sales">Offline Sales</option>
       <option value="Donations">Donations</option>
-      <option value="Investments">Investments</option>
+      <option value="Investments">Funding</option>
   </select>
 
-  <label for="amount">Amount:</label>
-  <input type="number" name="amount" required>
+  <label for="amount" style="font-size: 16px; margin-bottom: 5px; display: block;">Amount:</label>
+  <input type="number" name="amount" required style="width: 100%; padding: 10px; margin-bottom: 20px; border-radius: 4px; border: 1px solid #ccc;">
 
-  <label for="payment_method">Payment Method:</label>
-  <select name="payment_method" required>
+  <label for="payment_method" style="font-size: 16px; margin-bottom: 5px; display: block;">Payment Method:</label>
+  <select name="payment_method" required style="width: 100%; padding: 10px; margin-bottom: 20px; border-radius: 4px; border: 1px solid #ccc;">
       <option value="Cash">Cash</option>
       <option value="UPI">UPI</option>
       <option value="Bank Transfer">Bank Transfer</option>
   </select>
 
-  <button type="submit">Add Income</button>
+  <button type="submit" style="width: 100%; padding: 12px; background-color: #007bff; color: white; border: none; border-radius: 4px; font-size: 16px;">Add Income</button>
 </form>

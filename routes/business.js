@@ -20,7 +20,7 @@ router.get("/register", (req, res) => {
 });
 
 // Route to handle business registration form submission
-router.post("/register", upload.single("businessDoc"), async (req, res) => {
+router.post("/register", async (req, res) => {
     try {
         if (!req.user) {
             return res.status(401).send("Unauthorized: Please log in first.");
@@ -31,11 +31,10 @@ router.post("/register", upload.single("businessDoc"), async (req, res) => {
         const newBusiness = new Business({
             _id: req.user._id, 
             category,
-            businessName:"business",
+            businessName,
             tradeName:"business",
-            incorporationDate,
+            incorporationDate:new Date("2020-01-01"),
             description,
-            businessDoc: req.file ? req.file.path : null,
             businessEmail,
             supportEmail,
             businessPhone,
@@ -45,8 +44,10 @@ router.post("/register", upload.single("businessDoc"), async (req, res) => {
         await newBusiness.save();
         res.redirect("/home"); // Redirect after successful submission
     } catch (err) {
+        console.error("Error saving business:", err);
         res.status(400).send(err.message);
     }
 });
+
 
 module.exports = router;

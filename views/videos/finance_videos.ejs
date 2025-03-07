@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Videos</title>
+</head>
+<body>
+    <% layout("/layouts/boilerplate")%>
+  <!-- Header Section -->
+  <header style="text-align: center; margin-bottom: 20px;">
+    <h1 style="font-size: 2.5rem; color: #333;">Finance and Category Videos</h1>
+  </header>
+
+  <!-- Finance Videos Section -->
+  <div id="finance-videos" style="margin-bottom: 40px;">
+    <h2 style="font-size: 2rem; color: #333;">Finance Videos</h2>
+    <% if (videos && videos.length > 0) { %>
+      <div class="video-cards" style="display: flex; gap: 30px; overflow-x: auto; padding: 20px 0; scrollbar-width: thin; -ms-overflow-style: none;">
+        <!-- Add Scroll Arrow -->
+        
+        <% videos.forEach(function(video) { %>
+          <div class="video-card" style="background-color: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); width: 320px; text-align: center; padding: 20px; transition: transform 0.3s ease; flex-shrink: 0;">
+            <h3 style="font-size: 1.5rem; margin-bottom: 15px; color: #007bff;"><%= video.name %></h3>
+            <p style="font-size: 1rem; color: #666; margin-bottom: 20px; padding: 0 10px;"><%= video.description %></p>
+            <iframe width="100%" height="315" 
+                    src="https://www.youtube.com/embed/<%= video.url.split('v=')[1] %>" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen
+                    style="border-radius: 12px;">
+            </iframe>
+          </div>
+        <% }); %>
+        <!-- Add Scroll Arrow -->
+        
+      </div>
+    <% } else { %>
+      <p>No finance videos available.</p>
+    <% } %>
+  </section>
+
+  <!-- Category-related Videos Section -->
+  <section id="category-videos" style="margin-bottom: 40px;">
+    <h2 style="font-size: 2rem; color: #333;"><%= categoryName %> Videos</h2>
+    <% if (categoryVideos && categoryVideos.length > 0) { %>
+      <div class="video-cards" style="display: flex; gap: 30px; overflow-x: auto; padding: 20px 0; scrollbar-width: thin; -ms-overflow-style: none;">
+        <!-- Add Scroll Arrow -->
+        
+        <% categoryVideos.forEach(function(video) { %>
+          <div class="video-card" style="background-color: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); width: 320px; text-align: center; padding: 20px; transition: transform 0.3s ease; flex-shrink: 0;">
+            <h3 style="font-size: 1.5rem; margin-bottom: 15px; color: #007bff;"><%= video.name %></h3>
+            <p style="font-size: 1rem; color: #666; margin-bottom: 20px; padding: 0 10px;"><%= video.description %></p>
+            <iframe width="100%" height="315" 
+                    src="https://www.youtube.com/embed/<%= video.url.split('v=')[1] %>" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen
+                    style="border-radius: 12px;">
+            </iframe>
+          </div>
+        <% }); %>
+        <!-- Add Scroll Arrow -->
+       
+      </div>
+    <% } else { %>
+      <p>No videos available for this category.</p>
+    <% } %>
+  </section>
+
+  <!-- Footer Section -->
+  <footer style="text-align: center; margin-top: 40px; font-size: 0.9rem; color: #777;">
+    <p>© 2025 Your Company. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
