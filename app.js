@@ -33,10 +33,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 
-
-  
-
-
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -54,9 +50,6 @@ app.use(cors());
 
 // Serve static files from the 'public' folder
 app.use('/uploads', express.static(path.join(__dirname, 'public', 'uploads')));
-
-  
-
 
 
 // Database Connection
@@ -110,8 +103,6 @@ passport.deserializeUser(async function(id, done) {
 });
 // Flash Messages
 app.use(flash());
-
-// Middleware to pass flash messages to all views
 app.use((req, res, next) => {
     res.locals.messages = {
         success: req.flash("success"),

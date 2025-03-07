@@ -3,106 +3,144 @@ const router = express.Router();
 const Finance = require("../models/Finance");
 const { isLoggedIn } = require("../middleware");
 
-
-
+// ✅ Route to render expense form
 router.get("/add-expense", isLoggedIn, (req, res) => {
-  res.render("./finance/addExpense"); 
+  console.log("Current User:", req.user); // Debugging
+
+  if (!req.isAuthenticated()) {
+    req.flash("error", "Please log in first.");
+    return res.redirect("/login");
+  }
+
+  res.render("finance/addExpense", { userId: req.user._id });
 });
 
-router.get("/set-budget", isLoggedIn, (req, res) => {
-  res.render("./finance/addExpense"); 
+router.get("/add-income", (req, res) => {
+  console.log("Current User:", req.user); // Debugging
+
+  if (!req.isAuthenticated()) {
+      return res.status(401).send("Unauthorized: Please log in.");
+  }
+
+  res.render("finance/addIncome", { userId: req.user._id });
 });
 
-router.get("/add-income", isLoggedIn, (req, res) => {
-  res.render("./finance/addExpense"); 
+router.get("/set-budget", (req, res) => {
+  console.log("Current User:", req.user); // Debugging
+
+  if (!req.isAuthenticated()) {
+      return res.status(401).send("Unauthorized: Please log in.");
+  }
+
+  res.render("finance/setBudget", { userId: req.user._id });
 });
 
 router.post("/add-income", async (req, res) => {
+  if (!req.isAuthenticated()) {
+      req.flash("error", "Please log in first.");
+      return res.redirect("/login");
+  }
+
   try {
-    const { user_id, date, source, amount, payment_method } = req.body;
+      let finance = await Finance.findOne({ user_id: req.user._id });
 
-    if (!user_id || !date || !source || !amount || !payment_method) {
-      return res.status(400).json({ message: "All fields are required" });
-    }
+      if (!finance) {
+          finance = new Finance({
+              user_id: req.user._id,
+              budget: 0,
+              expenses: [],
+              income: []
+          });
+      }
 
-    let finance = await Finance.findOne({ user_id });
+      finance.income.push({
+          date: req.body.date,
+          source: req.body.source,
+          amount: req.body.amount,
+          payment_method: req.body.payment_method
+      });
 
-    if (!finance) {
-      finance = new Finance({ user_id, budget: 0, expenses: [], income: [] });
-    }
+      await finance.save();
+      req.flash("success", "Income added successfully!");
+      res.redirect("/finance/dashboard");
 
-    finance.income.push({ date, source, amount, payment_method });
-    await finance.save();
-
-    res.redirect("/finance"); // Redirect to finance page after adding income
-  } catch (error) {
-    res.status(500).send("Server Error");
+  } catch (err) {
+      console.error(err);
+      req.flash("error", "Something went wrong.");
+      res.redirect("/add-income");
   }
 });
 
 router.post("/set-budget", async (req, res) => {
+  if (!req.isAuthenticated()) {
+      req.flash("error", "Please log in first.");
+      return res.redirect("/login");
+  }
+
   try {
-    const { user_id, budget } = req.body;
+      let finance = await Finance.findOne({ user_id: req.user._id });
 
-    if (!user_id || budget === undefined) {
-      return res.status(400).json({ message: "User ID and budget are required" });
-    }
+      if (!finance) {
+          finance = new Finance({
+              user_id: req.user._id,
+              budget: req.body.budget,
+              expenses: [],
+              income: []
+          });
+      } else {
+          finance.budget = req.body.budget;  // Update the existing budget
+      }
 
-    let finance = await Finance.findOne({ user_id });
+      await finance.save();
+      req.flash("success", "Budget updated successfully!");
+      res.redirect("/finance/dashboard");
 
-    if (!finance) {
-      finance = new Finance({ user_id, budget, expenses: [], income: [] });
-    } else {
-      finance.budget = budget;
-    }
-
-    await finance.save();
-
-    res.redirect("/finance"); // Redirect to finance page after setting budget
-  } catch (error) {
-    res.status(500).send("Server Error");
+  } catch (err) {
+      console.error(err);
+      req.flash("error", "Something went wrong.");
+      res.redirect("/set-budget");
   }
 });
 
-// Assuming you are using user authentication to get the logged-in user's ID
-router.get("/dashboard", async (req, res) => {
-  console.log(req.session.userId);
-  try {
-    const userId = req.user._id; // or get the user ID from the session
-    const financeData = await Finance.findOne({ user_id: userId });
 
+router.get("/dashboard", isLoggedIn, async (req, res) => {
+  try {
+    const userId = req.user._id;
+    let financeData = await Finance.findOne({ user_id: userId });
+
+    // If finance data doesn't exist, create a new entry
     if (!financeData) {
-      return res.status(404).send("Finance data not found.");
+      financeData = new Finance({
+        user_id: userId,
+        budget: 0, // Default budget
+        expenses: [],
+        income: [],
+      });
+      await financeData.save();
     }
 
-    const expenses = financeData.expenses;
-    const income = financeData.income;
-    const budget = financeData.budget;
-
-    // Send the data to the EJS view
-    res.render("./finance/dashboard", { 
-      expenses: expenses,
-      income: income,
-      budget: budget
+    res.render("finance/dashboard", { 
+      expenses: financeData.expenses,
+      income: financeData.income,
+      budget: financeData.budget
     });
 
   } catch (error) {
     console.error(error);
-    res.status(500).send("Server error");
+    req.flash("error", "Something went wrong. Please try again.");
+    res.redirect("/login");
   }
 });
 
 
-
-
-router.post("/add-expense", isLoggedIn,async (req, res) => {
+router.post("/add-expense", isLoggedIn, async (req, res) => {
   try {
     const { date, category, amount, payment_method, notes } = req.body;
     const user_id = req.user._id; 
 
-
     if (!date || !category || !amount || !payment_method) {
-      return res.status(400).json({ message: "All required fields must be filled" });
+      req.flash("error", "All required fields must be filled.");
+      return res.redirect("/finance/dashboard");
     }
 
     let finance = await Finance.findOne({ user_id });
@@ -112,13 +150,14 @@ router.post("/add-expense", isLoggedIn,async (req, res) => {
     }
 
     finance.expenses.push({ date, category, amount, payment_method, notes });
-
     await finance.save();
 
-    res.redirect(`expenses/${user_id}`);
-    res.render("./finance/expenses")
+    req.flash("success", "Expense added successfully!");
+    res.redirect("/finance/dashboard");
   } catch (error) {
-    res.status(500).json({ message: "Server error", error });
+    console.error(error);
+    req.flash("error", "Something went wrong. Please try again.");
+    res.redirect("/finance/dashboard");
   }
 });
 
@@ -132,14 +171,10 @@ router.get("/expenses/:id", async (req, res) => {
       return res.status(404).json({ message: "No financial records found" });
     }
 
-    res.render("./finance/expenses", {
-      expenses: finance.expenses 
-    });
+    res.render("finance/expenses", { expenses: finance.expenses });
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
   }
 });
-
-
 
 module.exports = router;
