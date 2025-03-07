@@ -1,39 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Application Form</title>
-    <%- include("../layouts/layout.ejs") %>
-</head>
-<body>
-    <h2>Application Form</h2>
-    <form action="/worker/application/<%= hiringid %>" method="POST">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" value="<%= user.firstName + ' ' + user.lastName %>" required>
-        <br><br>
+<% layout("/layouts/boilerplate")%>
+<%- include("../layouts/layout.ejs") %>
+    <form action="/worker/application/<%= hiringid %>" method="POST" 
+        style="background: white; padding: 20px; border-radius: 10px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); width: 350px;">
+        
+        <h2 style="text-align: center; color: #333;">Application Form</h2>
 
-        <label for="mob_no">Mobile Number:</label>
-        <input type="text" id="mob_no" name="mob_no" value="<%= user.mob_no %>" required>
-        <br><br>
+        <label for="name" style="font-weight: bold; display: block; margin-bottom: 5px; color: #555;">Name:</label>
+        <input type="text" id="name" name="name" value="<%= user.firstName + ' ' + user.lastName %>" required 
+            style="width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px;">
 
-        <label for="pinCode">Pin Code:</label>
-        <input type="text" id="pinCode" name="location[pinCode]" value="<%= user.pinCode %>" required>
-        <br><br>
+        <label for="mob_no" style="font-weight: bold; display: block; margin-bottom: 5px; color: #555;">Mobile Number:</label>
+        <input type="text" id="mob_no" name="mob_no" value="<%= user.mob_no %>" required 
+            style="width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px;">
 
-        <label for="state">State:</label>
-        <input type="text" id="state" name="location[state]" value="<%= user.state %>" required>
-        <br><br>
+        <label for="pinCode" style="font-weight: bold; display: block; margin-bottom: 5px; color: #555;">Pin Code:</label>
+        <input type="text" id="pinCode" name="location[pinCode]" value="<%= user.pinCode %>" required 
+            style="width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px;">
 
-        <label for="district">District:</label>
-        <input type="text" id="district" name="location[district]" value="<%= user.district %>" required>
-        <br><br>
+        <label for="state" style="font-weight: bold; display: block; margin-bottom: 5px; color: #555;">State:</label>
+        <input type="text" id="state" name="location[state]" value="<%= user.state %>" required 
+            style="width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px;">
 
-        <label for="age">Age:</label>
-        <input type="number" id="age" name="age" min="18" required>
-        <br><br>
+        <label for="district" style="font-weight: bold; display: block; margin-bottom: 5px; color: #555;">District:</label>
+        <input type="text" id="district" name="location[district]" value="<%= user.district %>" required 
+            style="width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px;">
 
-        <button type="submit">Submit</button>
+        <label for="age" style="font-weight: bold; display: block; margin-bottom: 5px; color: #555;">Age:</label>
+        <input type="number" id="age" name="age" min="18" required 
+            style="width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px;">
+
+        <button type="submit" 
+            style="width: 100%; background-color: #007bff; color: white; padding: 10px; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; transition: background 0.3s ease-in-out;">
+            Submit
+        </button>
+
     </form>
-</body>
-</html>
+
