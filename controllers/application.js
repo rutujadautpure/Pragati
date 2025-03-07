@@ -7,7 +7,7 @@ async function handleApplyForm(req, res) {
         const { name, mob_no, location, age } = req.body;
 
         if (!name || !mob_no || !location || !age) {
-            return res.status(400).json({ message: "All fields are required." });
+            return res.status(400).json({ message: "All fields all are required." });
         }
 
         const { pinCode, state, district } = location;
