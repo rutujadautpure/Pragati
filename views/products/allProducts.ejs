@@ -1,0 +1,110 @@
+<% layout("/layouts/boilerplate")%>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Products</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin: 40px 0;
+        }
+
+        .card-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .card {
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #fff;
+            text-align: center;
+        }
+
+        .card-img-top {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .card-body {
+            padding: 15px;
+        }
+
+        .card-title {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .card-text {
+            font-size: 1em;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            background-color: #FFC107;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1em;
+            font-weight: bold;
+            display: inline-block;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #e0a800;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+<h1>All Products</h1>
+
+<div class="card-group">
+    <% products.forEach(product => { %>
+        <div class="card">
+            <% if (product.images && product.images.length > 0) { %>
+                <img src="<%= product.images[0] %>" 
+     alt="Product Image" class="card-img-top">
+           
+            <% } else { %>
+                <img src="https://res.cloudinary.com/<cloud_name>/image/upload/v_default-product.jpg" 
+                     alt="Default Product Image" class="card-img-top">
+            <% } %>
+            
+            <div class="card-body">
+                <h5 class="card-title"><%= product.name %></h5>
+                <p class="card-text"><strong>Price:</strong> ₹<%= product.price %></p>
+                <a href="/product/<%= product._id %>" class="btn">View Details</a>
+            </div>
+        </div>
+    <% }); %>
+</div>
+
+</body>
+</html>
