@@ -1,14 +1,12 @@
 <% layout("/layouts/boilerplate")%>
 <%- include("../layouts/layout.ejs") %>
 
-
 <div style="margin-top: 30px; padding: 20px; border: 2px solid #ccc; border-radius: 8px; max-width: 800px; margin-left: auto; margin-right: auto;">
     <h2 style="text-align: center; margin-bottom: 20px;">Add Hiring Details</h2>
     <form action="/hiring/submit/<%= id %>" method="POST">
 
-
         <label for="businessType" style="display: block;">Business Type:</label>
-        <input type="text" id="businessType" name="businessType" required style="width: 100%; padding: 10px; margin-top: 5px;"><br><br>
+        <input type="text" id="businessType" name="businessType" required value="<%= businessType %>" style="width: 100%; padding: 10px; margin-top: 5px;"><br><br>
 
         <label for="jobRole" style="display: block;">Job Role:</label>
         <input type="text" id="jobRole" name="jobRole" required style="width: 100%; padding: 10px; margin-top: 5px;"><br><br>
@@ -17,14 +15,10 @@
         <textarea id="jobRoleDescription" name="jobRoleDescription" required style="width: 100%; padding: 10px; margin-top: 5px;"></textarea><br><br>
 
         <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-
-            <!-- Job Hours -->
             <div style="flex: 1; min-width: 300px;">
                 <label for="jobHours" style="display: block;">Job Hours:</label>
                 <input type="number" id="jobHours" name="jobHours" required min="1" style="width: 100%; padding: 10px; margin-top: 5px;">
             </div>
-
-            <!-- Salary -->
             <div style="flex: 1; min-width: 300px;">
                 <label for="salary" style="display: block;">Salary:</label>
                 <input type="number" id="salary" name="salary" required min="0" style="width: 100%; padding: 10px; margin-top: 5px;">
@@ -32,17 +26,10 @@
         </div><br>
 
         <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-
-            <!-- Deadline to Apply -->
             <div style="flex: 1; min-width: 300px;">
                 <label for="deadlineToApply" style="display: block;">Deadline to Apply:</label>
                 <input type="date" id="deadlineToApply" name="deadlineToApply" required style="width: 100%; padding: 10px; margin-top: 5px;">
             </div>
-            
-            
-            
-
-            <!-- Vacancies -->
             <div style="flex: 1; min-width: 300px;">
                 <label for="vacancies" style="display: block;">Vacancies:</label>
                 <input type="number" id="vacancies" name="vacancies" required min="1" style="width: 100%; padding: 10px; margin-top: 5px;">
@@ -51,60 +38,46 @@
 
         <h3>Location</h3>
         <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-
-            <!-- Pin Code -->
             <div style="flex: 1; min-width: 300px;">
                 <label for="pinCode" style="display: block;">Pin Code:</label>
-                <input type="text" id="pinCode" name="location[pinCode]" required pattern="\d{6}" title="Enter a valid 6-digit pin code" style="width: 100%; padding: 10px; margin-top: 5px;">
+                <input type="text" id="pinCode" name="location[pinCode]" required pattern="\d{6}" value="<%= pinCode %>" style="width: 100%; padding: 10px; margin-top: 5px;">
             </div>
-
-            <!-- State -->
             <div style="flex: 1; min-width: 300px;">
                 <label for="state" style="display: block;">State:</label>
-                <input type="text" id="state" name="location[state]" required style="width: 100%; padding: 10px; margin-top: 5px;">
+                <input type="text" id="state" name="location[state]" required value="<%= state %>" style="width: 100%; padding: 10px; margin-top: 5px;">
             </div>
         </div><br>
 
-        <!-- District -->
         <div style="flex: 1; min-width: 300px;">
             <label for="district" style="display: block;">District:</label>
-            <input type="text" id="district" name="location[district]" required style="width: 100%; padding: 10px; margin-top: 5px;">
+            <input type="text" id="district" name="location[district]" required value="<%= district %>" style="width: 100%; padding: 10px; margin-top: 5px;">
         </div><br>
 
         <h3>Contact Information</h3>
         <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-
-            <!-- Contact Name -->
             <div style="flex: 1; min-width: 300px;">
                 <label for="contactName" style="display: block;">Contact Name:</label>
-                <input type="text" id="contactName" name="contactInfo[name]" required style="width: 100%; padding: 10px; margin-top: 5px;">
+                <input type="text" id="contactName" name="contactInfo[name]" required value="<%= contactName %>" style="width: 100%; padding: 10px; margin-top: 5px;">
             </div>
-
-            <!-- Contact Email -->
             <div style="flex: 1; min-width: 300px;">
                 <label for="contactEmail" style="display: block;">Contact Email:</label>
-                <input type="email" id="contactEmail" name="contactInfo[email]" required style="width: 100%; padding: 10px; margin-top: 5px;">
+                <input type="email" id="contactEmail" name="contactInfo[email]" required value="<%= contactEmail %>" style="width: 100%; padding: 10px; margin-top: 5px;">
             </div>
         </div><br>
 
-        <!-- Contact Phone -->
         <div style="flex: 1; min-width: 300px;">
             <label for="contactPhone" style="display: block;">Contact Phone:</label>
-            <input type="text" id="contactPhone" name="contactInfo[phone]" required pattern="[6-9]\d{9}" title="Enter a valid 10-digit mobile number" style="width: 100%; padding: 10px; margin-top: 5px;">
+            <input type="text" id="contactPhone" name="contactInfo[phone]" required pattern="[6-9]\d{9}" value="<%= contactPhone %>" style="width: 100%; padding: 10px; margin-top: 5px;">
         </div><br>
 
         <button type="submit" style="padding: 10px 20px; background-color: #56bff0; color: white; border: none; border-radius: 5px; cursor: pointer;">Submit</button>
     </form>
 </div>
 
-
 <script>
-     // Get today's date in the local timezone
-     let today = new Date();
+    let today = new Date();
     let localDate = today.getFullYear() + '-' + 
                     String(today.getMonth() + 1).padStart(2, '0') + '-' + 
                     String(today.getDate()).padStart(2, '0');
-
-    // Set the min attribute to today's date
     document.getElementById("deadlineToApply").setAttribute("min", localDate);
 </script>
