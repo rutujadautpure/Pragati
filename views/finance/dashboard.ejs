@@ -72,7 +72,7 @@
 
         <!-- Horizontal Cards for Budget, Expenses, Income -->
         <div class="horizontal-cards mb-4">
-            <div class="card text-white bg-info" style="flex: 1;">
+            <div class="card text-white bg-info" style="flex: 1; color: rgb(254, 125, 125);">
                 <div class="card-body">
                     <h5 class="card-title">Budget</h5>
                     <p class="card-text" id="budgetAmount">₹<%= budget %></p>
@@ -90,7 +90,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Income</h5>
                     <p class="card-text" id="incomeAmount">₹<%= income.reduce((sum, inc) => sum + inc.amount, 0) %></p>
-                    <button class="btn btn-success w-100" id="addIncomeBtn">Add Income</button>
+                    <button class="btn btn-secondary w-100" id="addIncomeBtn">Add Income</button>
                 </div>
             </div>
         </div>
