@@ -26,13 +26,13 @@ router.post("/register", upload.single("businessDoc"), async (req, res) => {
             return res.status(401).send("Unauthorized: Please log in first.");
         }
 
-        const { category, businessName, tradeName, incorporationDate, description, businessEmail, supportEmail, businessPhone, supportPhone } = req.body;
+        const { category, businessName, description, businessEmail, supportEmail, businessPhone, supportPhone } = req.body;
 
         const newBusiness = new Business({
             _id: req.user._id, 
             category,
-            businessName,
-            tradeName,
+            businessName:"business",
+            tradeName:"business",
             incorporationDate,
             description,
             businessDoc: req.file ? req.file.path : null,
