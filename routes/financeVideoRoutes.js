@@ -1,35 +1,35 @@
 const express = require('express');
-const axios = require('axios');
-
+const { Video } = require('../models/video');
+const Business = require('../models/business');
 const router = express.Router();
 
-// Route to display finance videos
-router.get('/videostop5', async (req, res) => {
-    try {
-        const videos = await getTopFinanceVideos();
-        res.render('finance_videos', { videos });
-    } catch (error) {
-        console.error('Error fetching videos:', error);  // Log the error here
-        res.status(500).send('Something went wrong!');
+// Route to fetch both finance-related videos and category-related videos
+router.get('/videos/finance', async (req, res) => {
+  try {
+    const userId = req.user._id;  // Assuming user is authenticated and user ID is available
+    
+    // Fetch the business category for the user
+    const business = await Business.findOne({ _id: userId });
+    if (!business) {
+      return res.status(404).send('Business not found');
     }
+
+    // Fetch finance-related videos
+    const financeVideos = await Video.find({ category: 'Finance' });
+
+    // Fetch category-related videos based on the user's business category
+    const categoryVideos = await Video.find({ category: business.category });
+
+    // Send both the finance videos and category-related videos to the view
+    res.render('videos/finance_videos', {
+      videos: financeVideos,
+      categoryVideos: categoryVideos,
+      categoryName: business.category  // Pass the business category name
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server Error');
+  }
 });
-
-
-// Function to fetch top finance videos from YouTube
-async function getTopFinanceVideos() {
-    const API_KEY = 'YOUR_YOUTUBE_API_KEY';  // Replace with your YouTube API key
-    const searchQuery = 'finance';
-    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${searchQuery}&type=video&order=viewCount&maxResults=5&key=${API_KEY}`;
-
-    const response = await axios.get(url);
-    const videos = response.data.items.map(item => ({
-        title: item.snippet.title,
-        description: item.snippet.description,
-        videoId: item.id.videoId,
-        thumbnail: item.snippet.thumbnails.high.url,
-    }));
-
-    return videos;
-}
 
 module.exports = router;

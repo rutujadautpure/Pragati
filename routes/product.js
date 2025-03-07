@@ -24,6 +24,59 @@ router.get('/add', (req, res) => {
 });
 
 // ✅ Route to handle product creation (POST request)
+// router.post('/add', async (req, res) => {
+//     try {
+//         console.log("Received Files:", req.files);
+
+//         // Ensure at least one file is uploaded
+//         if (!req.files || !req.files.productImages) {
+//             return res.status(400).json({ error: "Please upload at least one image." });
+//          //   res.flash('error' , 'Error in adding product , Pease try again');
+//             res.redirect('/home')
+//         }
+
+//         // ✅ Ensure req.user exists and has _id
+//         if (!req.user || !req.user._id) {
+//             return res.status(401).json({ error: "User not authenticated." });
+//            // res.flash('error' , 'Error in adding product , Pease try again');
+//             res.redirect('/home')
+//         }
+
+//         const { name, description, price, category, stock } = req.body;
+//         const uploadedImages = [];
+//         let imagesArray = Array.isArray(req.files.productImages) ? req.files.productImages : [req.files.productImages];
+
+//         // 🔹 Upload each image to Cloudinary
+//         for (const image of imagesArray) {
+//             const result = await cloudinary.uploader.upload(image.tempFilePath, { folder: 'products' });
+//             uploadedImages.push(result.secure_url);
+//         }
+
+//         // ✅ Create Product entry with `UserId`
+//         const product = new Product({
+//             name,
+//             description,
+//             price,
+//             category,
+//             stock,
+//             images: uploadedImages,
+//             UserId: req.user._id  // ✅ Saving UserId
+//         });
+
+//         await product.save();
+//         res.json({ message: "Product added successfully!", product });
+//       //  res.flash('success' , 'Product added successfully');
+//         res.redirect('/home')
+//     } catch (error) {
+//         console.error("Error uploading product:", error);
+//         res.status(500).send("Error uploading product.");
+//       //  res.flash('error' , 'Error in adding product , Pease try again');
+//         res.redirect('/home');
+//     }
+// });
+
+
+// ✅ Route to handle product creation (POST request)
 router.post('/add', async (req, res) => {
     try {
         console.log("Received Files:", req.files);
@@ -56,16 +109,24 @@ router.post('/add', async (req, res) => {
             category,
             stock,
             images: uploadedImages,
-            UserId: req.user._id  // ✅ Saving UserId
+            UserId: req.user._id
         });
 
         await product.save();
-        res.json({ message: "Product added successfully!", product });
+        // After saving, redirect to home page
+        res.redirect('/home'); // redirect after successful product creation
+
     } catch (error) {
         console.error("Error uploading product:", error);
         res.status(500).send("Error uploading product.");
     }
 });
+
+
+
+
+
+
 
 // ✅ Route to display all products
 // router.get('/allProducts', async (req, res) => {
