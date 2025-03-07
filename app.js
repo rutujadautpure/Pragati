@@ -5,26 +5,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 const flash = require("connect-flash");
 const ejsMate = require("ejs-mate");
-
-// const cloudinary = require("cloudinary").v2;
-// const { CloudinaryStorage } = require('multer-storage-cloudinary');
-
-
-// cloudinary.config({
-//     cloud_name: 'dryvfbx1a',
-//     api_key: '125726864975736',
-//     api_secret: 'EXmo00NXsnokFr_2jFkW8utcFBA',
-//   });
-
-// const storage = new CloudinaryStorage({
-//     cloudinary: cloudinary,
-//     params: {
-//         folder: 'products/',
-//         allowedFormats: ['jpeg', 'png', 'jpg', 'gif'],
-//         transformation: [{ width: 500, height: 500, crop: 'limit' }],
-//     },
-// });
-
+const sellerDetailsRoute = require("./routes/sellerDetail");
 
 
 require("dotenv").config();
@@ -44,6 +25,7 @@ const Hiringroute = require("./routes/hiring")
 const Applicationroute = require("./routes/application")
 
 const MONGO_URL = process.env.MONGO_URL || "mongodb://127.0.0.1:27017/myDatabase";
+const fileUpload = require('express-fileupload');
 
 
 const cors = require('cors');
@@ -113,6 +95,11 @@ app.use((req, res, next) => {
 });
 
 
+app.use(fileUpload({
+    useTempFiles:true,
+    tempFileDir: "/tmp/"
+}))
+
 app.get("/", (req, res) => {
     res.render("Homepage/index"); // No need for './' or .ejs extension
 });
@@ -125,6 +112,10 @@ app.get("/home", (req, res) =>{
 app.get("/workerhome", (req, res) => res.render("./worker/home"));
 app.use('/hiring',Hiringroute);
 app.use('/worker',Applicationroute);
+
+app.use("/seller", sellerDetailsRoute);
+console.log("Seller routes loaded"); // Debugging
+
 app.use("/finance",finRoutes);
 
 

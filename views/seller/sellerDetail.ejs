@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= user.firstName %> - Seller Details</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            padding: 30px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            color: #343a40;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .seller-info, .business-info {
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        .seller-info h2, .business-info h2 {
+            color: #495057;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+        .info-section {
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .info-section strong {
+            flex: 0 0 150px;
+            font-weight: bold;
+            color: #495057;
+            padding-right: 15px;
+        }
+        .info-section span {
+            flex: 1;
+            font-size: 1.1em;
+            color: #6c757d;
+        }
+        .info-section p {
+            font-size: 1em;
+            color: #6c757d;
+        }
+        .business-info .info-section span,
+        .seller-info .info-section span {
+            font-size: 1.1em;
+            color: #6c757d;
+        }
+        .business-info .info-section {
+            background-color: #f1f3f5;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        @media (max-width: 768px) {
+            .info-section strong {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Seller Details</h1>
+
+        <!-- Seller Information -->
+        <div class="seller-info">
+            <h2>Seller Information</h2>
+            <div class="info-section">
+                <strong>Name:</strong>
+                <span><%= user.firstName %> <%= user.lastName %></span>
+            </div>
+            <div class="info-section">
+                <strong>Email:</strong>
+                <span><%= user.email %></span>
+            </div>
+            <div class="info-section">
+                <strong>Phone:</strong>
+                <span><%= user.mob_no %></span>
+            </div>
+            <div class="info-section">
+                <strong>Location:</strong>
+                <span><%= user.district %>, <%= user.state %></span>
+            </div>
+        </div>
+
+        <!-- Business Information -->
+        <div class="business-info">
+            <h2>Business Information</h2>
+            <div class="info-section">
+                <strong>Business Name:</strong>
+                <span><%= business ? business.businessName : "Business Name not found" %></span>
+            </div>
+            <div class="info-section">
+                <strong>Business Category:</strong>
+                <span><%= business ? business.category : "Category not found" %></span>
+            </div>
+            <div class="info-section">
+                <strong>Business Description:</strong>
+                <p><%= business ? business.description : "Description not available" %></p>
+            </div>
+            <div class="info-section">
+                <strong>Contact Email:</strong>
+                <span><%= business ? business.businessEmail : "Not available" %></span>
+            </div>
+        </div>
+
+        <!-- Back to list or dashboard button -->
+        <a href="javascript:history.back()" class="btn">Back</a>
+
+    </div>
+
+</body>
+</html>
