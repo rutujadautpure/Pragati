@@ -5,17 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Product</title>
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f7f7f7;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
+    
         h1 {
             text-align: center;
             color: #333;
@@ -28,7 +18,7 @@
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 600px;
+            max-width: 800px;
         }
 
         .form-container h1 {
@@ -63,7 +53,7 @@
 
         .form-container textarea {
             resize: vertical;
-            height: 150px;
+            height: 100px;
         }
 
         .form-container select {
@@ -102,67 +92,110 @@
             padding: 0;
             border: none;
         }
+
+        .form-container {
+    width: 70%;
+    margin: 0 auto;
+}
+
+.product-details {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.product-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.product-info div {
+    width: 48%; /* Ensures price and stock fields sit beside each other */
+}
+
+.price-stock {
+    display: flex;
+    justify-content: space-between;
+}
+
+fieldset {
+    margin-top: 20px;
+}
+
+button {
+    display: block;
+    margin: 20px 0;
+}
+
     </style>
 </head>
 <body>
-    <div class="form-container">
+    <% layout("/layouts/boilerplate")%>
+    <div class="form-container" style="margin-top: 20px;">
+
         <h1>Add New Product</h1>
-        
         <form action="/products/add" method="POST" enctype="multipart/form-data">
-            <div>
-                <label for="name">Product Name:</label>
-                <input type="text" id="name" name="name" required>
+            <div class="product-details">
+                <div>
+                    <label for="name">Product Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+    
+                <div>
+                    <label for="description">Product Description:</label>
+                    <textarea id="description" name="description" required></textarea>
+                </div>
             </div>
-
-            <div>
-                <label for="description">Product Description:</label>
-                <textarea id="description" name="description" required></textarea>
+    
+            <div class="product-info">
+                <div>
+                    <label for="category">Category:</label>
+                    <select id="category" name="category" required>
+                        <option value="Fashion, Handicraft and Luggage">Fashion, Handicraft and Luggage</option>
+                        <option value="Home Decor, Furniture and Hardware">Home Decor, Furniture and Hardware</option>
+                        <option value="Electrical, Electronics and Software">Electrical, Electronics and Software</option>
+                        <option value="Books, Office Supplies and Madla">Books, Office Supplies and Madla</option>
+                        <option value="Personal Care Health and Beauty">Personal Care Health and Beauty</option>
+                        <option value="Sports, Hobbies, Toys and Events">Sports, Hobbies, Toys and Events</option>
+                        <option value="Others and Services">Others and Services</option>
+                        <option value="Food and Beverage">Food and Beverage</option>
+                        <option value="Automotive">Automotive</option>
+                        <option value="Real Estate">Real Estate</option>
+                        <option value="Health and Wellness">Health and Wellness</option>
+                        <option value="Education and Training">Education and Training</option>
+                        <option value="Travel and Tourism">Travel and Tourism</option>
+                        <option value="Entertainment and Media">Entertainment and Media</option>
+                        <option value="Pet Supplies and Services">Pet Supplies and Services</option>
+                        <option value="Financial Services">Financial Services</option>
+                        <option value="Technology and Gadgets">Technology and Gadgets</option>
+                        <option value="Art and Craft">Art and Craft</option>
+                        <option value="Construction and Renovation">Construction and Renovation</option>
+                        <option value="Business Services">Business Services</option>
+                    </select>
+                </div>
+    
+                <div class="price-stock">
+                    <div>
+                        <label for="price">Price:</label>
+                        <input type="number" id="price" name="price" required>
+                    </div>
+    
+                    <div>
+                        <label for="stock">Stock Quantity:</label>
+                        <input type="number" id="stock" name="stock" required>
+                    </div>
+                </div>
             </div>
-
-            <div>
-                <label for="price">Price:</label>
-                <input type="number" id="price" name="price" required>
-            </div>
-
-            <div>
-                <label for="category">Category:</label>
-                <select id="category" name="category" required>
-                    <option value="Fashion, Handicraft and Luggage">Fashion, Handicraft and Luggage</option>
-                    <option value="Home Decor, Furniture and Hardware">Home Decor, Furniture and Hardware</option>
-                    <option value="Electrical, Electronics and Software">Electrical, Electronics and Software</option>
-                    <option value="Books, Office Supplies and Madla">Books, Office Supplies and Madla</option>
-                    <option value="Personal Care Health and Beauty">Personal Care Health and Beauty</option>
-                    <option value="Sports, Hobbies, Toys and Events">Sports, Hobbies, Toys and Events</option>
-                    <option value="Others and Services">Others and Services</option>
-                    <option value="Food and Beverage">Food and Beverage</option>
-                    <option value="Automotive">Automotive</option>
-                    <option value="Real Estate">Real Estate</option>
-                    <option value="Health and Wellness">Health and Wellness</option>
-                    <option value="Education and Training">Education and Training</option>
-                    <option value="Travel and Tourism">Travel and Tourism</option>
-                    <option value="Entertainment and Media">Entertainment and Media</option>
-                    <option value="Pet Supplies and Services">Pet Supplies and Services</option>
-                    <option value="Financial Services">Financial Services</option>
-                    <option value="Technology and Gadgets">Technology and Gadgets</option>
-                    <option value="Art and Craft">Art and Craft</option>
-                    <option value="Construction and Renovation">Construction and Renovation</option>
-                    <option value="Business Services">Business Services</option>
-                </select>
-            </div>
-
-            <div>
-                <label for="stock">Stock Quantity:</label>
-                <input type="number" id="stock" name="stock" required>
-            </div>
-
-            <!-- Updated File Upload Section -->
+    
             <fieldset>
                 <legend>Upload Product Images (Max: 5)</legend>
                 <input type="file" name="productImages" id="productImages" multiple required>
             </fieldset>
-
+    
             <button type="submit">Add Product</button>
         </form>
     </div>
+    
 </body>
 </html>
