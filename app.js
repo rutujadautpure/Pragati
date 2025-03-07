@@ -38,6 +38,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user"); // Ensure this path is correct
 const authRoutes = require("./routes/auth");
+const finRoutes = require("./routes/finance");
 
 const Hiringroute = require("./routes/hiring")
 const Applicationroute = require("./routes/application")
@@ -124,6 +125,8 @@ app.get("/home", (req, res) =>{
 app.get("/workerhome", (req, res) => res.render("./worker/home"));
 app.use('/hiring',Hiringroute);
 app.use('/worker',Applicationroute);
+app.use("/finance",finRoutes);
+
 
 const productRoutes = require("./routes/product");
 app.use("/products", productRoutes);
