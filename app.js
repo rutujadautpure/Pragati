@@ -14,15 +14,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 
-
-  
-
-
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user"); // Ensure this path is correct
 const authRoutes = require("./routes/auth");
+const finRoutes = require("./routes/finance");
 
 const Hiringroute = require("./routes/hiring")
 const Applicationroute = require("./routes/application")
@@ -36,9 +33,6 @@ app.use(cors());
 
 // Serve static files from the 'public' folder
 app.use('/uploads', express.static(path.join(__dirname, 'public', 'uploads')));
-
-  
-
 
 
 // Database Connection
@@ -92,8 +86,6 @@ passport.deserializeUser(async function(id, done) {
 });
 // Flash Messages
 app.use(flash());
-
-// Middleware to pass flash messages to all views
 app.use((req, res, next) => {
     res.locals.messages = {
         success: req.flash("success"),
@@ -120,8 +112,12 @@ app.get("/home", (req, res) =>{
 app.get("/workerhome", (req, res) => res.render("./worker/home"));
 app.use('/hiring',Hiringroute);
 app.use('/worker',Applicationroute);
+
 app.use("/seller", sellerDetailsRoute);
 console.log("Seller routes loaded"); // Debugging
+
+app.use("/finance",finRoutes);
+
 
 const productRoutes = require("./routes/product");
 app.use("/products", productRoutes);

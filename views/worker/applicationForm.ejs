@@ -9,23 +9,23 @@
     <h2>Application Form</h2>
     <form action="/worker/application/<%= hiringid %>" method="POST">
         <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
+        <input type="text" id="name" name="name" value="<%= user.firstName + ' ' + user.lastName %>" required>
         <br><br>
 
         <label for="mob_no">Mobile Number:</label>
-        <input type="text" id="mob_no" name="mob_no" required>
+        <input type="text" id="mob_no" name="mob_no" value="<%= user.mob_no %>" required>
         <br><br>
 
         <label for="pinCode">Pin Code:</label>
-        <input type="text" id="pinCode" name="location[pinCode]" required>
+        <input type="text" id="pinCode" name="location[pinCode]" value="<%= user.pinCode %>" required>
         <br><br>
 
         <label for="state">State:</label>
-        <input type="text" id="state" name="location[state]" required>
+        <input type="text" id="state" name="location[state]" value="<%= user.state %>" required>
         <br><br>
 
         <label for="district">District:</label>
-        <input type="text" id="district" name="location[district]" required>
+        <input type="text" id="district" name="location[district]" value="<%= user.district %>" required>
         <br><br>
 
         <label for="age">Age:</label>

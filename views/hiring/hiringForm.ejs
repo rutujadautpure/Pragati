@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Hiring</title>
-    <link rel="stylesheet" href="../../public/hiring/style.css">
-
-</head>
-<body>
+<% layout("/layouts/boilerplate")%>
     <h2>Add Hiring Details</h2>
     <form action="/hiring/submit/<%= id %>" method="POST">
         <label for="salary">Salary:</label>
@@ -53,5 +44,3 @@
 
         <button type="submit">Submit</button>
     </form>
-</body>
-</html>

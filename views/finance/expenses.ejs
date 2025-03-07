@@ -1,11 +1,11 @@
 
-
 <div class="container mt-4">
     <h2 class="text-center">Your Expenses</h2>
     
-    <% if (typeof expenses !== 'undefined' && expenses.length === 0) { %>
+    <% if (expenses.length === 0) { %>
         <p class="text-center text-muted">No expenses recorded yet.</p>
-    <% } else if (typeof expenses !== 'undefined' && expenses.length > 0) { %>
+    <% } else { %>
+
         <table class="table table-bordered table-striped">
             <thead class="table-dark">
                 <tr>
@@ -28,8 +28,6 @@
                 <% }); %>
             </tbody>
         </table>
-    <% } else { %>
-        <p class="text-center text-muted">Unable to fetch expenses.</p>
     <% } %>
 
     <div class="text-center mt-3">

@@ -1,0 +1,24 @@
+<form action="/finance/add-income" method="POST">
+  <label for="date">Date:</label>
+  <input type="date" name="date" required>
+
+  <label for="source">Income Source:</label>
+  <select name="source" required>
+      <option value="Product Sales">Product Sales</option>
+      <option value="Services">Services</option>
+      <option value="Donations">Donations</option>
+      <option value="Investments">Investments</option>
+  </select>
+
+  <label for="amount">Amount:</label>
+  <input type="number" name="amount" required>
+
+  <label for="payment_method">Payment Method:</label>
+  <select name="payment_method" required>
+      <option value="Cash">Cash</option>
+      <option value="UPI">UPI</option>
+      <option value="Bank Transfer">Bank Transfer</option>
+  </select>
+
+  <button type="submit">Add Income</button>
+</form>
