@@ -9,7 +9,60 @@ router.get("/add-expense", isLoggedIn, (req, res) => {
   res.render("./finance/addExpense"); 
 });
 
+router.get("/set-budget", isLoggedIn, (req, res) => {
+  res.render("./finance/addExpense"); 
+});
 
+router.get("/add-income", isLoggedIn, (req, res) => {
+  res.render("./finance/addExpense"); 
+});
+
+router.post("/add-income", async (req, res) => {
+  try {
+    const { user_id, date, source, amount, payment_method } = req.body;
+
+    if (!user_id || !date || !source || !amount || !payment_method) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    let finance = await Finance.findOne({ user_id });
+
+    if (!finance) {
+      finance = new Finance({ user_id, budget: 0, expenses: [], income: [] });
+    }
+
+    finance.income.push({ date, source, amount, payment_method });
+    await finance.save();
+
+    res.redirect("/finance"); // Redirect to finance page after adding income
+  } catch (error) {
+    res.status(500).send("Server Error");
+  }
+});
+
+router.post("/set-budget", async (req, res) => {
+  try {
+    const { user_id, budget } = req.body;
+
+    if (!user_id || budget === undefined) {
+      return res.status(400).json({ message: "User ID and budget are required" });
+    }
+
+    let finance = await Finance.findOne({ user_id });
+
+    if (!finance) {
+      finance = new Finance({ user_id, budget, expenses: [], income: [] });
+    } else {
+      finance.budget = budget;
+    }
+
+    await finance.save();
+
+    res.redirect("/finance"); // Redirect to finance page after setting budget
+  } catch (error) {
+    res.status(500).send("Server Error");
+  }
+});
 
 // Assuming you are using user authentication to get the logged-in user's ID
 router.get("/dashboard", async (req, res) => {

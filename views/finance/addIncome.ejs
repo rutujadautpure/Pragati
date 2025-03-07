@@ -1,0 +1,30 @@
+<% layout("/layouts/boilerplate")%>
+
+    <h2>Add Income</h2>
+    <form action="/finance/add-income" method="POST">
+        <input type="hidden" name="user_id" value="<%= user_id %>">
+
+        <label>Date:</label>
+        <input type="date" name="date" required><br>
+
+        <label>Source:</label>
+        <select name="source" required>
+            <option value="Product Sales">Product Sales</option>
+            <option value="Services">Services</option>
+            <option value="Donations">Donations</option>
+            <option value="Investments">Investments</option>
+        </select><br>
+
+        <label>Amount:</label>
+        <input type="number" name="amount" required><br>
+
+        <label>Payment Method:</label>
+        <select name="payment_method" required>
+            <option value="Cash">Cash</option>
+            <option value="UPI">UPI</option>
+            <option value="Bank Transfer">Bank Transfer</option>
+        </select><br>
+
+        <button type="submit">Add Income</button>
+    </form>
+
