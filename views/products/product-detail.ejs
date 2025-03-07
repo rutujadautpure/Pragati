@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= product.name %> Details</title>
+    <%- include("../layouts/layout.ejs") %>
     <style>
         * {
             margin: 0;
@@ -154,8 +155,8 @@
         }
 
         .qr-scanner img {
-            width: 200px;
-            height: 200px;
+            width: 150px;
+            height: 150px;
         }
 
         @media (max-width: 768px) {
@@ -219,9 +220,9 @@
                 <% } %>
 
                 <!-- Chat to Buy Button -->
-                <% if (product.UserId && product.UserId.mob_no) { %>
+                <!-- <% if (product.UserId && product.UserId.mob_no) { %>
                     <a href="https://wa.me/<%= product.UserId.mob_no %>" class="btn whatsapp-btn">Chat to Buy</a>
-                <% } %>
+                <% } %> -->
             </div>
 
             <!-- QR Scanner Section -->
