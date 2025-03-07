@@ -6,11 +6,15 @@ const path = require("path");
 const flash = require("connect-flash");
 const ejsMate = require("ejs-mate");
 const sellerDetailsRoute = require("./routes/sellerDetail");
-
-
+const financeVideoRoutes = require('./routes/financeVideoRoutes');
+const axios = require('axios');
+const cheerio = require('cheerio');
+const ownerProductRoutes = require('./routes/ownerProduct');
 require("dotenv").config();
 
 app.use(express.static(path.join(__dirname, 'public')));
+const {isAuthorized} = require("./middleware")
+const Product = require("./models/product")
 
 
 
@@ -104,26 +108,56 @@ app.get("/", (req, res) => {
     res.render("Homepage/index"); // No need for './' or .ejs extension
 });
 const businessRoutes = require("./routes/business");
-app.use("/business", businessRoutes);
+app.use("/business", isAuthorized(["Entrepreneur"]),businessRoutes);
 
 app.use("/auth", authRoutes);
-app.get("/home", (req, res) =>{
+app.get("/home",isAuthorized(["Entrepreneur"]), (req, res) =>{
     res.render("index")});
-app.get("/workerhome", (req, res) => res.render("./worker/home"));
-app.use('/hiring',Hiringroute);
-app.use('/worker',Applicationroute);
+app.get("/workerhome", isAuthorized(["Worker"]),(req, res) => res.render("./worker/home"));
+app.use('/hiring',isAuthorized(["Entrepreneur"]),Hiringroute);
+app.use('/worker',isAuthorized(["Worker"]),Applicationroute);
 
-app.use("/seller", sellerDetailsRoute);
-console.log("Seller routes loaded"); // Debugging
+app.use("/seller",sellerDetailsRoute);
 
 app.use("/finance",finRoutes);
 
 
+app.use('/Videofinance', financeVideoRoutes);
+app.use('/myproducts', isAuthorized(["Entrepreneur"]),ownerProductRoutes);
 const productRoutes = require("./routes/product");
-app.use("/products", productRoutes);
+app.use("/products", isAuthorized(["Entrepreneur"]),productRoutes);
+app.get('/allProducts', async (req, res) => {
+    try {
+        // Capture search and category filter from query parameters
+        const { search, category } = req.query;
+
+        // Build filter object based on the query parameters
+        let filter = {};
+
+        // If search term is provided, add the name filter
+        if (search) {
+            filter.name = { $regex: search, $options: 'i' };  // Case-insensitive search
+        }
+
+        // If category is provided, add the category filter
+        if (category) {
+            filter.category = category;
+        }
+
+        // Fetch products based on the filter criteria
+        const products = await Product.find(filter).populate('UserId');  // Populating UserId
+
+        // Render the same page with filtered products
+        res.render('products/allProducts', { products, search, category });
+    } catch (err) {
+        console.error('Error fetching products:', err);
+        res.status(500).send("Error fetching products.");
+    }
+});
+
 
 const financeRoutes = require("./routes/finance");
-app.use("/finance", financeRoutes);
+app.use("/finance",isAuthorized(["Entrepreneur"]), financeRoutes);
 
 
 const SingleproductRoutes = require('./routes/seperateProductRoutes');
@@ -134,7 +168,70 @@ app.use(SingleproductRoutes);
 
 
 
-app.get("/dashboard", (req, res) => res.render("./finance/dashboard"));
+
+
+
+
+
+
+
+
+
+app.get('/scrape', async (req, res) => {
+    const url = 'https://www.youtube.com/results?search_query=finance';  // Replace with the actual URL to scrape
+  
+    try {
+      console.log(`Scraping URL: ${url}`);
+  
+      const { data } = await axios.get(url);  // Fetch the HTML data
+      console.log('Page HTML fetched successfully');
+  
+      const $ = cheerio.load(data);  // Load the HTML into Cheerio
+  
+      // Check if data is loaded correctly
+      if (!data || data.length === 0) {
+        console.error('No HTML data received from the page');
+        return res.status(500).send('Failed to retrieve data');
+      }
+  
+      // Example: Scrape the top 5 finance video titles and links
+      const videos = [];
+      $('selector-for-video-title').each((index, element) => {
+        if (index < 5) {  // Limit to top 5 videos
+          const title = $(element).text();
+          const link = $(element).attr('href');
+          console.log(`Found video: ${title} - ${link}`);
+          videos.push({ title, link });
+        }
+      });
+  
+      // Check if videos are found
+      if (videos.length === 0) {
+        console.error('No videos found');
+        return res.status(500).send('Failed to scrape any videos');
+      }
+  
+      // Send the scraped video data to the EJS view
+      console.log('Rendering videos...');
+      res.render('scraped', { title: 'Top 5 Finance Videos', videos });
+    } catch (error) {
+      console.error('Error during scraping:', error);
+      res.status(500).send('Error scraping the page');
+    }
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+app.get("/dashboard", isAuthorized(["Entrepreneur"]),(req, res) => res.render("./finance/dashboard"));
 
 app.get("/", (req, res) => res.send("Server is running..."));
 

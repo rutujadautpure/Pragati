@@ -20,6 +20,8 @@
   "homepage": "https://github.com/khedkarsayali/SHE_Solves_Hack_Hustlers#readme",
   "dependencies": {
     "aws-sdk": "^2.1692.0",
+    "axios": "^1.8.2",
+    "cheerio": "^1.0.0",
     "cloudinary": "^1.41.3",
     "connect-flash": "^0.1.1",
     "cors": "^2.8.5",
@@ -37,7 +39,10 @@
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^8.0.0",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "puppeteer": "^24.4.0",
+    "puppeteer-core": "^24.4.0",
+    "xml2js": "^0.6.2"
   },
   "devDependencies": {
     "sass": "^1.85.1"
