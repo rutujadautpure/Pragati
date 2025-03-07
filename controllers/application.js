@@ -129,8 +129,28 @@ async function getJobsByDistrict (req,res){
 
 
 
+async function openApplyForm (req,res){
+    try {
+        const hiringid = req.params.hiringId;
+        const user = await User.findById(req.user._id); // Fetch logged-in user's details
+
+        if (!user) {
+            return res.status(404).send("User not found");
+        }
+
+        return res.render("./worker/applicationForm", {
+            hiringid: hiringid,
+            user: user
+        });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send("Server error");
+    }
+}
+
 
 module.exports = { handleApplyForm,
     getAllJobs,
-    getJobsByDistrict
+    getJobsByDistrict,
+    openApplyForm
  };
