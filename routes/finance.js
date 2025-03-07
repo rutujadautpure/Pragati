@@ -1,4 +1,5 @@
-
+const express = require("express");
+const router = express.Router();
 const Finance = require("../models/finance");
 const { isLoggedIn } = require("../middleware");
 
@@ -9,7 +10,6 @@ router.get("/add-expense",(req, res) => {
 
 router.post("/add-expense", isLoggedIn,async (req, res) => {
     try {
-      console.log("Received POST request:", req.body); // Debugging
   
       const { date, category, amount, payment_method, notes } = req.body;
       const user_id = req.user?._id;
