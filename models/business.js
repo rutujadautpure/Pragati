@@ -13,7 +13,7 @@ const businessSchema = new mongoose.Schema({
             "Fashion, Handicraft and Luggage",
             "Home Decor, Furniture and Hardware",
             "Electrical, Electronics and Software",
-            "Books, Office Supplies and Madla",
+            "Books, Office Supplies and Media",
             "Personal Care Health and Beauty",
             "Sports, Hobbies, Toys and Events",
             "Others and Services"

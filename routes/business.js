@@ -31,9 +31,9 @@ router.post("/register", async (req, res) => {
         const newBusiness = new Business({
             _id: req.user._id, 
             category,
-            businessName:"business",
+            businessName,
             tradeName:"business",
-            incorporationDate,
+            incorporationDate:new Date("2020-01-01"),
             description,
             businessEmail,
             supportEmail,
