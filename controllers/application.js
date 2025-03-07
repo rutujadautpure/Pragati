@@ -1,8 +1,11 @@
-const Applicant=require("../models/application")
 const Business = require("../models/business")
 const Hiring = require("../models/hiring")
-const Aplicant = require("../models/application")
+const Applicant = require("../models/application")
 const User = require("../models/user")
+const axios = require("axios");
+require("dotenv").config();
+
+
 
 async function handleApplyForm(req, res) {
     try {
@@ -126,6 +129,7 @@ async function getJobsByDistrict (req,res){
         res.status(500).send("Internal Server Error");
     }
 }
+
 
 
 

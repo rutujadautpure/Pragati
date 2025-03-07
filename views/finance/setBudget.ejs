@@ -1,4 +1,5 @@
-
+<% layout("/layouts/boilerplate")%>
+<%- include("../layouts/layout.ejs") %>
 <h2>Set Your Budget</h2>
 <form action="/finance/set-budget" method="POST">
     <input type="hidden" name="userId" value="<%= userId %>">

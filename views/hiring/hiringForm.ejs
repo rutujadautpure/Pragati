@@ -1,4 +1,6 @@
 <% layout("/layouts/boilerplate")%>
+<%- include("../layouts/layout.ejs") %>
+
     <h2>Add Hiring Details</h2>
     <form action="/hiring/submit/<%= id %>" method="POST">
         <label for="salary">Salary:</label>

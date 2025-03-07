@@ -1,3 +1,6 @@
+<% layout("/layouts/boilerplate")%>
+<%- include("../layouts/layout.ejs") %>
+
 <form action="/finance/add-income" method="POST">
   <label for="date">Date:</label>
   <input type="date" name="date" required>
