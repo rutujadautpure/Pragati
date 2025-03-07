@@ -1,82 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Jobs</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 20px;
-        }
-        .job-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-        }
-        .job-card {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 350px;
-        }
-        .job-card h2 {
-            margin: 0;
-            color: #333;
-        }
-        .job-card p {
-            margin: 5px 0;
-            color: #666;
-        }
-        .contact-info {
-            background: #f9f9f9;
-            padding: 10px;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
-        .contact-info strong {
-            color: #222;
-        }
-    </style>
-</head>
-<body>
-
+<% layout("/layouts/boilerplateworker")%>
     <h1>Available Jobs</h1>
 
+    <div class="filter-container">
+        <label for="jobFilter">Filter Jobs:</label>
+        <select id="jobFilter" onchange="filterJobs()">
+            <option value="all" <%= filter === "all" ? "selected" : "" %>>All Jobs</option>
+            <option value="district" <%= filter === "district" ? "selected" : "" %>>Jobs in My District</option>
+        </select>
+    </div>
+
     <div class="job-container">
-        <% for (let i = 0; i < jobs.length; i++) { %>
-            <form action="/worker/applyForm/<%= jobs[i]._id %>" method="GET">
-                <div class="job-card">
-                    <!-- Hidden field to store Hiring ID -->
-                    <input type="hidden" name="jobId" value="<%= jobs[i]._id %>">
-    
-                    <h2><%= business[i] %></h2>
-    
-                    <p><strong>Salary:</strong> ₹<%= jobs[i].salary %> per month</p>
-                    <p><strong>Business Type:</strong> <%= jobs[i].businessType %></p>
-                    <p><strong>Job Role:</strong> <%= jobs[i].jobRole %></p>
-                    <p><strong>Description:</strong> <%= jobs[i].jobRoleDescription %></p>
-                    <p><strong>Job Hours:</strong> <%= jobs[i].jobHours %> hours/day</p>
-                    <p><strong>Vacancies:</strong> <%= jobs[i].vacancies %></p>
-                    <p><strong>Location:</strong> <%= jobs[i].location.district %>, <%= jobs[i].location.state %> - <%= jobs[i].location.pinCode %></p>
-                    <p><strong>Deadline to Apply:</strong> <%= new Date(jobs[i].deadlineToApply).toLocaleDateString() %></p>
-    
-                    <div class="contact-info">
-                        <h3>Contact Information</h3>
-                        <p><strong>Name:</strong> <%= jobs[i].contactInfo.name %></p>
-                        <p><strong>Email:</strong> <%= jobs[i].contactInfo.email %></p>
-                        <p><strong>Phone:</strong> <%= jobs[i].contactInfo.phone %></p>
+        <% if (jobs.length === 0) { %>
+            <div class="no-jobs-card">
+                <img src="https://cdn-icons-png.flaticon.com/512/2748/2748558.png" alt="No Jobs Icon">
+                <h2>No Job openings Currently</h2>
+                <p>Looks like there are no job postings available at the moment.</p>
+                <p>Please check back later or try changing the filter.</p>
+            </div>
+        <% } else { %>
+            <% for (let i = 0; i < jobs.length; i++) { %>
+                <form action="/worker/applyForm/<%= jobs[i]._id %>" method="GET">
+                    <div class="job-card">
+                        <input type="hidden" name="jobId" value="<%= jobs[i]._id %>">
+
+                        <h2><%= business[i] %></h2>
+
+                        <p><strong>Salary:</strong> ₹<%= jobs[i].salary %> per month</p>
+                        <p><strong>Business Type:</strong> <%= jobs[i].businessType %></p>
+                        <p><strong>Job Role:</strong> <%= jobs[i].jobRole %></p>
+                        <p><strong>Description:</strong> <%= jobs[i].jobRoleDescription %></p>
+                        <p><strong>Job Hours:</strong> <%= jobs[i].jobHours %> hours/day</p>
+                        <p><strong>Vacancies:</strong> <%= jobs[i].vacancies %></p>
+                        <p><strong>Location:</strong> <%= jobs[i].location.district %>, <%= jobs[i].location.state %> - <%= jobs[i].location.pinCode %></p>
+                        <p><strong>Deadline to Apply:</strong> <%= new Date(jobs[i].deadlineToApply).toLocaleDateString() %></p>
+
+                        <div class="contact-info">
+                            <h3>Contact Information</h3>
+                            <p><strong>Name:</strong> <%= jobs[i].contactInfo.name %></p>
+                            <p><strong>Email:</strong> <%= jobs[i].contactInfo.email %></p>
+                            <p><strong>Phone:</strong> <%= jobs[i].contactInfo.phone %></p>
+                        </div>
+
+                        <% if (appliedJobIds.includes(jobs[i]._id.toString())) { %>
+                            <button type="button" disabled>Applied</button>
+                        <% } else { %>
+                            <button type="submit">Apply</button>
+                        <% } %>
                     </div>
-                    <button type="submit">Apply</button>
-                </div>
-            </form>
-            
+                </form>
+            <% } %>
         <% } %>
     </div>
 
-</body>
-</html>
+    <script>
+        function filterJobs() {
+            const filter = document.getElementById("jobFilter").value;
+            if (filter === "all") {
+                window.location.href = "/worker/alljobs";
+            } else {
+                window.location.href = "/worker/jobsByDistrict";
+            }
+        }
+    </script>
