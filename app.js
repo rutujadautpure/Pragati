@@ -169,8 +169,6 @@ app.use(SingleproductRoutes);
 
 
 
-
-
 app.use(financeVideoRoutes);
 
 
