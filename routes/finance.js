@@ -67,7 +67,7 @@ router.post("/add-income", async (req, res) => {
   } catch (err) {
       console.error(err);
       req.flash("error", "Something went wrong.");
-      res.redirect("/add-income");
+      res.redirect("/finance/add-income");
   }
 });
 
