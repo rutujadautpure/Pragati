@@ -16,7 +16,7 @@ const IncomeSchema = new mongoose.Schema({
   date: { type: Date, required: true },
   source: { 
     type: String, 
-    enum: ["Product Sales", "Services", "Donations", "Investments"], 
+    enum: ["Online Sales", "Offline Sales", "Donations", "Investments"], 
     required: true 
   },
   amount: { type: Number, required: true },
