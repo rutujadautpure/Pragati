@@ -2,9 +2,10 @@ const express = require('express');
 const { Video } = require('../models/video');
 const Business = require('../models/business');
 const router = express.Router();
+const {isAuthorized} = require("../middleware")
 
 // Route to fetch both finance-related videos and category-related videos
-router.get('/videos/finance', async (req, res) => {
+router.get('/videos/finance',isAuthorized(["Entrepreneur"]), async (req, res) => {
   try {
     const userId = req.user._id;  // Assuming user is authenticated and user ID is available
     console.log(userId);
