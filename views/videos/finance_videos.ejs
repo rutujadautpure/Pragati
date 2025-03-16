@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Finance & Category Videos</title>
+    <%- include("../layouts/layout.ejs") %>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -53,7 +54,7 @@
     </style>
 </head>
 <body>
-
+    <% layout("/layouts/boilerplate")%>
     <h2>Finance Videos</h2>
     <div class="video-container">
         <% videos.forEach(video => { %>

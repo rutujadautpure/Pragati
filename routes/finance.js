@@ -96,9 +96,9 @@ router.post("/set-budget", async (req, res) => {
       res.redirect("/finance/dashboard");
 
   } catch (err) {
-      console.error(err);
-      req.flash("error", "Something went wrong.");
-      res.redirect("/set-budget");
+    console.error("Error in /set-budget:", err);
+    req.flash("error", "Something went wrong.");
+    res.redirect("/set-budget");
   }
 });
 
