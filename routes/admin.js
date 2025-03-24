@@ -167,16 +167,16 @@ router.get('/addVideo', (req, res) => {
     }
   });
   router.delete('/deleteVideo/:videoId', async (req, res) => {
-    try {
-      const { videoId } = req.params; // Get videoId from URL params
-      await Video.findByIdAndDelete(videoId);
-      res.json({ success: true, message: 'Video deleted successfully' });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ success: false, message: 'Error deleting video' });
-    }
-  });
-  
+  try {
+    const { videoId } = req.params; // Get videoId from URL params
+    await Video.findByIdAndDelete(videoId);
+    res.json({ success: true, message: 'Video deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Error deleting video' });
+  }
+});
+
   
 
 module.exports = router;
