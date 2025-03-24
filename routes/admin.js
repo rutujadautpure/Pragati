@@ -2,10 +2,11 @@ const express = require("express");
 const router = express.Router();
 const Admin = require("../models/admin"); 
 const passport = require("passport");
+const { Video } = require('../models/video');
 
 router.get("/login", (req, res) => {
     res.render("admin/login"); 
-  });
+});
 
 
 router.post("/register", async (req, res) => {
@@ -98,5 +99,84 @@ router.get('/home', (req, res) => {
     res.render('admin/home');
 });
 
+router.get('/addVideo', (req, res) => {
+    res.render('admin/addVideo', {
+      categories: [
+        'Finance',
+        'Tax',
+        'Fashion, Handicraft and Luggage',
+        'Home Decor, Furniture and Hardware',
+        'Electrical, Electronics and Software',
+        'Books, Office Supplies and Madla',
+        'Personal Care Health and Beauty',
+        'Sports, Hobbies, Toys and Events',
+        'Others and Services',
+      ],
+    });
+  });
+
+  function convertToEmbedUrl(url) {
+    const videoIdMatch = url.match(/(?:youtu\.be\/|youtube\.com\/.*[?&]v=)([^?&]+)/);
+    if (videoIdMatch) {
+      return `https://www.youtube.com/embed/${videoIdMatch[1]}`;
+    }
+    throw new Error('Invalid YouTube URL');
+  }
+  
+  // Handle video submission
+  router.post('/addVideo', async (req, res) => {
+    try {
+      const { name, url, description, category } = req.body;
+  
+      // Validate fields
+      if (!name || !url || !description || !category) {
+        return res.status(400).send('All fields are required');
+      }
+  
+      // Convert URL to embed format
+      const embedUrl = convertToEmbedUrl(url);
+  
+      // Save video
+      const newVideo = new Video({ name, url: embedUrl, description, category });
+      await newVideo.save();
+      res.redirect('/admin/addVideo');
+    } catch (error) {
+      console.error(error);
+      res.status(500).send(error.message || 'Internal Server Error');
+    }
+  });
+
+  router.get('/showVideo', async (req, res) => {
+    try {
+      const videos = await Video.find({});
+      const categories = [
+        'Finance',
+        'Tax',
+        'Fashion, Handicraft and Luggage',
+        'Home Decor, Furniture and Hardware',
+        'Electrical, Electronics and Software',
+        'Books, Office Supplies and Madla',
+        'Personal Care Health and Beauty',
+        'Sports, Hobbies, Toys and Events',
+        'Others and Services',
+      ];
+      res.render('admin/addVideo', { categories, videos });
+    } catch (error) {
+      console.error('Error fetching videos:', error);
+      res.status(500).send('Error fetching videos');
+    }
+  });
+  router.delete('/deleteVideo/:videoId', async (req, res) => {
+    try {
+      const { videoId } = req.params; // Get videoId from URL params
+      await Video.findByIdAndDelete(videoId);
+      res.json({ success: true, message: 'Video deleted successfully' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: 'Error deleting video' });
+    }
+  });
+  
+  
 
 module.exports = router;
