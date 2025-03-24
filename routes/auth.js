@@ -1,6 +1,7 @@
 const express = require("express");
 const passport = require("passport");
 const User = require("../models/user");
+const Admin = require("../models/admin");
 
 const router = express.Router();
 router.get("/login", (req, res) => {
@@ -96,6 +97,7 @@ router.get("/logout", (req, res, next) => {
     res.render("./Homepage/index");
   });
 });
+
 
 
 module.exports = router;

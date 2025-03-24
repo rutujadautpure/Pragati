@@ -86,7 +86,7 @@ body::before {
             </div>
       
             <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
-                <form action="/auth/login" method="POST">
+                <form action="/admin/login" method="POST">
                 
               <div class="container">
                 <div class="card bg-glass">
@@ -119,14 +119,8 @@ body::before {
                       <div class="text-center text-lg-start mt-4 pt-2">
                         <button  type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg"
                           style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
-                        <div style="display: flex; justify-content: space-between; width: 100%;">
-                          <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="/auth/signup"
-                            class="link-danger">Register</a></p>
-                        <p class="small fw-bold mt-2 pt-1 mb-0">Are you Admin ? <a href="/admin/login"
-                              class="link-danger">Admin Login</a></p>
-
-                        </div>
-                        
+                        <p class="small fw-bold mt-2 pt-1 mb-0">Not an Admin? <a href="/auth/login"
+                            class="link-danger">Login</a></p>
                       </div>
             
                     </form>
