@@ -21,9 +21,10 @@ const router = express.Router();
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
-const User = require("./models/user"); // Ensure this path is correct
+const User = require("./models/user"); 
 const authRoutes = require("./routes/auth");
 const finRoutes = require("./routes/finance");
+const adminRoutes = require("./routes/admin");
 
 const Hiringroute = require("./routes/hiring")
 const Applicationroute = require("./routes/application")
@@ -108,6 +109,9 @@ app.use(fileUpload({
     tempFileDir: "/tmp/"
 }))
 
+// Admin Home Route
+
+
 app.get("/", (req, res) => {
     res.render("Homepage/index"); // No need for './' or .ejs extension
 });
@@ -115,6 +119,8 @@ const businessRoutes = require("./routes/business");
 app.use("/business", isAuthorized(["Entrepreneur"]),businessRoutes);
 
 app.use("/auth", authRoutes);
+app.use("/admin", adminRoutes);
+
 app.get("/home",isAuthorized(["Entrepreneur"]), (req, res) =>{
     res.render("index")});
 app.get("/workerhome", isAuthorized(["Worker"]),(req, res) => res.render("./worker/home"));
