@@ -320,14 +320,7 @@ body {
     background-color: var(--dark-grey);
 	color: var(--light);
 }
-body.dark #content nav .notification-menu li:hover {
-    background-color: var(--light-blue);
-	color: var(--light);
-}
-body.dark #content nav .notification-menu li a{
-    background-color: var(--dark-grey);
-	color: var(--light);
-}
+
 #content nav .profile img {
 	width: 36px;
 	height: 36px;

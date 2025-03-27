@@ -4,21 +4,25 @@
 	</a>
 	<ul class="side-menu top">
 		<li class="active">
-			<a href="/dashboard">
+			<a href="/admin/home">
 				<i class='bx bxs-dashboard bx-sm'></i>
-				<span class="text">Dashboard</span>
+				<span class="text">Home</span>
 			</a>
 		</li>
 		<li>
-			<a href="/store">
-				<i class='bx bxs-shopping-bag-alt bx-sm'></i>
-				<span class="text">My Store</span>
+			<a href="/admin/showVideo">
+				<!-- <span class="material-symbols-outlined">
+					school
+				</span> -->
+				<span class="text"> Manage Courses</span>
 			</a>
 		</li>
 		<li>
 			<a href="/analytics">
-				<i class='bx bxs-doughnut-chart bx-sm'></i>
-				<span class="text">Analytics</span>
+				<span class="text material-symbols-outlined">
+					account_balance
+				</span>
+				<span class="text">Schemes</span>
 			</a>
 		</li>
 		<li>
@@ -49,3 +53,18 @@
 		</li>
 	</ul>
 </section>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+	const currentPath = window.location.pathname; // Get current path
+	const menuItems = document.querySelectorAll('.side-menu li a');
+  
+	menuItems.forEach(item => {
+	  if (item.getAttribute('href') === currentPath) {
+		item.parentElement.classList.add('active');
+	  } else {
+		item.parentElement.classList.remove('active');
+	  }
+	});
+  });
+
+</script>
