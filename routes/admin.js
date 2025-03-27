@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const Admin = require("../models/admin"); 
+const Applicant = require("../models/application"); 
+const Business = require("../models/business"); 
 const passport = require("passport");
 
 router.get("/login", (req, res) => {
@@ -94,9 +96,72 @@ router.get("/logout", (req, res, next) => {
   });
 });
 
-router.get('/home', (req, res) => {
-    res.render('admin/home');
+//View all job seeker
+router.get("/job-seekers", async (req, res) => {
+  try {
+      const jobSeekers = await Applicant.aggregate([
+          {
+              $group: { 
+                  _id: "$userId",  // Group by userId to count unique job seekers
+                  name: { $first: "$name" }, 
+                  mob_no: { $first: "$mob_no" }, 
+                  location: { $first: "$location" }, 
+                  age: { $first: "$age" } 
+              }
+          }
+      ]);
+
+      const jobSeekerCount = jobSeekers.length; // Count unique job seekers
+
+      return res.render("./admin/jobSeekers", { jobSeekers, jobSeekerCount });
+
+  } catch (error) {
+      console.error("Error fetching job seekers:", error);
+      res.status(500).json({ message: "Internal Server Error" });
+  }
 });
+
+//View all business
+router.get("/businesses", async (req, res) => {
+  try {
+      const businesses = await Business.find({}, "businessName businessEmail businessPhone");
+
+      return res.render("./admin/business", { businesses, businessCount: businesses.length });
+
+  } catch (error) {
+      console.error("Error fetching businesses:", error);
+      res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+
+
+router.get("/home", async (req, res) => {
+  try {
+    // Count distinct job seekers based on userId
+    const jobSeekerCount = await Applicant.aggregate([
+        { $group: { _id: "$userId" } }, // Group by userId
+        { $count: "count" } // Count unique userIds
+    ]);
+
+    // Count distinct businesses based on _id (as businesses already have unique _id per entry)
+    const businessCount = await Business.countDocuments();
+
+    return res.render("./admin/home", { 
+        jobSeekerCount: jobSeekerCount.length > 0 ? jobSeekerCount[0].count : 0, 
+        businessCount 
+    });
+
+  }catch (error) {
+      console.error("Error fetching dashboard data:", error);
+      res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+// router.get('/home', (req, res) => {
+//     //res.render('admin/home');
+//     res.redirect("/admin/dashboard");
+// });
 
 
 module.exports = router;
