@@ -1,4 +1,5 @@
 <% layout('/layouts/adminBoilerplate') %>
+<%- include("../layouts/layout.ejs") %>
 <div class="head-title">
 	<div class="left">
 		<h1>Dashboard</h1>
@@ -12,20 +13,25 @@
 
 </div>
 <ul class="box-info">
-    <li>
-        <i class='bx bxs-calendar-check' ></i>
-        <span class="text">
-            <h3>1020</h3>
-            <p>Job Seekers</p>
-        </span>
-    </li>
-    <li>
-        <i class='bx bxs-group' ></i>
-        <span class="text">
-            <h3>2834</h3>
-            <p>Business</p>
-        </span>
-    </li>
+    <a href="/admin/job-seekers" style="text-decoration: none">
+        <li>
+            <i class='bx bxs-calendar-check' ></i>
+            <span class="text">
+                <h3><%= jobSeekerCount %></h3>
+                <p>Job Seekers</p>
+            </span>
+        </li>
+    </a>
+    <a href="/admin/businesses" style="text-decoration: none">
+        <li>
+            <i class='bx bxs-group' ></i>
+            <span class="text">
+                <h3><%= businessCount %></h3>
+                <p>Business</p>
+            </span>
+        </li>
+    </a>
+    
     <li>
         <i class='bx bxs-dollar-circle' ></i>
         <span class="text">

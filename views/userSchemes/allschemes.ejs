@@ -1,0 +1,45 @@
+<% layout('/layouts/boilerplate') %>
+<%- include("../layouts/layout.ejs") %>
+<link rel="stylesheet" href="/css/userScheme/style.css">
+
+<div class="container">
+  <div class="header">
+    <h1>Schemes</h1>
+  </div>
+
+  <div class="table-container">
+    <div class="table-card">
+      <div class="table-header">
+        <h3>All Schemes</h3>
+        <i class='bx bx-filter'></i>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Scheme Type</th>
+            <th>Website</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% schemes.forEach(scheme => { %>
+            <tr>
+              <td><%= scheme.name %></td>
+              <td><%= scheme.description %></td>
+              <td><%= scheme.schemeType %></td>
+              <td>
+                <a href="<%= scheme.website %>" target="_blank">View</a>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+
+      <nav aria-label="Page navigation example">
+        <ul class="pagination" id="pagination"></ul>
+      </nav>
+    </div>
+  </div>
+</div>

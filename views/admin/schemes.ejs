@@ -1,0 +1,146 @@
+<% layout('/layouts/adminBoilerplate') %>
+<%- include("../layouts/layout.ejs") %>
+
+<div class="left">
+  <h1>Schemes</h1>
+</div>
+<div class="row">
+    <div style="border: 1px solid #ccc;">
+      <div class="table-data">
+        <div class="order">
+          <div class="head">
+            <h3>All Schemes</h3>
+            <button class="btn btn-primary" onclick="showForm()">Add Scheme</button>
+            <i class='bx bx-filter'></i>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Scheme Type</th>
+                <th>Website</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% schemes.forEach(scheme => { %>
+                <tr>
+                  <td style="max-width: 150px;"><%= scheme.name %></td>
+                  <td style="max-width: 150px;"><%= scheme.description %></td>
+                  <td style="max-width: 150px;"><%= scheme.schemeType %></td>
+                  <td style="max-width: 150px;">
+                    <a href="<%= scheme.website %>" target="_blank">View</a>
+                  </td>
+                  <td>
+                    <button class="btn btn-outline-danger delete-btn" data-id="<%= scheme._id %>">
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+          <nav aria-label="Page navigation example" style="margin-top: 20px;">
+            <ul class="pagination justify-content-center" id="pagination"></ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div id="formOverlay" 
+  style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0, 0, 0, 0.5); z-index: 1050; justify-content: center; align-items: center;">
+  
+  <div class="table-data" style="background-color: #fff; padding: 20px; border-radius: 10px; max-width: 600px; width: 100%;">
+    <div class="todo">
+      <div class="head d-flex justify-content-between align-items-center">
+        <h3>Add Scheme</h3>
+        <button style="border: none; background: none; font-size: 20px; cursor: pointer;" onclick="hideForm()">✖</button>
+      </div>
+      <div class="todo-list">
+        <form action="/admin/scheme" method="post" class="needs-validation" novalidate>
+          <div class="mb-3">
+            <label for="name" class="form-label">Scheme Name:</label>
+            <input type="text" id="name" name="name" class="form-control" required />
+          </div>
+
+          <div class="mb-3">
+            <label for="description" class="form-label">Description:</label>
+            <textarea id="description" name="description" class="form-control" rows="4" required></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label for="schemeType" class="form-label">Category:</label>
+            <select id="schemeType" name="schemeType" class="form-select" required>
+              <option value="">Select</option>
+              <option value="Central">Central</option>
+              <option value="State">State</option>
+              <option value="Finance">Finance</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="website" class="form-label">Website link:</label>
+            <input type="url" id="website" name="website" class="form-control" required />
+          </div>
+
+          <button type="submit" class="btn btn-primary">Add Scheme</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+  function showForm() {
+    document.getElementById('formOverlay').style.display = 'flex';
+  }
+
+  function hideForm() {
+    document.getElementById('formOverlay').style.display = 'none';
+  }
+
+  function deleteScheme(schemeId) {
+    if (confirm('Are you sure you want to delete this scheme?')) {
+      fetch(`/admin/deleteScheme/${schemeId}`, {
+        method: 'DELETE',
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          alert(data.message);
+          location.reload(); 
+        } else {
+          alert('Error: ' + data.message);
+        }
+      })
+      .catch(error => console.error('Error:', error));
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".delete-btn").forEach(button => {
+      button.addEventListener("click", function () {
+        const schemeId = this.getAttribute("data-id");
+        if (confirm("Are you sure you want to delete this scheme?")) {
+          fetch(`/admin/deletescheme/${schemeId}`, {
+            method: "DELETE",
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              alert(data.message);
+              window.location.reload();
+            } else {
+              alert("Error: " + data.message);
+            }
+          })
+          .catch(error => console.error("Error:", error));
+        }
+      });
+    });
+  });
+</script>

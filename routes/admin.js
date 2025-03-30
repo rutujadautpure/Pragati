@@ -1,11 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const Admin = require("../models/admin"); 
+const Applicant = require("../models/application"); 
+const Business = require("../models/business"); 
+const Scheme = require("../models/scheme"); 
 const passport = require("passport");
+const { Video } = require('../models/video');
 
 router.get("/login", (req, res) => {
     res.render("admin/login"); 
-  });
+});
 
 
 router.post("/register", async (req, res) => {
@@ -94,9 +98,217 @@ router.get("/logout", (req, res, next) => {
   });
 });
 
-router.get('/home', (req, res) => {
-    res.render('admin/home');
+//View all job seeker
+router.get("/job-seekers", async (req, res) => {
+  try {
+      const jobSeekers = await Applicant.aggregate([
+          {
+              $group: { 
+                  _id: "$userId",  // Group by userId to count unique job seekers
+                  name: { $first: "$name" }, 
+                  mob_no: { $first: "$mob_no" }, 
+                  location: { $first: "$location" }, 
+                  age: { $first: "$age" } 
+              }
+          }
+      ]);
+
+      const jobSeekerCount = jobSeekers.length; // Count unique job seekers
+
+      return res.render("./admin/jobSeekers", { jobSeekers, jobSeekerCount });
+
+  } catch (error) {
+      console.error("Error fetching job seekers:", error);
+      res.status(500).json({ message: "Internal Server Error" });
+  }
 });
+
+//View all business
+router.get("/businesses", async (req, res) => {
+  try {
+      const businesses = await Business.find({}, "businessName businessEmail businessPhone");
+
+      return res.render("./admin/business", { businesses, businessCount: businesses.length });
+
+  } catch (error) {
+      console.error("Error fetching businesses:", error);
+      res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+router.get('/addVideo', (req, res) => {
+    res.render('admin/addVideo', {
+      categories: [
+        'Finance',
+        'Tax',
+        'Fashion, Handicraft and Luggage',
+        'Home Decor, Furniture and Hardware',
+        'Electrical, Electronics and Software',
+        'Books, Office Supplies and Madla',
+        'Personal Care Health and Beauty',
+        'Sports, Hobbies, Toys and Events',
+        'Others and Services',
+      ],
+    });
+  });
+
+  function convertToEmbedUrl(url) {
+    const videoIdMatch = url.match(/(?:youtu\.be\/|youtube\.com\/.*[?&]v=)([^?&]+)/);
+    if (videoIdMatch) {
+      return `https://www.youtube.com/embed/${videoIdMatch[1]}`;
+    }
+    throw new Error('Invalid YouTube URL');
+  }
+  
+  // Handle video submission
+  router.post('/addVideo', async (req, res) => {
+    try {
+      const { name, url, description, category } = req.body;
+  
+      // Validate fields
+      if (!name || !url || !description || !category) {
+        return res.status(400).send('All fields are required');
+      }
+  
+      // Convert URL to embed format
+      const embedUrl = convertToEmbedUrl(url);
+  
+      // Save video
+      const newVideo = new Video({ name, url: embedUrl, description, category });
+      await newVideo.save();
+      res.redirect('/admin/addVideo');
+    } catch (error) {
+      console.error(error);
+      res.status(500).send(error.message || 'Internal Server Error');
+    }
+  });
+
+  router.get('/showVideo', async (req, res) => {
+    try {
+      const videos = await Video.find({});
+      const categories = [
+        'Finance',
+        'Tax',
+        'Fashion, Handicraft and Luggage',
+        'Home Decor, Furniture and Hardware',
+        'Electrical, Electronics and Software',
+        'Books, Office Supplies and Madla',
+        'Personal Care Health and Beauty',
+        'Sports, Hobbies, Toys and Events',
+        'Others and Services',
+      ];
+      res.render('admin/addVideo', { categories, videos });
+    } catch (error) {
+      console.error('Error fetching videos:', error);
+      res.status(500).send('Error fetching videos');
+    }
+  });
+  router.delete('/deleteVideo/:videoId', async (req, res) => {
+  try {
+    const { videoId } = req.params; // Get videoId from URL params
+    await Video.findByIdAndDelete(videoId);
+    res.json({ success: true, message: 'Video deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Error deleting video' });
+  }
+});
+
+  
+// router.get("/scheme", async (req, res) => {
+//   try {
+//     const videos = await Video.find({});
+//       const categories = [
+//         'Finance',
+//         'Tax',
+//         'Fashion, Handicraft and Luggage',
+//         'Home Decor, Furniture and Hardware',
+//         'Electrical, Electronics and Software',
+//         'Books, Office Supplies and Madla',
+//         'Personal Care Health and Beauty',
+//         'Sports, Hobbies, Toys and Events',
+//         'Others and Services',
+//       ];
+//       res.render('admin/schemes', { categories, videos });
+//   } catch (error) {
+//     console.error("Error fetching schemes:", error);
+//     res.status(500).send("Error fetching schemes");
+//   }
+// });
+router.get("/scheme", async (req, res) => {
+  try {
+    const schemes = await Scheme.find();
+    const schemeTypes = await Scheme.distinct("schemeType"); // Fetch distinct scheme types
+
+    res.render("admin/schemes", { schemes, schemeTypes });
+  } catch (error) {
+    console.error("Error fetching schemes:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+router.post("/scheme", async (req, res) => {
+  try {
+    const { name, description, schemeType, website } = req.body;
+    // Validate required fields
+    if (!name || !description || !schemeType) {
+      return res.status(400).send("All required fields must be filled");
+    }
+
+    const newScheme = new Scheme({
+      name,
+      description,
+      schemeType,
+      website,
+    });
+
+    await newScheme.save();
+    res.redirect("/admin/scheme"); // Redirect to the schemes page after adding
+  } catch (error) {
+    console.error("Error adding scheme:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+
+//Delete Scheme
+router.delete("/deletescheme/:id", async (req, res) => {
+  try {
+      await Scheme.findByIdAndDelete(req.params.id);
+      res.json({ success: true, message: "Scheme deleted successfully" });
+  } catch (error) {
+      console.error("Error deleting scheme:", error);
+      res.status(500).json({ success: false, message: "Failed to delete scheme" });
+  }
+});
+
+
+router.get("/home", async (req, res) => {
+  try {
+    // Count distinct job seekers based on userId
+    const jobSeekerCount = await Applicant.aggregate([
+        { $group: { _id: "$userId" } }, // Group by userId
+        { $count: "count" } // Count unique userIds
+    ]);
+
+    // Count distinct businesses based on _id (as businesses already have unique _id per entry)
+    const businessCount = await Business.countDocuments();
+
+    return res.render("./admin/home", { 
+        jobSeekerCount: jobSeekerCount.length > 0 ? jobSeekerCount[0].count : 0, 
+        businessCount 
+    });
+
+  }catch (error) {
+      console.error("Error fetching dashboard data:", error);
+      res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+// router.get('/home', (req, res) => {
+//     //res.render('admin/home');
+//     res.redirect("/admin/dashboard");
+// });
 
 
 module.exports = router;

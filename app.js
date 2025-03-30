@@ -25,6 +25,7 @@ const User = require("./models/user");
 const authRoutes = require("./routes/auth");
 const finRoutes = require("./routes/finance");
 const adminRoutes = require("./routes/admin");
+const userSchemeRoutes = require("./routes/userSchemes");
 
 const Hiringroute = require("./routes/hiring")
 const Applicationroute = require("./routes/application")
@@ -120,6 +121,7 @@ app.use("/business", isAuthorized(["Entrepreneur"]),businessRoutes);
 
 app.use("/auth", authRoutes);
 app.use("/admin", adminRoutes);
+app.use("/userSchemes", userSchemeRoutes);
 
 app.get("/home",isAuthorized(["Entrepreneur"]), (req, res) =>{
     res.render("index")});
