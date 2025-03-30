@@ -1,0 +1,120 @@
+/* General Styles */
+body {
+    font-family: sans-serif;  /* ✅ Changed font */
+    font-size: 16px;  /* ✅ Base font size */
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container {
+    max-width: 90%;
+    margin: 30px auto;
+  }
+  
+  /* Header Styling */
+  .header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .header h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  /* Table Card */
+  .table-container {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .table-card {
+    width: 100%;
+    max-width: 1200px;
+    background: #f0fbfc;  /* ✅ Updated background color */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  /* Table Header */
+  .table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .table-header h3 {
+    color: #444;
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+  
+  /* Table Styling */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #f0fbfc;  /* ✅ Ensures full table has background */
+  }
+  
+  /* ✅ Table head with black text and no background color */
+  thead th {
+    color: black;
+    font-weight: bold;
+    border-bottom: 2px solid #ddd;
+    padding: 15px;
+  }
+  
+  th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    background-color: #f0fbfc; /* ✅ All rows remain #f0fbfc */
+    color: #333;
+    font-size: 16px;  /* ✅ Ensuring 16px font size */
+  }
+  
+  /* Hover effect on rows */
+  tr:hover {
+    background-color: #e0f5f7;  /* Slight hover effect */
+    transition: 0.3s ease;
+  }
+  
+  /* Link Styling */
+  a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+    color: #0056b3;
+  }
+  
+  /* Pagination */
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .pagination li {
+    list-style: none;
+    margin: 0 5px;
+    padding: 8px 12px;
+    background: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .pagination li:hover {
+    background: #0056b3;
+  }
+  

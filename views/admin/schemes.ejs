@@ -1,10 +1,11 @@
 <% layout('/layouts/adminBoilerplate') %>
+<%- include("../layouts/layout.ejs") %>
 
 <div class="left">
   <h1>Schemes</h1>
 </div>
 <div class="row">
-    <div style=" border: 1px solid #ccc;">
+    <div style="border: 1px solid #ccc;">
       <div class="table-data">
         <div class="order">
           <div class="head">
@@ -15,22 +16,31 @@
           <table>
             <thead>
               <tr>
-                <th style="max-width: 150px;">Scheme Name</th>
+                <th>Name</th>
                 <th>Description</th>
-                <th style="max-width: 150px;">Category</th>
-                <th style="max-width: 150px;">Website</th>
+                <th>Scheme Type</th>
+                <th>Website</th>
                 <th>Actions</th>
               </tr>
             </thead>
-            <tbody id="videoTableBody">
-              <% if (!videos || videos.length === 0) { %>
-              <tr>
-                <td colspan="5" class="text-center">No videos available</td>
-              </tr>
-              <% } %>
+            <tbody>
+              <% schemes.forEach(scheme => { %>
+                <tr>
+                  <td style="max-width: 150px;"><%= scheme.name %></td>
+                  <td style="max-width: 150px;"><%= scheme.description %></td>
+                  <td style="max-width: 150px;"><%= scheme.schemeType %></td>
+                  <td style="max-width: 150px;">
+                    <a href="<%= scheme.website %>" target="_blank">View</a>
+                  </td>
+                  <td>
+                    <button class="btn btn-outline-danger delete-btn" data-id="<%= scheme._id %>">
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              <% }) %>
             </tbody>
           </table>
-          
           <nav aria-label="Page navigation example" style="margin-top: 20px;">
             <ul class="pagination justify-content-center" id="pagination"></ul>
           </nav>
@@ -49,7 +59,7 @@
         <button style="border: none; background: none; font-size: 20px; cursor: pointer;" onclick="hideForm()">✖</button>
       </div>
       <div class="todo-list">
-        <form action="/admin/addVideo" method="post" class="needs-validation" novalidate>
+        <form action="/admin/scheme" method="post" class="needs-validation" novalidate>
           <div class="mb-3">
             <label for="name" class="form-label">Scheme Name:</label>
             <input type="text" id="name" name="name" class="form-control" required />
@@ -61,12 +71,18 @@
           </div>
 
           <div class="mb-3">
-            <label for="category" class="form-label">Category:</label>
-            <select id="category" name="category" class="form-select" required>
-              <% categories.forEach(function(category) { %>
-              <option value="<%= category %>"><%= category %></option>
-              <% }) %>
+            <label for="schemeType" class="form-label">Category:</label>
+            <select id="schemeType" name="schemeType" class="form-select" required>
+              <option value="">Select</option>
+              <option value="Central">Central</option>
+              <option value="State">State</option>
+              <option value="Finance">Finance</option>
             </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="website" class="form-label">Website link:</label>
+            <input type="url" id="website" name="website" class="form-control" required />
           </div>
 
           <button type="submit" class="btn btn-primary">Add Scheme</button>
@@ -77,67 +93,9 @@
 </div>
 
 
-  
-  <script>
-    const videos = <%- JSON.stringify(videos) %>;
-    const rowsPerPage = 7;
-    let currentPage = 1;
-  
-    function displayVideos(page) {
-      const startIndex = (page - 1) * rowsPerPage;
-      const endIndex = startIndex + rowsPerPage;
-      const paginatedVideos = videos.slice(startIndex, endIndex);
-  
-      const tableBody = document.getElementById('videoTableBody');
-      tableBody.innerHTML = '';
-  
-      paginatedVideos.forEach(video => {
-        const row = `<tr>
-          <td style="max-width: 150px;">${video.name}</td>
-          <td style="max-width: 150px;">${video.description}</td>
-          <td style="max-width: 150px;">${video.category}</td>
-          <td style="max-width: 150px;">${video.website}</td>
-          <td>
-            <button class="btn btn-outline-danger d-block" onclick="deleteVideo('${video._id}')">Delete</button>
-          </td>
-        </tr>`;
-        tableBody.innerHTML += row;
-      });
-      generatePagination();
-    }
-  
-    function generatePagination() {
-      const totalPages = Math.ceil(videos.length / rowsPerPage);
-      const paginationContainer = document.getElementById('pagination');
-      paginationContainer.innerHTML = '';
-  
-      const prevLi = document.createElement('li');
-      prevLi.className = `page-item ${currentPage === 1 ? 'disabled' : ''}`;
-      prevLi.innerHTML = `<a class="page-link" href="#">Previous</a>`;
-      prevLi.onclick = () => { if (currentPage > 1) displayVideos(--currentPage); };
-      paginationContainer.appendChild(prevLi);
-  
-      for (let i = 1; i <= totalPages; i++) {
-        const li = document.createElement('li');
-        li.className = `page-item ${i === currentPage ? 'active' : ''}`;
-        li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
-        li.onclick = () => { currentPage = i; displayVideos(i); };
-        paginationContainer.appendChild(li);
-      }
-  
-      const nextLi = document.createElement('li');
-      nextLi.className = `page-item ${currentPage === totalPages ? 'disabled' : ''}`;
-      nextLi.innerHTML = `<a class="page-link" href="#">Next</a>`;
-      nextLi.onclick = () => { if (currentPage < totalPages) displayVideos(++currentPage); };
-      paginationContainer.appendChild(nextLi);
-    }
-  
-    displayVideos(1);
-  
- function previewVideo(url) {
-  window.open(url, '_blank');
-}
-function showForm() {
+
+<script>
+  function showForm() {
     document.getElementById('formOverlay').style.display = 'flex';
   }
 
@@ -145,9 +103,9 @@ function showForm() {
     document.getElementById('formOverlay').style.display = 'none';
   }
 
-  function deleteVideo(videoId) {
-    if (confirm('Are you sure you want to delete this video?')) {
-      fetch(`/admin/deleteVideo/${videoId}`, {
+  function deleteScheme(schemeId) {
+    if (confirm('Are you sure you want to delete this scheme?')) {
+      fetch(`/admin/deleteScheme/${schemeId}`, {
         method: 'DELETE',
       })
       .then(response => response.json())
@@ -162,4 +120,27 @@ function showForm() {
       .catch(error => console.error('Error:', error));
     }
   }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".delete-btn").forEach(button => {
+      button.addEventListener("click", function () {
+        const schemeId = this.getAttribute("data-id");
+        if (confirm("Are you sure you want to delete this scheme?")) {
+          fetch(`/admin/deletescheme/${schemeId}`, {
+            method: "DELETE",
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              alert(data.message);
+              window.location.reload();
+            } else {
+              alert("Error: " + data.message);
+            }
+          })
+          .catch(error => console.error("Error:", error));
+        }
+      });
+    });
+  });
 </script>

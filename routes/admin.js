@@ -3,6 +3,7 @@ const router = express.Router();
 const Admin = require("../models/admin"); 
 const Applicant = require("../models/application"); 
 const Business = require("../models/business"); 
+const Scheme = require("../models/scheme"); 
 const passport = require("passport");
 const { Video } = require('../models/video');
 
@@ -214,6 +215,72 @@ router.get('/addVideo', (req, res) => {
 });
 
   
+// router.get("/scheme", async (req, res) => {
+//   try {
+//     const videos = await Video.find({});
+//       const categories = [
+//         'Finance',
+//         'Tax',
+//         'Fashion, Handicraft and Luggage',
+//         'Home Decor, Furniture and Hardware',
+//         'Electrical, Electronics and Software',
+//         'Books, Office Supplies and Madla',
+//         'Personal Care Health and Beauty',
+//         'Sports, Hobbies, Toys and Events',
+//         'Others and Services',
+//       ];
+//       res.render('admin/schemes', { categories, videos });
+//   } catch (error) {
+//     console.error("Error fetching schemes:", error);
+//     res.status(500).send("Error fetching schemes");
+//   }
+// });
+router.get("/scheme", async (req, res) => {
+  try {
+    const schemes = await Scheme.find();
+    const schemeTypes = await Scheme.distinct("schemeType"); // Fetch distinct scheme types
+
+    res.render("admin/schemes", { schemes, schemeTypes });
+  } catch (error) {
+    console.error("Error fetching schemes:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+router.post("/scheme", async (req, res) => {
+  try {
+    const { name, description, schemeType, website } = req.body;
+    // Validate required fields
+    if (!name || !description || !schemeType) {
+      return res.status(400).send("All required fields must be filled");
+    }
+
+    const newScheme = new Scheme({
+      name,
+      description,
+      schemeType,
+      website,
+    });
+
+    await newScheme.save();
+    res.redirect("/admin/scheme"); // Redirect to the schemes page after adding
+  } catch (error) {
+    console.error("Error adding scheme:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+
+//Delete Scheme
+router.delete("/deletescheme/:id", async (req, res) => {
+  try {
+      await Scheme.findByIdAndDelete(req.params.id);
+      res.json({ success: true, message: "Scheme deleted successfully" });
+  } catch (error) {
+      console.error("Error deleting scheme:", error);
+      res.status(500).json({ success: false, message: "Failed to delete scheme" });
+  }
+});
 
 
 router.get("/home", async (req, res) => {
