@@ -94,7 +94,7 @@ router.post("/login", async (req, res, next) => {
 router.get("/logout", (req, res, next) => {
   req.logout((err) => {
     if (err) return next(err);
-    res.render("./Homepage/index");
+    res.redirect("/");
   });
 });
 
