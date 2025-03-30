@@ -98,206 +98,423 @@
             </div>
         </div>
 
-        <!-- Categorical Expenses Pie Chart and Add Transactions Card -->
-        <div class="row mb-4">
+        <div class="row m-4">
+            <!-- Expense Breakdown and Expense List (Side by Side) -->
             <div class="col-md-4">
                 <div class="card">
                     <h5 class="card-header">Expense Breakdown</h5>
                     <div class="card-body">
-                        <canvas id="expenseBreakdownChart"></canvas>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="mr-3">
+                                <label for="breakdownYear" class="d-block">Select Year:</label>
+                                <input type="number" id="breakdownYear" class="form-control" value="2025" min="2000" max="2100">
+                            </div>
+                            <div class="mr-3">
+                                <label for="breakdownMonth" class="d-block">Select Month (Optional):</label>
+                                <select id="breakdownMonth" class="form-control">
+                                    <option value="">All Months</option>
+                                    <option value="0">January</option>
+                                    <option value="1">February</option>
+                                    <option value="2">March</option>
+                                    <option value="3">April</option>
+                                    <option value="4">May</option>
+                                    <option value="5">June</option>
+                                    <option value="6">July</option>
+                                    <option value="7">August</option>
+                                    <option value="8">September</option>
+                                    <option value="9">October</option>
+                                    <option value="10">November</option>
+                                    <option value="11">December</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-primary" id="updateExpenseBreakdown">Update Breakdown</button>
+                        </div>
+                        <br>
+                        <canvas id="expenseBreakdownChart" style="height: 100px;"></canvas>
                     </div>
                 </div>
             </div>
-
-            <div class="col-md-8">
-              <div class="card">
-                  <h5 class="card-header">All Expenses Transactions</h5>
-                  <div class="card-body">
-                      <div class="table-wrapper">
-                          <table class="table table-striped">
-                              <thead>
-                                  <tr>
-                                      <th>Date</th>
-                                      <th>Category</th>
-                                      <th>Amount</th>
-                                  </tr>
-                              </thead>
-                              <tbody>
-                                  <% expenses.forEach(function(expense) { %>
-                                      <tr>
-                                          <td><%= expense.date %></td>
-                                          <td><%= expense.category %></td>
-                                          <td>₹<%= expense.amount %></td>
-                                      </tr>
-                                  <% }) %>
-                              </tbody>
-                          </table>
-                      </div>
-                  </div>
-              </div>
-          </div>
-            
-
-        <!-- Transaction History and Graphs -->
         
-
-        <div class="row">
-            <div class="col-md-4">
+            <!-- All Expenses Transactions -->
+            <div class="col-md-8">
+                <div class="card">
+                    <h5 class="card-header">All Expenses Transactions</h5>
+                    <div class="card-body">
+                        <!-- Filter Section -->
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div>
+                                <label for="startDate" class="d-block">Start Date:</label>
+                                <input type="date" id="startDate" class="form-control">
+                            </div>
+                            <div>
+                                <label for="endDate" class="d-block">End Date:</label>
+                                <input type="date" id="endDate" class="form-control">
+                            </div>
+                            <button class="btn btn-primary" id="filterDates">Filter</button>
+                        </div>
+            
+                        <div class="table-wrapper">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Category</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="expenseTableBody">
+                                    <% expenses.forEach(function(expense) { %>
+                                        <tr>
+                                            <td><%= expense.date %></td>
+                                            <td><%= expense.category %></td>
+                                            <td>₹<%= expense.amount %></td>
+                                        </tr>
+                                    <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+        <div class="row mt-4">
+            <!-- All Income Transactions -->
+            <div class="col-md-6">
+                <div class="card">
+                    <h5 class="card-header">All Income Transactions</h5>
+                    <div class="card-body">
+                        <!-- Filter Section -->
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div>
+                                <label for="incomeStartDate" class="d-block">Start Date:</label>
+                                <input type="date" id="incomeStartDate" class="form-control">
+                            </div>
+                            <div>
+                                <label for="incomeEndDate" class="d-block">End Date:</label>
+                                <input type="date" id="incomeEndDate" class="form-control">
+                            </div>
+                            <button class="btn btn-primary" id="filterIncomeDates">Filter</button>
+                        </div>
+            
+                        <div class="table-wrapper">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Source</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="incomeTableBody">
+                                    <% income.forEach(function(inc) { %>
+                                        <tr>
+                                            <td><%= inc.date %></td>
+                                            <td><%= inc.source %></td>
+                                            <td>₹<%= inc.amount %></td>
+                                        </tr>
+                                    <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        
+            <!-- Income Graph -->
+            <div class="col-md-6">
                 <div class="card">
                     <h5 class="card-header">Income Graph</h5>
                     <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="mr-3">
+                                <label for="incomeChartType" class="d-block">Chart Type:</label>
+                                <select id="incomeChartType" class="form-control">
+                                    <option value="monthly">Monthly</option>
+                                    <option value="annual">Annual</option>
+                                </select>
+                            </div>
+                            <div class="mr-3">
+                                <label for="incomeYear" class="d-block">Select Year:</label>
+                                <input type="number" id="incomeYear" class="form-control" value="2025" min="2000" max="2100">
+                            </div>
+                            <button class="btn btn-primary" id="updateIncomeChart">Update Chart</button>
+                        </div>
+                        <br>
+                        <!-- Income Graph Canvas -->
                         <canvas id="incomeGraph"></canvas>
                     </div>
                 </div>
             </div>
-
-            <div class="col-md-8">
-              <div class="card">
-                  <h5 class="card-header">All Income Transactions</h5>
-                  <div class="card-body">
-                      <div class="table-wrapper">
-                          <table class="table table-striped">
-                              <thead>
-                                  <tr>
-                                      <th>Date</th>
-                                      <th>Source</th>
-                                      <th>Amount</th>
-                                  </tr>
-                              </thead>
-                              <tbody>
-                                  <% income.forEach(function(inc) { %>
-                                      <tr>
-                                          <td><%= inc.date %></td>
-                                          <td><%= inc.source %></td>
-                                          <td>₹<%= inc.amount %></td>
-                                      </tr>
-                                  <% }) %>
-                              </tbody>
-                          </table>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-
         </div>
-
+        
         <div class="row mt-4">
-          
-            
-
-            <div class="col-md-4">
+            <!-- Expense Chart -->
+            <div class="col-md-6">
                 <div class="card">
-                    <h5 class="card-header">Weekly Expense Comparison</h5>
+                    <h5 class="card-header">Expense Chart</h5>
                     <div class="card-body">
-                        <canvas id="weeklyExpenseChart"></canvas>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="mr-3">
+                                <label for="expenseChartType" class="d-block">Chart Type:</label>
+                                <select id="expenseChartType" class="form-control">
+                                    <option value="monthly">Monthly</option>
+                                    <option value="annual">Annual</option>
+                                </select>
+                            </div>
+                            <div class="mr-3">
+                                <label for="expenseYear" class="d-block">Select Year:</label>
+                                <input type="number" id="expenseYear" class="form-control" value="2025" min="2000" max="2100">
+                            </div>
+                            <button class="btn btn-primary" id="updateExpenseChart">Update Chart</button>
+                        </div>
+                        <br>
+                        <!-- Expense Chart Canvas -->
+                        <canvas id="expenseChart"></canvas>
                     </div>
                 </div>
             </div>
-    
-
-            
+        
+            <!-- Income vs Expense Chart -->
+            <div class="col-md-6">
+                <div class="card">
+                    <h5 class="card-header">Income vs Expense Chart</h5>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="mr-3">
+                                <label for="comparisonChartType" class="d-block">Chart Type:</label>
+                                <select id="comparisonChartType" class="form-control">
+                                    <option value="monthly">Monthly</option>
+                                    <option value="annual">Annual</option>
+                                </select>
+                            </div>
+                            <div class="mr-3">
+                                <label for="comparisonYear" class="d-block">Select Year:</label>
+                                <input type="number" id="comparisonYear" class="form-control" value="2025" min="2000" max="2100">
+                            </div>
+                            <button class="btn btn-primary" id="updateComparisonChart">Update Chart</button>
+                        </div>
+                        <br>
+                        <!-- Income vs Expense Graph Canvas -->
+                        <canvas id="incomeVsExpenseChart"></canvas>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-
+        
+    
+    
     <script>
-        // Prepare data for charts using dynamic data from EJS
         const expenses = <%- JSON.stringify(expenses) %>;
         const income = <%- JSON.stringify(income) %>;
-        const budget = <%= budget %>;
-
-        // Expense Breakdown Pie Chart
-        const expenseCategories = {};
-        expenses.forEach(expense => {
-            expenseCategories[expense.category] = (expenseCategories[expense.category] || 0) + expense.amount;
-        });
-
-        new Chart(document.getElementById("expenseBreakdownChart"), {
-            type: "pie",
-            data: {
-                labels: Object.keys(expenseCategories),
-                datasets: [{
-                    data: Object.values(expenseCategories),
-                    backgroundColor: ["#007bff", "#28a745", "#dc3545", "#ffc107", "#17a2b8"],
-                    borderColor: "#fff",
-                    borderWidth: 1
-                }]
-            },
-            options: { responsive: true, plugins: { legend: { position: "bottom" } } }
-        });
-
-        // Weekly Expense Comparison Bar Chart
-        const weeklyExpenses = {};
-        expenses.forEach(entry => {
-            const week = new Date(entry.date).toLocaleDateString("en-GB", { weekday: "long" });
-            weeklyExpenses[week] = (weeklyExpenses[week] || 0) + entry.amount;
-        });
-
-        new Chart(document.getElementById("weeklyExpenseChart"), {
-            type: "bar",
-            data: {
-                labels: Object.keys(weeklyExpenses),
-                datasets: [{
-                    label: "Expenses (₹)",
-                    data: Object.values(weeklyExpenses),
-                    backgroundColor: "#dc3545"
-                }]
-            },
-            options: { responsive: true, scales: { y: { beginAtZero: true } } }
-        });
-
-        // Income Graph (Example)
-        const weeklyIncome = {};
-        income.forEach(entry => {
-            const week = new Date(entry.date).toLocaleDateString("en-GB", { weekday: "long" });
-            weeklyIncome[week] = (weeklyIncome[week] || 0) + entry.amount;
-        });
-
-        new Chart(document.getElementById("incomeGraph"), {
-            type: "line",
-            data: {
-                labels: Object.keys(weeklyIncome),
-                datasets: [{
-                    label: "Income (₹)",
-                    data: Object.values(weeklyIncome),
-                    borderColor: "#28a745",
-                    fill: false
-                }]
-            },
-            options: { responsive: true }
-        });
-
-        // Overview Graph (Example)
-        const totalIncome = income.reduce((sum, entry) => sum + entry.amount, 0);
-        const totalExpenses = expenses.reduce((sum, entry) => sum + entry.amount, 0);
-        new Chart(document.getElementById("overviewGraph"), {
-            type: "line",
-            data: {
-                labels: ["January", "February", "March", "April", "May"],
-                datasets: [{
-                    label: "Income (₹)",
-                    data: [totalIncome, totalIncome + 20000, totalIncome + 40000, totalIncome + 60000, totalIncome + 80000],
-                    borderColor: "#28a745",
-                    fill: false
-                }, {
-                    label: "Expenses (₹)",
-                    data: [totalExpenses, totalExpenses + 5000, totalExpenses + 10000, totalExpenses + 15000, totalExpenses + 20000],
-                    borderColor: "#dc3545",
-                    fill: false
-                }]
+    
+        let incomeChart, expenseChart, expenseBreakdownChart, incomeVsExpenseChart;
+    
+        function generateCharts(chartId, type = 'monthly', selectedYear = 2025, selectedMonth = null) {
+            const filteredExpenses = expenses.filter(entry => {
+                const entryDate = new Date(entry.date);
+                return entryDate.getFullYear() === selectedYear && (selectedMonth === null || entryDate.getMonth() === selectedMonth);
+            });
+    
+            const filteredIncome = income.filter(entry => {
+                const entryDate = new Date(entry.date);
+                return entryDate.getFullYear() === selectedYear && (selectedMonth === null || entryDate.getMonth() === selectedMonth);
+            });
+    
+            const expenseData = Array(12).fill(0);
+            const incomeData = Array(12).fill(0);
+            const expenseCategoryData = {};
+    
+            if (type === 'monthly') {
+                filteredExpenses.forEach(entry => {
+                    const month = new Date(entry.date).getMonth();
+                    expenseData[month] += entry.amount;
+    
+                    if (!expenseCategoryData[entry.category]) {
+                        expenseCategoryData[entry.category] = 0;
+                    }
+                    expenseCategoryData[entry.category] += entry.amount;
+                });
+    
+                filteredIncome.forEach(entry => {
+                    const month = new Date(entry.date).getMonth();
+                    incomeData[month] += entry.amount;
+                });
+            } else {
+                const totalExpenses = filteredExpenses.reduce((sum, entry) => sum + entry.amount, 0);
+                const totalIncome = filteredIncome.reduce((sum, entry) => sum + entry.amount, 0);
+    
+                expenseData[0] = totalExpenses;
+                incomeData[0] = totalIncome;
             }
+    
+            const labels = type === 'monthly' ? ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"] : [selectedYear.toString()];
+    
+            switch (chartId) {
+                case 'income':
+                    if (incomeChart) incomeChart.destroy();
+                    incomeChart = new Chart(document.getElementById("incomeGraph"), {
+                        type: "line",
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: "Income (₹)",
+                                data: incomeData,
+                                borderColor: "#28a745",
+                                backgroundColor: "rgba(40,167,69,0.1)",
+                                fill: true
+                            }]
+                        }
+                    });
+                    break;
+                case 'expense':
+                    if (expenseChart) expenseChart.destroy();
+                    expenseChart = new Chart(document.getElementById("expenseChart"), {
+                        type: "bar",
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: "Expenses (₹)",
+                                data: expenseData,
+                                backgroundColor: "#dc3545"
+                            }]
+                        }
+                    });
+                    break;
+                case 'comparison':
+                    if (incomeVsExpenseChart) incomeVsExpenseChart.destroy();
+                    incomeVsExpenseChart = new Chart(document.getElementById("incomeVsExpenseChart"), {
+                        type: "line",
+                        data: {
+                            labels: labels,
+                            datasets: [
+                                { label: "Income (₹)", data: incomeData, borderColor: "#28a745" },
+                                { label: "Expenses (₹)", data: expenseData, borderColor: "#dc3545" }
+                            ]
+                        }
+                    });
+                    break;
+                case 'breakdown':
+                    const expenseCategoryLabels = Object.keys(expenseCategoryData);
+                    const expenseCategoryValues = Object.values(expenseCategoryData);
+                    if (expenseBreakdownChart) expenseBreakdownChart.destroy();
+                    expenseBreakdownChart = new Chart(document.getElementById("expenseBreakdownChart"), {
+                        type: "pie",
+                        data: {
+                            labels: expenseCategoryLabels,
+                            datasets: [{
+                                label: "Expense Breakdown",
+                                data: expenseCategoryValues,
+                                backgroundColor: ["#007bff", "#dc3545", "#ffc107", "#28a745", "#17a2b8"]
+                            }]
+                        }
+                    });
+                    break;
+            }
+        }
+
+        
+
+        window.onload = function() {
+        generateCharts('income', 'monthly', 2025);
+        generateCharts('expense', 'monthly', 2025);
+        generateCharts('comparison', 'monthly', 2025);
+        generateCharts('breakdown', 'monthly', 2025);
+    };
+
+    
+        document.getElementById('updateIncomeChart').addEventListener('click', () => generateCharts('income', document.getElementById('incomeChartType').value, parseInt(document.getElementById('incomeYear').value)));
+        document.getElementById('updateExpenseChart').addEventListener('click', () => generateCharts('expense', document.getElementById('expenseChartType').value, parseInt(document.getElementById('expenseYear').value)));
+        document.getElementById('updateComparisonChart').addEventListener('click', () => generateCharts('comparison', document.getElementById('comparisonChartType').value, parseInt(document.getElementById('comparisonYear').value)));
+        document.getElementById('updateExpenseBreakdown').addEventListener('click', () => generateCharts('breakdown', 'monthly', parseInt(document.getElementById('breakdownYear').value), document.getElementById('breakdownMonth').value !== "" ? parseInt(document.getElementById('breakdownMonth').value) : null));
+
+        document.getElementById('filterDates').addEventListener('click', function() {
+    // Get the start and end dates
+    var startDate = document.getElementById('startDate').value;
+    var endDate = document.getElementById('endDate').value;
+
+    // Check if both dates are provided
+    if (startDate && endDate) {
+        // Format the dates to make sure they are in the same format (YYYY-MM-DD)
+        var formattedStartDate = new Date(startDate).getTime();
+        var formattedEndDate = new Date(endDate).getTime();
+
+        // Filter expenses based on date range
+        var filteredExpenses = expenses.filter(function(expense) {
+            var expenseDate = new Date(expense.date).getTime();
+            return expenseDate >= formattedStartDate && expenseDate <= formattedEndDate;
         });
 
-        document.getElementById('addTransactionBtn').addEventListener('click', function() {
-            window.location.href = '/finance/add-expense';  // Redirects to the add-expense route
+        // Update the table with filtered expenses
+        updateExpenseTable(filteredExpenses);
+    } else {
+        alert("Please select both start and end dates.");
+    }
+});
+
+// Function to update the table with filtered expenses
+function updateExpenseTable(filteredExpenses) {
+    var tableBody = document.getElementById('expenseTableBody');
+    tableBody.innerHTML = ''; // Clear existing rows
+
+    filteredExpenses.forEach(function(expense) {
+        var row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${expense.date}</td>
+            <td>${expense.category}</td>
+            <td>₹${expense.amount}</td>
+        `;
+        tableBody.appendChild(row);
+    });
+}
+
+document.getElementById('filterIncomeDates').addEventListener('click', function() {
+    // Get the start and end dates
+    var startDate = document.getElementById('incomeStartDate').value;
+    var endDate = document.getElementById('incomeEndDate').value;
+
+    // Check if both dates are provided
+    if (startDate && endDate) {
+        // Format the dates to make sure they are in the same format (YYYY-MM-DD)
+        var formattedStartDate = new Date(startDate).getTime();
+        var formattedEndDate = new Date(endDate).getTime();
+
+        // Filter income based on date range
+        var filteredIncome = income.filter(function(inc) {
+            var incomeDate = new Date(inc.date).getTime();
+            return incomeDate >= formattedStartDate && incomeDate <= formattedEndDate;
         });
-        document.getElementById('setBudgetBtn').addEventListener('click', function() {
-            window.location.href = '/finance/set-budget';  // Redirects to the add-expense route
-        });
-        document.getElementById('addIncomeBtn').addEventListener('click', function() {
-            window.location.href = '/finance/add-income';  // Redirects to the add-expense route
-        });
+
+        // Update the table with filtered income
+        updateIncomeTable(filteredIncome);
+    } else {
+        alert("Please select both start and end dates.");
+    }
+});
+
+// Function to update the income table with filtered transactions
+function updateIncomeTable(filteredIncome) {
+    var tableBody = document.getElementById('incomeTableBody');
+    tableBody.innerHTML = ''; // Clear existing rows
+
+    filteredIncome.forEach(function(inc) {
+        var row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${inc.date}</td>
+            <td>${inc.source}</td>
+            <td>₹${inc.amount}</td>
+        `;
+        tableBody.appendChild(row);
+    });
+}
+
     </script>
+    
+    
 
+
+    
 </body>
 </html>
