@@ -1815,3 +1815,42 @@ select {
     border-right: none;
 }
 
+
+.container1 {
+    width: 90%;
+    height: 40vh;
+    display: flex;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    overflow: hidden;
+    background: linear-gradient(to left, #e0f7ff, #ffffff);
+  }
+  .left1 {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .left1 h1 {
+    color: #004080;
+    font-size: 36px;
+  }
+  .left1 p {
+    color: #333;
+    font-size: 18px;
+  }
+  .right1 {
+    flex: 1;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 80%, rgb(226 247 255)), url(../../img/admin_home.jpg) no-repeat center / cover;
+    background-size: 70%; /* Reduce the size to 80% */
+    background-position: left;
+}
+
+  .outer-cont{
+    margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
