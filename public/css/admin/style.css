@@ -95,11 +95,12 @@ body {
 	margin-top: 48px;
 }
 #sidebar .side-menu li {
-	height: 48px;
+	height: 60px;
 	background: transparent;
 	margin-left: 6px;
+    margin-top: 45px;
 	border-radius: 48px 0 0 48px;
-	padding: 4px;
+	padding: 10px;
 }
 #sidebar .side-menu li.active {
 	background: var(--grey);
@@ -109,7 +110,7 @@ body {
 	content: '';
 	position: absolute;
 	width: 40px;
-	height: 40px;
+	height: 60px;
 	border-radius: 50%;
 	top: -40px;
 	right: 0;
@@ -119,7 +120,7 @@ body {
 #sidebar .side-menu li.active::after {
 	content: '';
 	position: absolute;
-	width: 40px;
+	width: 60px;
 	height: 40px;
 	border-radius: 50%;
 	bottom: -40px;
@@ -134,7 +135,7 @@ body {
 	display: flex;
 	align-items: center;
 	border-radius: 48px;
-	font-size: 16px;
+	font-size: 20px;
 	color: var(--dark);
 	white-space: nowrap;
 	overflow-x: hidden;
@@ -168,7 +169,7 @@ body {
 
 /* Birbirinin üzerine binmesini engellemek için */
 #sidebar .side-menu.bottom li:nth-last-of-type(2) {
-  bottom: 40px; /* İkinci son öğeyi yukarı kaydır */
+  bottom: 60px; /* İkinci son öğeyi yukarı kaydır */
 }
 /* SIDEBAR */
 
