@@ -1,6 +1,43 @@
 <% layout("/layouts/boilerplateworker")%>
 <%- include("../layouts/layout.ejs") %>
 <h1>Available Jobs</h1>
+<style>
+    .job-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;  
+        gap: 40px;  
+        padding: 50px; 
+        margin: 0 auto;  
+        max-width: 1200px;
+    }
+
+    .job-card {
+        background-color: #fff;
+        border-radius: 12px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        width: 420px;
+        padding: 30px;
+        transition: transform 0.3s ease-in-out;
+        text-align: left;
+        font-size: 16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 400px; 
+        margin: 20px;
+    }
+
+    .job-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .filter-container {
+        text-align: center;
+        margin-bottom: 40px;
+        padding: 20px;
+    }
+</style>
 
 <div class="filter-container" style="text-align: center; margin-bottom: 20px;">
     <label for="jobFilter" style="font-size: 16px; color: #333;">Filter Jobs:</label>
