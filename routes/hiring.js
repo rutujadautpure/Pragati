@@ -68,31 +68,46 @@ router.get("/", isLoggedIn, async (req, res) => {
     }
 });
 
-router.get('/allaplicants', isLoggedIn, async (req, res) => {
+
+router.get('/myHirings', async (req, res) => {
     try {
-        const id = req.user._id;
-        
-        // Fetch all hiring objects for the logged-in user
-        const hirings = await Hiring.find({ userId: id });
+        const businessId = req.user._id; // Make sure user is logged in and req.user exists
+        const myJobs = await Hiring.find({ userId: businessId }).lean();
 
-        if (!hirings.length) {
-            return res.render("./hiring/allapplicants", { jobCount: 0, applicantCount: 0 });
-        }
-
-        // Extract all hiring IDs
-        const hiringIds = hirings.map(hiring => hiring._id);
-
-        const applicantCount = await Applicant.countDocuments({ hiringId: { $in: hiringIds } });
-        const applicants = await Applicant.find({ hiringId: { $in: hiringIds } })
-                                          .limit(applicantCount);
-
-        return res.render("./hiring/allapplicants", { jobCount: hirings.length, applicantCount,applicants });
+        res.render('hiring/myHirings', { jobs: myJobs });
     } catch (error) {
-        console.log(error);
-        return res.status(500).send("Internal Server Error");
+        console.error('Error fetching business job hirings:', error);
+        res.status(500).send('Internal Server Error');
     }
 });
 
+router.get('/applicants/:jobId', async (req, res) => {
+    try {
+        const jobId = req.params.jobId;
+        const applicants = await Applicant.find({ hiringId: jobId }).populate('userId');
+        const applicantCount = applicants.length;
+
+        const applicantsWithDetails = applicants.map(applicant => {
+            return {
+                userName: applicant.userId.firstName + " " + applicant.userId.lastName,
+                userEmail: applicant.userId.email,
+                mob_no: applicant.mob_no,
+                age: applicant.age,
+                location: applicant.location,
+                appliedDate: applicant.createdAt,
+            };
+        });
+        console.error(applicantsWithDetails);
+
+        res.render('./hiring/allapplicants', {
+            applicants: applicantsWithDetails, 
+            applicantCount
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Server Error");
+    }
+});
 
 router.post('/submit/:id',handleHiringForm);
 
