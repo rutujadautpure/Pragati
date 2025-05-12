@@ -4,7 +4,7 @@ const Admin = require("../models/admin");
 const Applicant = require("../models/application"); 
 const Business = require("../models/business"); 
 const Scheme = require("../models/scheme"); 
-const Product = require("../models/Product"); 
+const Product = require("../models/product"); 
 const passport = require("passport");
 const { Video } = require('../models/video');
 
