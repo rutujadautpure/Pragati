@@ -4,8 +4,6 @@ const axios = require('axios');
 
 const apiKey = '82adfe12aafa432d92637b1e144ce3dc'; // Replace with your real API key
 
-
-// Handle hiring form submission
 async function handleHiringForm(req, res) {
     try {
         console.log("Received Data:", req.body); // Log received data for debugging
@@ -96,4 +94,5 @@ async function handleHiringForm(req, res) {
     }
 }
 
-module.exports = { handleHiringForm };
+
+module.exports = { handleHiringForm};

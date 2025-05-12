@@ -1,0 +1,99 @@
+<% layout("/layouts/boilerplate")%>
+<%- include("../layouts/layout.ejs") %>
+
+<h1>My Job Hirings</h1>
+
+<style>
+    .job-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;  
+        gap: 40px;  
+        padding: 50px; 
+        margin: 0 auto;  
+        max-width: 1200px;
+    }
+
+    .job-card {
+        background-color: #fff;
+        border-radius: 12px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        width: 420px;
+        padding: 30px;
+        transition: transform 0.3s ease-in-out;
+        text-align: left;
+        font-size: 16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 440px;
+        margin: 20px;
+    }
+
+    .job-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .applicants-btn {
+        margin-top: 20px;
+        padding: 10px 15px;
+        font-size: 15px;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        align-self: center;
+        text-decoration: none;
+        text-align: center;
+    }
+
+    .applicants-btn:hover {
+        background-color: #0056b3;
+    }
+
+    .no-jobs-card {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        text-align: center;
+        width: 100%;
+        max-width: 500px;
+        margin: 20px auto;
+    }
+</style>
+
+<div class="job-container">
+    <% if (jobs.length === 0) { %>
+        <div class="no-jobs-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/2748/2748558.png" alt="No Jobs Icon" style="width: 100px; height: 100px; margin-bottom: 20px;">
+            <h2 style="color: #333; font-size: 20px; margin-bottom: 10px;">No Job Postings Yet</h2>
+            <p style="color: #777; font-size: 16px;">You haven't posted any job listings yet.</p>
+        </div>
+    <% } else { %>
+        <% for (let i = 0; i < jobs.length; i++) { %>
+            <div class="job-card">
+
+                <div style="display: flex; flex-wrap: wrap; justify-content: space-between; margin-bottom: 15px;">
+                    <div style="width: 48%;"><strong>Salary:</strong> ₹<%= jobs[i].salary %>/month</div>
+                    <div style="width: 48%;"><strong>Role:</strong> <%= jobs[i].jobRole %></div>
+                </div>
+
+                <div style="display: flex; flex-wrap: wrap; justify-content: space-between; margin-bottom: 15px;">
+                    <div style="width: 48%;"><strong>Hours:</strong> <%= jobs[i].jobHours %>/day</div>
+                    <div style="width: 48%;"><strong>Vacancies:</strong> <%= jobs[i].vacancies %></div>
+                </div>
+
+                <div style="display: flex; flex-wrap: wrap; justify-content: space-between; margin-bottom: 15px;">
+                    <div style="width: 100%;"><strong>Location:</strong> <%= jobs[i].location.district %>, <%= jobs[i].location.state %> - <%= jobs[i].location.pinCode %></div>
+                </div>
+
+                <div style="margin-bottom: 15px;"><strong>Deadline:</strong> <%= new Date(jobs[i].deadlineToApply).toLocaleDateString() %></div>
+
+                <!-- Button to see all applicants -->
+                <a href="/hiring/applicants/<%= jobs[i]._id %>" class="applicants-btn">View Applicants</a>
+            </div>
+        <% } %>
+    <% } %>
+</div>
