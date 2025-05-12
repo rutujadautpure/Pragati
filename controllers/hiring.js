@@ -2,8 +2,6 @@ const Hiring = require("../models/hiring"); // Import the Hiring model
 const User = require("../models/user");
 const axios = require('axios');
 
-const apiKey = '82adfe12aafa432d92637b1e144ce3dc'; // Replace with your real API key
-
 async function handleHiringForm(req, res) {
     try {
         console.log("Received Data:", req.body); // Log received data for debugging
