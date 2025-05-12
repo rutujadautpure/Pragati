@@ -22,6 +22,13 @@ const schema = new mongoose.Schema(
     },
     state: { type: String, required: true },
     district: { type: String, required: true },
+    location: {
+      coordinates: {
+        type: [Number], // [longitude, latitude]
+        index: "2dsphere", // Create 2dsphere index for geospatial queries
+        required: false, // Make true if mandatory during registration
+      },
+    },
     role: { type: String, required: true },
     description: { type: String, trim: true },
   },

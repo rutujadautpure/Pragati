@@ -20,7 +20,7 @@
   "homepage": "https://github.com/khedkarsayali/SHE_Solves_Hack_Hustlers#readme",
   "dependencies": {
     "aws-sdk": "^2.1692.0",
-    "axios": "^1.8.2",
+    "axios": "^1.9.0",
     "cheerio": "^1.0.0",
     "cloudinary": "^1.41.3",
     "connect-flash": "^0.1.1",

@@ -33,6 +33,17 @@ const hiringSchema = new mongoose.Schema(
         required: true,
       },
     },
+    geoLocation: {
+      type: {
+        type: String,
+        enum: ['Point'],
+        required: true,
+      },
+      coordinates: {
+        type: [Number], // [longitude, latitude]
+        required: true,
+      },
+    },
     jobRole: {
       type: String,
       required: true,
@@ -84,6 +95,8 @@ const hiringSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+hiringSchema.index({ geoLocation: "2dsphere" });
 const Hiring = mongoose.model("hiring", hiringSchema);
+
 
 module.exports = Hiring;
