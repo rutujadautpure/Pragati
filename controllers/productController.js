@@ -1,5 +1,5 @@
 const cloudinary = require('cloudinary').v2;  // Cloudinary configuration
-const Product = require('../models/product');  // Importing the Product model
+const Product = require('../models/Product');  // Importing the Product model
 const fs = require('fs');
 
 // Cloudinary configuration

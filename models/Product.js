@@ -9,7 +9,7 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true,
         enum: [
-            "Fashion, Handicraft and Luggage",
+            "Fashion,Handicraft and Luggage",
             "Home Decor, Furniture and Hardware",
             "Electrical, Electronics and Software",
             "Books, Office Supplies and Madla",
