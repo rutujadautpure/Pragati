@@ -14,7 +14,7 @@ require("dotenv").config();
 const { Video } = require('./models/video');
 app.use(express.static(path.join(__dirname, 'public')));
 const {isAuthorized} = require("./middleware")
-const Product = require("./models/product")
+const Product = require("./models/Product")
 
 const router = express.Router();
 

@@ -2,7 +2,7 @@ const express = require('express');
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const router = express.Router();
-const Product = require('../models/product'); 
+const Product = require('../models/Product'); 
 
 cloudinary.config({ 
     cloud_name: 'dryvfbx1a', 
