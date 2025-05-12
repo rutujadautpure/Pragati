@@ -5,7 +5,7 @@
   <div class="col-md-6">
       <div class="card shadow-lg border-0 rounded-4 bg-light">
           <div class="card-body text-center py-4">
-              <h3 class="fw-bold text-primary">All Applications</h3>
+              <h3 class="fw-bold" style="color: rgb(44 124 149);">All Applications</h3>
               <h5 class="card-title display-5 text-dark"><%= applicantCount %></h5>
               <p class="text-muted">Total number of applicants received</p>
           </div>
@@ -22,11 +22,11 @@
         <p>Please check back later.</p>
     </div>
 <% } else { %>
-    <div class="row mt-5">
+    <div class="row mt-5" style="margin-left: 50px;">
         <% applicants.forEach(applicant => { %>
         <div class="col-md-4 mb-4">
             <div class="card shadow-lg border-0 rounded-4 bg-light">
-                <div class="card-header bg-primary text-white fw-bold text-center">
+                <div class="card-header text-white fw-bold text-center" style="background-color: rgb(97, 208, 241);;">
                     Applicant Details
                 </div>
                 <div class="card-body text-center py-4">

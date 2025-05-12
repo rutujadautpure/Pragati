@@ -1,22 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Product</title>
+<% layout("/layouts/boilerplate") %>
+<%- include("../layouts/layout.ejs") %>
     <style>
-        /* Basic Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Arial', sans-serif;
             background-color: #f4f7fc;
-            color: #333;
-            padding: 20px;
         }
 
         h1 {
@@ -27,6 +13,7 @@
         }
 
         .form-container {
+            width: 600px;
             max-width: 600px;
             margin: 0 auto;
             background-color: #fff;
@@ -69,7 +56,7 @@
         }
 
         .form-container button {
-            background-color: #3498db;
+            background-color:  rgb(97, 208, 241);;
             color: white;
             font-size: 16px;
             font-weight: bold;
@@ -82,7 +69,7 @@
         }
 
         .form-container button:hover {
-            background-color: #2980b9;
+            background-color:rgb(79, 182, 214);
         }
 
         .form-container button:active {
@@ -106,9 +93,8 @@
         }
 
     </style>
-</head>
 <body>
-    <h1>Edit Product</h1>
+    <h1 style="color: rgb(44 124 149);">Edit Product</h1>
     <div class="form-container">
         <form action="/myproducts/edit/<%= product._id %>" method="POST">
             <label for="name">Name:</label>
@@ -137,4 +123,4 @@
         </form>
     </div>
 </body>
-</html>
+

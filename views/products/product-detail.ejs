@@ -1,29 +1,24 @@
-<% layout("/layouts/boilerplate") %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <title><%= product.name %> Details</title>
     <%- include("../layouts/layout.ejs") %>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
+        body{
+            background-color: #F7F9FC;
         }
-
-        body {
-            background-color: #f0f4f8;
-            color: #333;
-            line-height: 1.6;
-        }
-
         .container {
             width: 100%;
             margin: 0 auto;
             padding: 30px 15px;
+            margin-top: 70px;
         }
 
         .product-detail {
@@ -39,206 +34,272 @@
             font-size: 2.5rem;
             color: #333;
             font-weight: 700;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .product-content {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            align-items: stretch;
         }
 
         .product-images {
+            flex: 1 1 45%;
             display: flex;
             justify-content: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 30px;
+            align-items: center;
         }
 
         .product-images img {
-            width: 32%;
-            max-width: 300px;
-            height: 300px;
+            width: 100%;
+            max-width: 400px;
+            height: auto;
             border-radius: 8px;
-            object-fit: cover;
+            object-fit: contain;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-info {
+            flex: 1 1 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .product-title {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
         }
 
         .product-description {
             font-size: 1.1rem;
-            line-height: 1.8;
+            line-height: 1.6;
             margin-bottom: 20px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .left-info {
+            flex: 1;
         }
 
         .price {
             font-size: 1.8rem;
             color: #2c3e50;
             font-weight: bold;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .btn {
             display: inline-block;
-            background-color: #3498db;
-            color: #fff;
-            padding: 12px 25px;
+            background-color: rgb(109, 214, 246); /* Light modern blue */
+            color: #140101;
+            /* border-color: #140101; */
+            padding: 8px 18px;          /* Reduced padding */
             border-radius: 5px;
-            font-size: 1.1rem;
+            font-size: 0.95rem;         /* Slightly smaller font */
             text-decoration: none;
-            margin-top: 20px;
             cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            min-width: 120px;           /* Smaller minimum width */
             text-align: center;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            position: relative;
-            width: auto;
-            min-width: 150px;
             white-space: nowrap;
         }
 
         .btn:hover {
-            background-color: #2980b9;
-            transform: translateY(-3px);
+            background-color: rgba(109, 214, 246, 0.711);  /* Slightly deeper blue on hover */
+            transform: translateY(-2px);
+            /* border-color: #140101; */
         }
 
         .btn-back {
-            background-color: #e74c3c;
+            background-color: #ff3e6c;  /* Light reddish-pink */
+            margin-top: 25px;
+            color: #fff;
+            border: none;
         }
 
         .btn-back:hover {
-            background-color: #c0392b;
+            background-color: #ff3e6ba5;  /* Slightly deeper red on hover */
+            border: none;
         }
 
-        .options {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .phone-number {
-            display: none;
-            font-size: 1.2rem;
-            color: #333;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-
-        .call-btn:hover + .phone-number {
-            display: block;
-        }
-
-        .email-tooltip, .phone-tooltip {
-            display: none;
-            position: absolute;
-            background-color: rgba(0, 0, 0, 0.8);
-            color: #fff;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 0.9rem;
-            bottom: 110%;
-            left: 50%;
-            transform: translateX(-50%);
-            white-space: nowrap;
-        }
-
-        .email-btn:hover .email-tooltip, .call-btn:hover .phone-tooltip {
-            display: block;
-        }
-
-        .whatsapp-btn {
-            background-color: #25D366;
-        }
-
-        .whatsapp-btn:hover {
-            background-color: #128C7E;
-        }
 
         .qr-scanner {
-            margin-top: 20px;
+            flex: 1;
             text-align: center;
         }
 
         .qr-scanner img {
             width: 150px;
             height: 150px;
+            margin-top: 10px;
         }
 
         @media (max-width: 768px) {
-            .product-images {
+            .product-content {
                 flex-direction: column;
-                align-items: center;
             }
 
-            .product-images img {
-                width: 80%;
-                margin-bottom: 20px;
+            .info-row {
+                flex-direction: column;
+                align-items: flex-start;
             }
 
-            .options {
-                flex-direction: column;
+            .qr-scanner {
+                text-align: left;
             }
 
             .btn-back {
                 width: 100%;
             }
         }
+        
+        .navbar .dropdown-toggle::after {
+            border: none;
+            content: "\f107";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            vertical-align: middle;
+            margin-left: 8px;
+        }
+
+        .navbar-light .navbar-nav .nav-link {
+            margin-right: 30px;
+            padding: 25px 0;
+            color: #FFFFFF;
+            font-size: 15px;
+            text-transform: uppercase;
+            outline: none;
+        }
+
+        .navbar-light .navbar-nav .nav-link:hover,
+        .navbar-light .navbar-nav .nav-link.active {
+            color: var(--primary);
+        }
+
+        @media (max-width: 991.98px) {
+            .navbar-light .navbar-nav .nav-link  {
+                margin-right: 0;
+                padding: 10px 0;
+            }
+
+            .navbar-light .navbar-nav {
+                border-top: 1px solid #EEEEEE;
+            }
+        }
+
+        .navbar-light .navbar-brand,
+        .navbar-light a.btn {
+            height: 75px;
+        }
+
+        .navbar-light .navbar-nav .nav-link {
+            color: var(--dark);
+            font-weight: 500;
+        }
+
+        .navbar-light.sticky-top {
+            top: -100px;
+            transition: .5s;
+        }
+
+        @media (min-width: 992px) {
+            .navbar .nav-item .dropdown-menu {
+                display: block;
+                margin-top: 0;
+                opacity: 0;
+                visibility: hidden;
+                transition: .5s;
+            }
+
+            .navbar .dropdown-menu.fade-down {
+                top: 100%;
+                transform: rotateX(-75deg);
+                transform-origin: 0% 0%;
+            }
+
+            .navbar .nav-item:hover .dropdown-menu {
+                top: 100%;
+                transform: rotateX(0deg);
+                visibility: visible;
+                transition: .5s;
+                opacity: 1;
+            }
+        }
+
     </style>
 </head>
 <body>
+      <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+    <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+        <img src="/img/Pragati_logo.png" alt="Logo" style="height: 40px; width: auto; margin-right: 10px;">
+        <h2 class="m-0 text-primary">Pragati</h2>
+    </a>
+    <div id="google_translate_element"></div>
+    <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav ms-auto p-4 p-lg-0">
+            <a href="/" class="nav-item nav-link active">Home</a>
+            <!-- <a href="#about" class="nav-item nav-link">About</a> -->
+            <a href="/auth/login" class="nav-item nav-link">Login</a>
+            <a href="/allProducts" class="nav-item nav-link">MarketPlace</a>
+        </div>
+       
+    </div>
+</nav>
+
+    <div id="google_translate_element"></div>
     <div class="container">
         <div class="product-detail">
-            <h1><%= product.name %></h1>
 
-            <div class="product-images">
-                <% if (product.images && product.images.length > 0) { %>
-                    <img src="<%= product.images[0] %>" alt="Product Image" class="card-img-top">
-                <% } else { %>
-                    <img src="https://res.cloudinary.com/<cloud_name>/image/upload/v_default-product.jpg" alt="Default Product Image" class="card-img-top">
-                <% } %>
-            </div>
-
-            <div class="product-description">
-                <p><strong>Description:</strong> <%= product.description %></p>
-                <p><strong>Category:</strong> <%= product.category %></p>
-            </div>
-
-            <div class="price">
-                <p>₹<%= product.price %></p>
-            </div>
-
-            <div class="options">
-                <% if (product.UserId && product.UserId.mob_no) { %>
-                    <a href="tel:<%= product.UserId.mob_no %>" class="btn call-btn">Call Now
-                        <span class="phone-tooltip"><%= product.UserId.mob_no %></span>
-                    </a>
-                <% } %>
-
-                <% if (product.UserId && product.UserId.email) { %>
-                    <a href="mailto:<%= product.UserId.email %>" class="btn email-btn">Email to the Seller
-                        <span class="email-tooltip"><%= product.UserId.email %></span>
-                    </a>
-                <% } %>
-
-                <% if (product.UserId) { %>
-                    <a href="/seller/<%= product.UserId._id %>" class="btn">More about Seller</a>
-                <% } %>
-
-                <!-- Chat to Buy Button -->
-                <!-- <% if (product.UserId && product.UserId.mob_no) { %>
-                    <a href="https://wa.me/<%= product.UserId.mob_no %>" class="btn whatsapp-btn">Chat to Buy</a>
-                <% } %> -->
-            </div>
-
-            <!-- QR Scanner Section -->
-            <% if (product.UserId && product.UserId.mob_no) { %>
-                <div class="qr-scanner">
-                    <p>Scan to chat with the seller on WhatsApp:</p>
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?data=https://wa.me/<%= product.UserId.mob_no %>&size=200x200" alt="QR Code">
+            <div class="product-content">
+                <div class="product-images">
+                    <% if (product.images && product.images.length > 0) { %>
+                        <img src="<%= product.images[0] %>" alt="Product Image">
+                    <% } else { %>
+                        <img src="https://res.cloudinary.com/<cloud_name>/image/upload/v_default-product.jpg" alt="Default Product Image">
+                    <% } %>
                 </div>
-            <% } %>
 
-            <button type="button" class="btn btn-back" onclick="window.history.back();">Go Back</button>
+                <div class="product-info">
+                    <h2 class="product-title"><%= product.name %></h2>
+                    <div class="info-row">
+                        <div class="left-info">
+                            <p><strong>Description:</strong> <%= product.description %></p>
+                            <p><strong>Category:</strong> <%= product.category %></p>
+                            <div class="price">₹<%= product.price %></div>
+                            <% if (product.UserId) { %>
+                                <a href="/seller/<%= product.UserId._id %>" class="btn">More about Seller</a>
+                            <% } %>
+                            <button type="button" class="btn btn-back" onclick="window.history.back();">Go Back</button>
+                        </div>
+
+                        <% if (product.UserId && product.UserId.mob_no) { %>
+                            <div class="qr-scanner">
+                                
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?data=https://wa.me/<%= product.UserId.mob_no %>&size=200x200" alt="QR Code">
+                                <p>Scan to chat with the seller on WhatsApp:</p>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+
+            
         </div>
+        
     </div>
-
-    <footer>
-        <p>&copy; 2025 Your Business Name. All rights reserved.</p>
-    </footer>
 </body>
 </html>
