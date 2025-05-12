@@ -4,6 +4,7 @@ const Admin = require("../models/admin");
 const Applicant = require("../models/application"); 
 const Business = require("../models/business"); 
 const Scheme = require("../models/scheme"); 
+const Product = require("../models/Product"); 
 const passport = require("passport");
 const { Video } = require('../models/video');
 
@@ -293,10 +294,11 @@ router.get("/home", async (req, res) => {
 
     // Count distinct businesses based on _id (as businesses already have unique _id per entry)
     const businessCount = await Business.countDocuments();
+    const totalProducts = await Product.countDocuments();
 
     return res.render("./admin/home", { 
         jobSeekerCount: jobSeekerCount.length > 0 ? jobSeekerCount[0].count : 0, 
-        businessCount 
+        businessCount, totalProducts 
     });
 
   }catch (error) {
