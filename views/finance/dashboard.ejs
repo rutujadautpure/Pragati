@@ -71,32 +71,39 @@
 
     <% layout("/layouts/boilerplate")%>
     <div class="container">
-        <h2 class="text-center mb-4">Finance Dashboard</h2>
+    <h2 class="text-center mb-4">Finance Dashboard</h2>
 
-        <!-- Horizontal Cards for Budget, Expenses, Income -->
-        <div class="horizontal-cards mb-4">
-            <div class="card text-white bg-info" style="flex: 1; color: rgb(254, 125, 125);">
-                <div class="card-body">
-                    <h5 class="card-title">Budget</h5>
-                    <p class="card-text" id="budgetAmount">₹<%= budget %></p>
-                    <button class="btn btn-secondary w-100 mb-3" id="setBudgetBtn">Set Budget</button>
-                </div>
-            </div>
-            <div class="card text-white bg-danger" style="flex: 1;">
-                <div class="card-body">
-                    <h5 class="card-title">Expenses</h5>
-                    <p class="card-text" id="expensesAmount">₹<%= expenses.reduce((sum, expense) => sum + expense.amount, 0) %></p>
-                    <button class="btn btn-primary w-100 mb-3" id="addTransactionBtn">Add Transaction</button>
-                </div>
-            </div>
-            <div class="card text-white bg-success" style="flex: 1;">
-                <div class="card-body">
-                    <h5 class="card-title">Income</h5>
-                    <p class="card-text" id="incomeAmount">₹<%= income.reduce((sum, inc) => sum + inc.amount, 0) %></p>
-                    <button class="btn btn-secondary w-100" id="addIncomeBtn">Add Income</button>
-                </div>
+    <!-- Horizontal Cards for Budget, Expenses, Income -->
+    <div class="horizontal-cards mb-4" style="display: flex; gap: 16px;">
+        <!-- Budget Card -->
+        <div class="card text-white bg-info" style="flex: 1; color: rgb(254, 125, 125);">
+            <div class="card-body">
+                <h5 class="card-title">Budget</h5>
+                <p class="card-text" id="budgetAmount">₹<%= budget %></p>
+                <a href="/finance/set-budget" class="btn btn-secondary w-100 mb-3" id="setBudgetBtn">Set Budget</a>
             </div>
         </div>
+
+        <!-- Expenses Card -->
+        <div class="card text-white bg-danger" style="flex: 1;">
+            <div class="card-body">
+                <h5 class="card-title">Expenses</h5>
+                <p class="card-text" id="expensesAmount">₹<%= expenses.reduce((sum, expense) => sum + expense.amount, 0) %></p>
+                <a href="/finance/add-expense" class="btn btn-primary w-100 mb-3" id="addTransactionBtn">Add Transaction</a>
+            </div>
+        </div>
+
+        <!-- Income Card -->
+        <div class="card text-white bg-success" style="flex: 1;">
+            <div class="card-body">
+                <h5 class="card-title">Income</h5>
+                <p class="card-text" id="incomeAmount">₹<%= income.reduce((sum, inc) => sum + inc.amount, 0) %></p>
+                <a href="/finance/add-income" class="btn btn-secondary w-100" id="addIncomeBtn">Add Income</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 
         <div class="row m-4">
             <!-- Expense Breakdown and Expense List (Side by Side) -->
