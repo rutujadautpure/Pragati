@@ -1,7 +1,7 @@
 const express = require('express');
  // The Product model
 const router = express.Router();
-const Product = require('../models/Product');
+const Product = require('../models/product');
 
 // Middleware to check if the user is authenticated
 const { isLoggedIn } = require('../middleware');
