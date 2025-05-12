@@ -7,6 +7,7 @@
     <select id="jobFilter" onchange="filterJobs()" style="padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ddd;">
         <option value="all" <%= filter === "all" ? "selected" : "" %>>All Jobs</option>
         <option value="district" <%= filter === "district" ? "selected" : "" %>>Jobs in My District</option>
+        <option value="nearby" <%= filter === "nearby" ? "selected" : "" %>>Nearby Jobs</option>
     </select>
 </div>
 
@@ -59,8 +60,10 @@
         const filter = document.getElementById("jobFilter").value;
         if (filter === "all") {
             window.location.href = "/worker/alljobs";
-        } else {
+        } else if (filter === "district") {
             window.location.href = "/worker/jobsByDistrict";
+        } else if (filter === "nearby") {
+            window.location.href = "/worker/jobsNearby";  // Redirect to nearby jobs
         }
     }
 </script>

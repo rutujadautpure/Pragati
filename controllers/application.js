@@ -130,7 +130,51 @@ async function getJobsByDistrict (req,res){
     }
 }
 
+async function getNearbyJobs(req, res) {
+  try {
+    const user = await User.findById(req.user._id).lean();
+    if (!user || !user.location || !user.location.coordinates) {
+      return res.status(400).send("User location coordinates not found");
+    }
 
+    const userCoords = user.location.coordinates; // [lng, lat]
+
+    // Find nearby jobs within 20km (20,000 meters)
+    const nearbyJobs = await Hiring.find({
+        geoLocation: {
+            $nearSphere: {
+            $geometry: {
+                type: "Point",
+                coordinates: userCoords,
+            },
+            $maxDistance: 200000, // 300km
+            },
+        },
+    });
+
+    // Get corresponding business names
+    const businessList = [];
+    for (let job of nearbyJobs) {
+      const business = await Business.findById(job.userId).lean();
+      businessList.push(business ? business.businessName : "Unknown Business");
+    }
+
+    // Check which jobs the user has applied to
+    const appliedJobs = await Applicant.find({ userId: req.user._id }).select("hiringId").lean();
+    const appliedJobIds = appliedJobs.map(app => app.hiringId.toString());
+
+    res.render("./worker/alljobs", {
+      jobs: nearbyJobs,
+      business: businessList,
+      appliedJobIds,
+      filter: "nearby",
+    });
+
+  } catch (error) {
+    console.error("Error fetching nearby jobs:", error);
+    res.status(500).send("Internal Server Error");
+  }
+}
 
 
 async function openApplyForm (req,res){
@@ -156,5 +200,6 @@ async function openApplyForm (req,res){
 module.exports = { handleApplyForm,
     getAllJobs,
     getJobsByDistrict,
-    openApplyForm
+    openApplyForm,
+    getNearbyJobs
  };

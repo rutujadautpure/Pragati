@@ -1,13 +1,14 @@
+require('dotenv').config();
 const express = require("express");
 const passport = require("passport");
 const User = require("../models/user");
 const Admin = require("../models/admin");
+const axios = require('axios');
 
 const router = express.Router();
 router.get("/login", (req, res) => {
     res.render("auth/login"); 
   });
-
 
   router.get("/signup", (req, res) => {
     res.render("auth/signup"); 
@@ -17,8 +18,26 @@ router.get("/login", (req, res) => {
 router.post("/signup", async (req, res) => {
   try {
     const { firstName, lastName, email, password, mob_no, pinCode, state, district, role } = req.body;
+     const address = `${state}, ${district}, ${pinCode}`;
 
-    const newUser = new User({ firstName, lastName, email, mob_no, pinCode, state, district, role });
+    // Geocode the address to get coordinates (longitude, latitude)
+    const geocodeResponse = await axios.get("https://api.opencagedata.com/geocode/v1/json", {
+      params: {
+        q: address,
+        key: process.env.OPENCAGE_API_KEY,  // Your OpenCage API Key
+      },
+    });
+
+    // Get coordinates from the geocode response
+    const coordinates = geocodeResponse.data.results[0]?.geometry;
+
+    if (!coordinates) {
+      return res.status(400).json({ message: "Unable to fetch coordinates for the provided address." });
+    }
+
+    const newUser = new User({ firstName, lastName, email, mob_no, pinCode, state, district, role,location: { // Store the location data
+        coordinates: [coordinates.lng, coordinates.lat],  // Longitude and Latitude
+      }, });
 
     const registeredUser = await User.register(newUser, password);
 
