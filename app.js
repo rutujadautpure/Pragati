@@ -1,7 +1,6 @@
 // Import required modules
 const express = require("express");
 const app = express();
-const mongoose = require("mongoose");
 const path = require("path");
 const flash = require("connect-flash");
 const ejsMate = require("ejs-mate");
@@ -18,7 +17,10 @@ const Product = require("./models/Product")
 
 const router = express.Router();
 
-const session = require("express-session");
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+const mongoose = require("mongoose");
+
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user"); 
@@ -67,14 +69,16 @@ app.use(express.static(path.join(__dirname, "homepage")));
 
 // ✅ Express-session must be initialized before passport.session()
 app.use(session({
-    secret: 'your-secret-key', // You should use a strong secret key
-    resave: false, // Don't save session if unmodified
-    saveUninitialized: false, // Don't create a session until something is stored
-    cookie: {
-        maxAge: 1000 * 60 * 60 * 24, // Session expiration (optional, here 1 day)
-        secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
-        httpOnly: true // Prevent JavaScript from accessing the cookie (recommended for security)
-    }
+  secret: 'your_secret_key', // Replace with a strong secret
+  resave: false,
+  saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGODB_URI,
+    collectionName: 'sessions'
+  }),
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24 // 1 day
+  }
 }));
 
 // ✅ Initialize Passport after express-session
