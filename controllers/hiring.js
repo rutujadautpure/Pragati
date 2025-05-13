@@ -1,6 +1,7 @@
 const Hiring = require("../models/hiring"); // Import the Hiring model
 const User = require("../models/user");
 const axios = require('axios');
+require("dotenv").config();
 
 async function handleHiringForm(req, res) {
     try {
@@ -47,7 +48,7 @@ async function handleHiringForm(req, res) {
 
         const geoRes = await axios.get(`https://api.opencagedata.com/geocode/v1/json`, {
             params: {
-                key: apiKey,
+                key: process.env.OPENCAGE_API_KEY,
                 q: address
             }
         });
