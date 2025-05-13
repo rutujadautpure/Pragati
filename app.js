@@ -190,6 +190,7 @@ app.get("/dashboard", isAuthorized(["Entrepreneur"]),(req, res) => res.render(".
 
 app.get("/", (req, res) => res.send("Server is running..."));
 
+
 app.listen(8080, () => {
     console.log("🚀 Server started on port 8080");
 });
