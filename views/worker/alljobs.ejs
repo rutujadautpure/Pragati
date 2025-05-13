@@ -1,7 +1,11 @@
 <% layout("/layouts/boilerplateworker")%>
 <%- include("../layouts/layout.ejs") %>
-<h1>Available Jobs</h1>
+
 <style>
+    body {
+        font-family: 'Segoe UI', Roboto, sans-serif;
+        background-color: #f7f9fc;
+    }
     .job-container {
         display: flex;
         flex-wrap: wrap;
@@ -38,12 +42,12 @@
         padding: 20px;
     }
 </style>
+<h1 style="text-align: center; margin-top: 20px; color: rgb(44, 124, 149);">Available Jobs</h1>
 
 <div class="filter-container" style="text-align: center; margin-bottom: 20px;">
     <label for="jobFilter" style="font-size: 16px; color: #333;">Filter Jobs:</label>
     <select id="jobFilter" onchange="filterJobs()" style="padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ddd;">
         <option value="all" <%= filter === "all" ? "selected" : "" %>>All Jobs</option>
-        <option value="district" <%= filter === "district" ? "selected" : "" %>>Jobs in My District</option>
         <option value="nearby" <%= filter === "nearby" ? "selected" : "" %>>Nearby Jobs</option>
     </select>
 </div>
