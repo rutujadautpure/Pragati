@@ -3,7 +3,8 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-        overflow-x: hidden;
+    overflow-x: hidden;
+    background-color:#f7f9fc;
 }
 
 /*** Navbar ***/
@@ -83,7 +84,8 @@ body {
 /********** Template CSS **********/
 :root {
     --primary: #06BBCC;
-    --light: #F0FBFC;
+    --light: #f7f9fc
+;
     --dark: #181d38;
 }
 
